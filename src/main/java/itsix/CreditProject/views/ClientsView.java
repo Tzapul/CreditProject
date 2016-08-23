@@ -85,7 +85,7 @@ public class ClientsView extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setBounds(288, 24, 89, 20);
 		searchPanel.add(btnSearch);
-		btnSearch.setIcon(new ImageIcon("C:\\Users\\itsix\\workspace\\CreditProject\\images\\search-icon.png"));
+		btnSearch.setIcon(new ImageIcon(getClass().getClassLoader().getResource("search-icon.png")));
 		btnSearch.addActionListener(new ActionListener() {
 			
 			@Override

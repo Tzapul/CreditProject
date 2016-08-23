@@ -1,5 +1,6 @@
 package itsix.CreditProject.views;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -48,7 +49,7 @@ public class StartingView extends JFrame {
 		setLayout(null);
 
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\itsix\\workspace\\CreditProject\\images\\bank-flat.png"));
+		lblNewLabel.setIcon(new ImageIcon(getClass().getClassLoader().getResource("bank-flat.png")));
 		lblNewLabel.setBounds(123, 50, 256, 256);
 		add(lblNewLabel);
 
