@@ -4,37 +4,36 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.models.ICurrency;
-import itsix.CreditProject.repositories.ICreditRepository;
+import itsix.CreditProject.repositories.IProductRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
-import itsix.CreditProject.validator.ICreditValidator;
+import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
-import itsix.CreditProject.views.EditCreditView;
+import itsix.CreditProject.views.EditProductView;
 
 public class EditCreditController implements IEditCreditController {
 
 	private ICurrencyRepository currencyRepository;
 
+	private IProductRepository productRepository;
 
-	private ICreditRepository creditRepository;
+	private IProduct credit;
 
-	private ICredit credit;
+	private EditProductView view;
 
-	private EditCreditView view;
+	private IProductValidator productValidator;
 
-	private ICreditValidator creditValidator;
-
-	public EditCreditController(ICurrencyRepository currencyRepository, ICreditRepository creditRepository,
-			ICredit credit, ICreditValidator creditValidator) {
+	public EditCreditController(ICurrencyRepository currencyRepository, IProductRepository creditRepository,
+			IProduct credit, IProductValidator productValidator) {
 		this.currencyRepository = currencyRepository;
-		this.creditRepository = creditRepository;
+		this.productRepository = creditRepository;
 		this.credit = credit;
-		this.creditValidator = creditValidator;
+		this.productValidator = productValidator;
 	}
 
 	@Override
-	public void setView(EditCreditView view) {
+	public void setView(EditProductView view) {
 		this.view = view;
 	}
 
@@ -50,14 +49,15 @@ public class EditCreditController implements IEditCreditController {
 		view.setMaxValue(credit.getMaxValue());
 		view.setInterestRate(credit.getInterestRate());
 		view.setCurrency(currencyRepository.getCreditIndex(credit));
-		view.setPeriod(credit.getPeriod());
+		view.setMinPeriod(credit.getMinPeriod());
+		view.setMaxPeriod(credit.getMaxPeriod());
 	}
 
 	@Override
 	public void updateCredit() {
-		ICredit updatedCredit = view.getUpdatedCredit();
+		IProduct updatedCredit = view.getUpdatedProduct();
 
-		IValidatorResult result = creditValidator.validateFields(updatedCredit);
+		IValidatorResult result = productValidator.validateFields(updatedCredit);
 
 		if (result.isNotValid()) {
 			JOptionPane.showMessageDialog(null, result.getDescription(), "Invalid Fields", JOptionPane.WARNING_MESSAGE);
@@ -65,7 +65,7 @@ public class EditCreditController implements IEditCreditController {
 			return;
 		}
 
-		creditRepository.update(credit, updatedCredit);
+		productRepository.update(credit, updatedCredit);
 		view.dispose();
 	}
 

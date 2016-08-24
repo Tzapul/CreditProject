@@ -20,18 +20,18 @@ import javax.swing.event.ListSelectionListener;
 import itsix.CreditProject.controllers.ICreditsController;
 import itsix.CreditProject.controllers.IRepository;
 import itsix.CreditProject.customs.CreditsList;
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.pubSub.ISubscriber;
 
-public class CreditsView extends JFrame implements ISubscriber {
+public class ProductsView extends JFrame implements ISubscriber {
 
 	private static final long serialVersionUID = 1L;
 
-	private JList<ICredit> productsList;
+	private JList<IProduct> productsList;
 	private JTextPane descriptionTextPane;
 	private ICreditsController controller;
 
-	public CreditsView(ICreditsController controller, IRepository repository) {
+	public ProductsView(ICreditsController controller, IRepository repository) {
 		this.controller = controller;
 		repository.getCreditRepository().subscribe(this);
 		initialize();
@@ -54,7 +54,7 @@ public class CreditsView extends JFrame implements ISubscriber {
 		});
 		getContentPane().setLayout(null);
 		getContentPane().add(btnNewProduct);
-		AbstractListModel<ICredit> model = new CreditsList(controller.getCreditsList());
+		AbstractListModel<IProduct> model = new CreditsList(controller.getCreditsList());
 
 		JLabel lblDescription = new JLabel("Description");
 		lblDescription.setBounds(200, 11, 61, 14);
@@ -127,7 +127,7 @@ public class CreditsView extends JFrame implements ISubscriber {
 
 	@Override
 	public void update() {
-		AbstractListModel<ICredit> model = new CreditsList(controller.getCreditsList());
+		AbstractListModel<IProduct> model = controller.createCreditList();
 		productsList.setModel(model);
 		productsList.setSelectedIndex(0);
 	}
@@ -136,7 +136,7 @@ public class CreditsView extends JFrame implements ISubscriber {
 		descriptionTextPane.setText(description);
 	}
 
-	public JList<ICredit> getProductList() {
+	public JList<IProduct> getProductList() {
 		return productsList;
 	}
 

@@ -4,13 +4,13 @@ import itsix.CreditProject.controllers.IRepository;
 
 public class MainRepository implements IRepository {
 
-	private ICreditRepository creditRepository;
+	private IProductRepository creditRepository;
 	private ICurrencyRepository currencyRepository;
 	private IClientRepository clientRepository;
 
 	private IIndicator indicator;
 
-	public MainRepository(ICreditRepository creditRepository, ICurrencyRepository currencyRepository,
+	public MainRepository(IProductRepository creditRepository, ICurrencyRepository currencyRepository,
 			IIndicator indicator, IClientRepository clientRepository) {
 		this.creditRepository = creditRepository;
 		this.currencyRepository = currencyRepository;
@@ -24,7 +24,7 @@ public class MainRepository implements IRepository {
 	}
 
 	@Override
-	public ICreditRepository getCreditRepository() {
+	public IProductRepository getCreditRepository() {
 		return creditRepository;
 	}
 

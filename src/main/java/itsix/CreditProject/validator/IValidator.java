@@ -1,19 +1,21 @@
 package itsix.CreditProject.validator;
 
+import itsix.CreditProject.models.IInterval;
+
 public interface IValidator {
 
 	void validateName(String name);
 
-	void validateMinValue(Double minValue);
+	void validateMinValue(Integer minValue);
 
-	void validateMaxValue(Double maxValue);
+	void validateMaxValue(Integer maxValue);
 
 	void validateInterestRate(Double interestRate);
 
-	void validatePeriod(Integer period);
+	void validatePeriod(IInterval iInterval);
 
 	IValidatorResult buildResult();
 
-	void validateIntervalBounds(Double minValue, Double maxValue);
+	void validateIntervalBounds(Integer minValue, Integer maxValue);
 
 }

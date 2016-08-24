@@ -6,14 +6,16 @@ public class Account implements IAccount {
 
 	private String name;
 	private ICurrency currency;
-	private List<ICredit> products;
+	private List<ICredit> credits;
+	
+	private ISold sold;
 	
 	
-	public Account(String name, ICurrency currency, List<ICredit> products) {
+	public Account(String name, ICurrency currency, List<ICredit> credits) {
 		super();
 		this.name = name;
 		this.currency = currency;
-		this.products = products;
+		this.credits = credits;
 	}
 	
 	@Override

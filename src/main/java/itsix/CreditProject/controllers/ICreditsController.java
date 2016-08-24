@@ -2,22 +2,26 @@ package itsix.CreditProject.controllers;
 
 import java.util.List;
 
-import itsix.CreditProject.models.ICredit;
-import itsix.CreditProject.views.CreditsView;
+import javax.swing.AbstractListModel;
+
+import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.views.ProductsView;
 
 public interface ICreditsController {
 
 	void goToNewCreditView();
 
-	List<ICredit> getCreditsList();
+	List<IProduct> getCreditsList();
 
 	void setDescriptionText(String description);
 
-	void setView(CreditsView view);
+	void setView(ProductsView view);
 
 	void goToEditProduct();
 
-	void delete(ICredit credit);
+	void delete(IProduct credit);
 
 	void clearDescription();
+
+	AbstractListModel<IProduct> createCreditList();
 }

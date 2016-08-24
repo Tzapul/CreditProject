@@ -1,6 +1,6 @@
 package itsix.CreditProject.models;
 
-public class Credit implements ICredit {
+public class Product implements IProduct {
 
 	private String name;
 
@@ -8,9 +8,9 @@ public class Credit implements ICredit {
 	private ICurrency currency;
 
 	private Double interestRate;
-	private Integer period;
+	private IInterval period;
 
-	public Credit(String name, IInterval interval, ICurrency currency, Double interestRate, Integer period) {
+	public Product(String name, IInterval interval, ICurrency currency, Double interestRate, IInterval period) {
 		super();
 		this.name = name;
 		this.interval = interval;
@@ -32,7 +32,7 @@ public class Credit implements ICredit {
 	}
 
 	private void appendPeriod(StringBuilder builder) {
-		builder.append("Period : " + period + " months");
+		builder.append("Period : " + period.getMin() + "-" + period.getMax() + " (months)");
 		builder.append("\n");
 	}
 
@@ -52,7 +52,7 @@ public class Credit implements ICredit {
 	}
 
 	private void appendName(StringBuilder builder) {
-		builder.append("Credit name : " + name);
+		builder.append("Product name : " + name);
 		builder.append("\n");
 	}
 
@@ -62,12 +62,12 @@ public class Credit implements ICredit {
 	}
 
 	@Override
-	public Double getMinValue() {
+	public Integer getMinValue() {
 		return interval.getMin();
 	}
 
 	@Override
-	public Double getMaxValue() {
+	public Integer getMaxValue() {
 		return interval.getMax();
 	}
 
@@ -82,10 +82,10 @@ public class Credit implements ICredit {
 	}
 
 	@Override
-	public Integer getPeriod() {
+	public IInterval getPeriod() {
 		return period;
 	}
-	
+
 	@Override
 	public IInterval getInterval() {
 		return interval;
@@ -97,7 +97,7 @@ public class Credit implements ICredit {
 	}
 
 	@Override
-	public void updateFields(ICredit credit) {
+	public void updateFields(IProduct credit) {
 		this.name = credit.getName();
 		this.period = credit.getPeriod();
 		this.interestRate = credit.getInterestRate();
@@ -105,6 +105,14 @@ public class Credit implements ICredit {
 		this.interval = credit.getInterval();
 	}
 
+	@Override
+	public Integer getMinPeriod() {
+		return period.getMin();
+	}
 
+	@Override
+	public Integer getMaxPeriod() {
+		return period.getMax();
+	}
 
 }

@@ -16,13 +16,15 @@ import javax.swing.WindowConstants;
 import itsix.CreditProject.controllers.IEditCreditController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
-import itsix.CreditProject.models.Credit;
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.Product;
+import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.models.ICurrency;
 import itsix.CreditProject.models.IInterval;
 import itsix.CreditProject.models.Interval;
+import itsix.CreditProject.models.MoneyInterval;
+import itsix.CreditProject.models.PeriodInterval;
 
-public class EditCreditView extends JFrame {
+public class EditProductView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,13 +32,14 @@ public class EditCreditView extends JFrame {
 	private JTextField minValueTextField;
 	private JTextField maxValueTextField;
 	private JTextField interestRateTextField;
-	private JTextField periodTextField;
+	private JTextField minPeriodTextField;
 
 	private JComboBox<ICurrency> currencyComboBox;
 
 	private IEditCreditController controller;
+	private JTextField maxPeriodTextField;
 
-	public EditCreditView(IEditCreditController controller) {
+	public EditProductView(IEditCreditController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -45,7 +48,7 @@ public class EditCreditView extends JFrame {
 		setBounds(100, 100, 300, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setTitle("Edit Credit");
+		setTitle("Edit Product");
 		setBounds(100, 100, 300, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -67,22 +70,22 @@ public class EditCreditView extends JFrame {
 		getContentPane().add(lblInterestRate);
 
 		nameTextField = new JTextField();
-		nameTextField.setBounds(135, 22, 86, 20);
+		nameTextField.setBounds(170, 22, 86, 20);
 		getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 
 		minValueTextField = new IntegerJTextField();
-		minValueTextField.setBounds(135, 63, 86, 20);
+		minValueTextField.setBounds(170, 63, 86, 20);
 		getContentPane().add(minValueTextField);
 		minValueTextField.setColumns(10);
 
 		maxValueTextField = new IntegerJTextField();
-		maxValueTextField.setBounds(135, 103, 86, 20);
+		maxValueTextField.setBounds(170, 103, 86, 20);
 		getContentPane().add(maxValueTextField);
 		maxValueTextField.setColumns(10);
 
 		interestRateTextField = new DoubleJTextField();
-		interestRateTextField.setBounds(134, 146, 86, 20);
+		interestRateTextField.setBounds(170, 146, 86, 20);
 		getContentPane().add(interestRateTextField);
 		interestRateTextField.setColumns(10);
 
@@ -93,7 +96,7 @@ public class EditCreditView extends JFrame {
 		currencyComboBox = new JComboBox<>();
 		currencyComboBox.setEnabled(false);
 		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getCurrencies()));
-		currencyComboBox.setBounds(135, 186, 85, 20);
+		currencyComboBox.setBounds(170, 186, 85, 20);
 		getContentPane().add(currencyComboBox);
 
 		JButton btnEdit = new JButton("Edit");
@@ -108,14 +111,23 @@ public class EditCreditView extends JFrame {
 
 		getContentPane().add(btnEdit);
 
-		JLabel lblPeriod = new JLabel("Period (months) :");
-		lblPeriod.setBounds(25, 232, 99, 14);
-		getContentPane().add(lblPeriod);
+		JLabel lblMinPeriod = new JLabel("Min. Period (months) :");
+		lblMinPeriod.setBounds(25, 232, 118, 14);
+		getContentPane().add(lblMinPeriod);
 
-		periodTextField = new IntegerJTextField();
-		periodTextField.setBounds(135, 229, 86, 20);
-		getContentPane().add(periodTextField);
-		periodTextField.setColumns(10);
+		minPeriodTextField = new IntegerJTextField();
+		minPeriodTextField.setBounds(170, 229, 86, 20);
+		getContentPane().add(minPeriodTextField);
+		minPeriodTextField.setColumns(10);
+		
+		JLabel lblMaxPeriod = new JLabel("Max. Period (months) :");
+		lblMaxPeriod.setBounds(25, 275, 118, 14);
+		getContentPane().add(lblMaxPeriod);
+		
+		maxPeriodTextField = new JTextField();
+		maxPeriodTextField.setBounds(170, 272, 86, 20);
+		getContentPane().add(maxPeriodTextField);
+		maxPeriodTextField.setColumns(10);
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -131,12 +143,12 @@ public class EditCreditView extends JFrame {
 		nameTextField.setText(name);
 	}
 
-	public void setMaxValue(Double maxValue) {
-		maxValueTextField.setText(Double.toString(maxValue));
+	public void setMaxValue(Integer maxValue) {
+		maxValueTextField.setText(Integer.toString(maxValue));
 	}
 
-	public void setMinimumSize(Double minValue) {
-		minValueTextField.setText(Double.toString(minValue));
+	public void setMinimumSize(Integer minValue) {
+		minValueTextField.setText(Integer.toString(minValue));
 	}
 
 	public void setInterestRate(Double interestRate) {
@@ -148,21 +160,34 @@ public class EditCreditView extends JFrame {
 	}
 
 	public void setPeriod(Integer period) {
-		periodTextField.setText(Integer.toString(period));
+		minPeriodTextField.setText(Integer.toString(period));
 	}
 
-	public ICredit getUpdatedCredit() {
+	public IProduct getUpdatedProduct() {
 		String name = nameTextField.getText();
-		Double minValue = Double.valueOf(minValueTextField.getText());
-		Double maxValue = Double.valueOf(maxValueTextField.getText());
-		IInterval interval = new Interval(minValue, maxValue);
+		
+		Integer minValue = Integer.valueOf(minValueTextField.getText());
+		Integer maxValue = Integer.valueOf(maxValueTextField.getText());
+		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
+		
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
 		Double interestRate = Double.valueOf(interestRateTextField.getText());
-		Integer period = Integer.valueOf(periodTextField.getText());
+		
+		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
+		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());
+		IInterval period = new PeriodInterval(new Interval(minPeriod, maxPeriod));
 
-		ICredit credit = new Credit(name, interval, currency, interestRate, period);
+		IProduct credit = new Product(name, moneyInterval, currency, interestRate, period);
 
 		return credit;
+	}
+
+	public void setMinPeriod(Integer minPeriod) {
+		minPeriodTextField.setText(String.valueOf(minPeriod));
+	}
+	
+	public void setMaxPeriod(Integer maxPeriod) {
+		maxPeriodTextField.setText(String.valueOf(maxPeriod));
 	}
 
 }

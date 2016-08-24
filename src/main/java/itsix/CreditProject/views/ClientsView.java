@@ -133,7 +133,7 @@ public class ClientsView extends JFrame {
 		accountsTable.addMouseListener(new MouseAdapter() {
 			 public void mousePressed(MouseEvent me) {
 			        if (me.getClickCount() == 2) {
-
+			        	controller.goToAccountView();
 			        }
 			    }
 		});

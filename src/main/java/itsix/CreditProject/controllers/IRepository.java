@@ -1,14 +1,14 @@
 package itsix.CreditProject.controllers;
 
 import itsix.CreditProject.repositories.IClientRepository;
-import itsix.CreditProject.repositories.ICreditRepository;
+import itsix.CreditProject.repositories.IProductRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
 
 public interface IRepository {
 
 	Double getIndicator();
 
-	ICreditRepository getCreditRepository();
+	IProductRepository getCreditRepository();
 
 	ICurrencyRepository getCurrencyRepository();
 

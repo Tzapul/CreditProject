@@ -3,7 +3,7 @@ package itsix.CreditProject.repositories;
 import java.util.Vector;
 
 import itsix.CreditProject.models.Currency;
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.models.ICurrency;
 
 public class CurrencyRepository implements ICurrencyRepository {
@@ -23,7 +23,7 @@ public class CurrencyRepository implements ICurrencyRepository {
 	}
 
 	@Override
-	public ICurrency getCreditIndex(ICredit credit) {
+	public ICurrency getCreditIndex(IProduct credit) {
 		for (ICurrency currency : currencies) {
 			if(credit.hasCurrency(currency)) {
 				return currency;

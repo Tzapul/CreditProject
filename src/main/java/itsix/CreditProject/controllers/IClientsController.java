@@ -12,4 +12,6 @@ public interface IClientsController {
 
 	void updateClient();
 
+	void goToAccountView();
+
 }

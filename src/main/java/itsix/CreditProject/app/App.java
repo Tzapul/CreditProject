@@ -16,10 +16,10 @@ import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
 import itsix.CreditProject.repositories.ClientRepository;
-import itsix.CreditProject.repositories.CreditRepository;
+import itsix.CreditProject.repositories.ProductRepository;
 import itsix.CreditProject.repositories.CurrencyRepository;
 import itsix.CreditProject.repositories.IClientRepository;
-import itsix.CreditProject.repositories.ICreditRepository;
+import itsix.CreditProject.repositories.IProductRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
 import itsix.CreditProject.repositories.IIndicator;
 import itsix.CreditProject.repositories.Indicator;
@@ -43,7 +43,7 @@ public class App extends JFrame {
 				
 				List<ISubscriber> subscribers = new ArrayList<>();
 				IInnerPublisher publisher = new Publisher(subscribers);
-				ICreditRepository creditRepository = new CreditRepository(publisher);
+				IProductRepository creditRepository = new ProductRepository(publisher);
 				
 				IRepository mainRepository = new MainRepository(creditRepository, currencyRepository, indicator, clientRepository);
 				

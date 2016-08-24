@@ -1,7 +1,7 @@
 package itsix.CreditProject.controllers;
 
 import itsix.CreditProject.views.ClientsView;
-import itsix.CreditProject.views.CreditsView;
+import itsix.CreditProject.views.ProductsView;
 
 public class StartingController implements IStartingController {
 
@@ -14,11 +14,11 @@ public class StartingController implements IStartingController {
 	@Override
 	public void goToProductsWindow() {
 
-		ICreditsController controller = new CreditsController(repository);
-		CreditsView creditView = new CreditsView(controller, repository);
-		
+		ICreditsController controller = new ProductsController(repository);
+		ProductsView creditView = new ProductsView(controller, repository);
+
 		controller.setView(creditView);
-		
+
 		creditView.setVisible(true);
 	}
 

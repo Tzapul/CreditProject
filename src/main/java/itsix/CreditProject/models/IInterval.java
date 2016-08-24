@@ -2,8 +2,8 @@ package itsix.CreditProject.models;
 
 public interface IInterval {
 
-	Double getMin();
+	Integer getMin();
 
-	Double getMax();
+	Integer getMax();
 
 }

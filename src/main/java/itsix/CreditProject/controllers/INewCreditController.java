@@ -3,7 +3,7 @@ package itsix.CreditProject.controllers;
 import java.util.Vector;
 
 import itsix.CreditProject.models.ICurrency;
-import itsix.CreditProject.views.NewCreditView;
+import itsix.CreditProject.views.NewProductView;
 
 public interface INewCreditController {
 
@@ -11,7 +11,7 @@ public interface INewCreditController {
 
 	Vector<ICurrency> getCurrencies();
 
-	void setView(NewCreditView newCreditView);
+	void setView(NewProductView newCreditView);
 
 	void changeToFixedBuilder();
 

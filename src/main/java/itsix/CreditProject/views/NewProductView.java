@@ -23,7 +23,7 @@ import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.ICurrency;
 
-public class NewCreditView extends JFrame {
+public class NewProductView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class NewCreditView extends JFrame {
 	private JTextField minValueTextField;
 	private JTextField maxValueTextField;
 	private JTextField interestRateTextField;
-	private JTextField periodTextField;
+	private JTextField minPeriodTextField;
 
 	private JLabel lblRealInterestRate;
 	private JLabel lblRealInterestRateValue;
@@ -41,54 +41,55 @@ public class NewCreditView extends JFrame {
 	private JComboBox<ICurrency> currencyComboBox;
 
 	private INewCreditController controller;
+	private JTextField maxPeriodTextField;
 
-	public NewCreditView(INewCreditController controller) {
+	public NewProductView(INewCreditController controller) {
 		this.controller = controller;
 		initialize();
 	}
 
 	private void initialize() {
-		setTitle("Create Credit");
-		setBounds(100, 100, 300, 439);
+		setTitle("Create Product");
+		setBounds(100, 100, 300, 504);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(null);
+		getContentPane().setLayout(null);
 
 		JLabel lblName = new JLabel("Name :");
 		lblName.setBounds(25, 25, 99, 14);
-		add(lblName);
+		getContentPane().add(lblName);
 
 		JLabel lblMinValue = new JLabel("Min. Value :");
 		lblMinValue.setBounds(25, 66, 99, 14);
-		add(lblMinValue);
+		getContentPane().add(lblMinValue);
 
 		JLabel lblMaxValue = new JLabel("Max. Value :");
 		lblMaxValue.setBounds(25, 106, 99, 14);
-		add(lblMaxValue);
+		getContentPane().add(lblMaxValue);
 
 		JLabel lblInterestRate = new JLabel("Interest rate (%) :");
 		lblInterestRate.setBounds(25, 149, 99, 14);
-		add(lblInterestRate);
+		getContentPane().add(lblInterestRate);
 
 		nameTextField = new JTextField();
-		nameTextField.setBounds(135, 22, 86, 20);
-		add(nameTextField);
+		nameTextField.setBounds(179, 19, 86, 20);
+		getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 
 		minValueTextField = new IntegerJTextField();
-		minValueTextField.setBounds(135, 63, 86, 20);
-		add(minValueTextField);
+		minValueTextField.setBounds(179, 60, 86, 20);
+		getContentPane().add(minValueTextField);
 		minValueTextField.setColumns(10);
 		minValueTextField.setText("0");
 
 		maxValueTextField = new IntegerJTextField();
-		maxValueTextField.setBounds(135, 103, 86, 20);
-		add(maxValueTextField);
+		maxValueTextField.setBounds(179, 100, 86, 20);
+		getContentPane().add(maxValueTextField);
 		maxValueTextField.setColumns(10);
 		maxValueTextField.setText("0");
 
 		interestRateTextField = new DoubleJTextField();
-		interestRateTextField.setBounds(134, 146, 86, 20);
-		add(interestRateTextField);
+		interestRateTextField.setBounds(178, 143, 86, 20);
+		getContentPane().add(interestRateTextField);
 		interestRateTextField.setColumns(10);
 		interestRateTextField.setText("0");
 		interestRateTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -117,18 +118,18 @@ public class NewCreditView extends JFrame {
 
 		JLabel lblCurrency = new JLabel("Currency :");
 		lblCurrency.setBounds(25, 189, 99, 14);
-		add(lblCurrency);
+		getContentPane().add(lblCurrency);
 
 		currencyComboBox = new JComboBox<>();
 		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getCurrencies()));
-		currencyComboBox.setBounds(135, 186, 85, 20);
-		add(currencyComboBox);
+		currencyComboBox.setBounds(179, 183, 85, 20);
+		getContentPane().add(currencyComboBox);
 
 		buttonGroup = new ButtonGroup();
 
 		JRadioButton rdbtnFixedInterest = new JRadioButton("Fixed Interest");
 		rdbtnFixedInterest.setSelected(true);
-		rdbtnFixedInterest.setBounds(15, 321, 109, 23);
+		rdbtnFixedInterest.setBounds(17, 369, 109, 23);
 		rdbtnFixedInterest.addActionListener(new ActionListener() {
 
 			@Override
@@ -137,10 +138,10 @@ public class NewCreditView extends JFrame {
 				controller.setLabelsInvisible();
 			}
 		});
-		add(rdbtnFixedInterest);
+		getContentPane().add(rdbtnFixedInterest);
 
 		JRadioButton rdbtnVariableInterest = new JRadioButton("Variable Interest");
-		rdbtnVariableInterest.setBounds(154, 321, 109, 23);
+		rdbtnVariableInterest.setBounds(156, 369, 109, 23);
 		rdbtnVariableInterest.addActionListener(new ActionListener() {
 
 			@Override
@@ -149,13 +150,13 @@ public class NewCreditView extends JFrame {
 				controller.setLabelsVisible();
 			}
 		});
-		add(rdbtnVariableInterest);
+		getContentPane().add(rdbtnVariableInterest);
 
 		buttonGroup.add(rdbtnVariableInterest);
 		buttonGroup.add(rdbtnFixedInterest);
 
 		JButton btnCreate = new JButton("Create");
-		btnCreate.setBounds(90, 364, 100, 25);
+		btnCreate.setBounds(92, 412, 100, 25);
 		btnCreate.addActionListener(new ActionListener() {
 
 			@Override
@@ -164,25 +165,35 @@ public class NewCreditView extends JFrame {
 			}
 		});
 
-		add(btnCreate);
+		getContentPane().add(btnCreate);
 
-		JLabel lblPeriod = new JLabel("Period (months) :");
-		lblPeriod.setBounds(25, 232, 99, 14);
-		add(lblPeriod);
+		JLabel lblMinPeriod = new JLabel("Min. Period (months) :");
+		lblMinPeriod.setBounds(25, 232, 113, 14);
+		getContentPane().add(lblMinPeriod);
 
-		periodTextField = new IntegerJTextField();
-		periodTextField.setBounds(135, 229, 86, 20);
-		add(periodTextField);
-		periodTextField.setColumns(10);
-		periodTextField.setText("0");
+		minPeriodTextField = new IntegerJTextField();
+		minPeriodTextField.setBounds(179, 226, 86, 20);
+		getContentPane().add(minPeriodTextField);
+		minPeriodTextField.setColumns(10);
+		minPeriodTextField.setText("0");
 
 		lblRealInterestRate = new JLabel("Real interest rate (%) :");
-		lblRealInterestRate.setBounds(25, 277, 113, 14);
-		add(lblRealInterestRate);
+		lblRealInterestRate.setBounds(25, 326, 113, 14);
+		getContentPane().add(lblRealInterestRate);
 
 		lblRealInterestRateValue = new JLabel("");
-		lblRealInterestRateValue.setBounds(154, 277, 67, 14);
-		add(lblRealInterestRateValue);
+		lblRealInterestRateValue.setBounds(154, 326, 67, 14);
+		getContentPane().add(lblRealInterestRateValue);
+		
+		JLabel lblMaxPeriod = new JLabel("Max. Period (months) :");
+		lblMaxPeriod.setBounds(25, 277, 113, 14);
+		getContentPane().add(lblMaxPeriod);
+		
+		maxPeriodTextField = new JTextField();
+		maxPeriodTextField.setText("0");
+		maxPeriodTextField.setBounds(179, 274, 86, 20);
+		getContentPane().add(maxPeriodTextField);
+		maxPeriodTextField.setColumns(10);
 
 		lblRealInterestRate.setVisible(false);
 		lblRealInterestRateValue.setVisible(false);
@@ -197,12 +208,12 @@ public class NewCreditView extends JFrame {
 		});
 	}
 
-	public Double getMinValue() {
-		return Double.valueOf(minValueTextField.getText());
+	public Integer getMinValue() {
+		return Integer.valueOf(minValueTextField.getText());
 	}
 
-	public Double getMaxValue() {
-		return Double.valueOf(maxValueTextField.getText());
+	public Integer getMaxValue() {
+		return Integer.valueOf(maxValueTextField.getText());
 	}
 
 	public Double getInterestRate() {
@@ -214,7 +225,7 @@ public class NewCreditView extends JFrame {
 	}
 
 	public Integer getPeriod() {
-		return Integer.valueOf(periodTextField.getText());
+		return Integer.valueOf(minPeriodTextField.getText());
 	}
 
 	public String getCreditName() {
@@ -248,4 +259,11 @@ public class NewCreditView extends JFrame {
 		return !interestRateTextField.getText().equals(null) && interestRateTextField.getText().length() != 0;
 	}
 
+	public Integer getMinPeriod() {
+		return Integer.valueOf(minPeriodTextField.getText());
+	}
+	
+	public Integer getMaxPeriod() {
+		return Integer.valueOf(maxPeriodTextField.getText());
+	}
 }

@@ -1,17 +1,17 @@
 package itsix.CreditProject.validator;
 
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.IProduct;
 
-public class CreditValidator implements ICreditValidator {
+public class ProductValidator implements IProductValidator {
 
 	private IValidator validator;
 	
-	public CreditValidator(IValidator validator) {
+	public ProductValidator(IValidator validator) {
 		this.validator = validator;
 	}
 
 	@Override
-	public IValidatorResult validateFields(ICredit credit) {
+	public IValidatorResult validateFields(IProduct credit) {
 		
 		validator.validateName(credit.getName());
 		validator.validateMinValue(credit.getMinValue());

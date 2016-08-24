@@ -2,22 +2,27 @@ package itsix.CreditProject.models;
 
 public class Interval implements IInterval {
 
-	private Double minValue;
-	private Double maxValue;
+	private Integer minValue;
+	private Integer maxValue;
 
-	public Interval(Double min, Double max) {
+	public Interval(Integer min, Integer max) {
 		this.minValue = min;
 		this.maxValue = max;
 	}
 
 	@Override
-	public Double getMin() {
+	public Integer getMin() {
 		return minValue;
 	}
 
 	@Override
-	public Double getMax() {
+	public Integer getMax() {
 		return maxValue;
+	}
+
+	@Override
+	public String toString() {
+		return minValue + "-" + maxValue;
 	}
 
 }

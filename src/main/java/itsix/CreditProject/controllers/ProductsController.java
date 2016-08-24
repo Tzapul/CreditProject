@@ -2,35 +2,38 @@ package itsix.CreditProject.controllers;
 
 import java.util.List;
 
-import itsix.CreditProject.builders.FixedCreditBuilder;
-import itsix.CreditProject.builders.IFixedCreditBuilder;
+import javax.swing.AbstractListModel;
+
+import itsix.CreditProject.builders.FixedInterestProductBuilder;
+import itsix.CreditProject.builders.IFixedInterestProductBuilder;
 import itsix.CreditProject.builders.IIntervalBuilder;
-import itsix.CreditProject.builders.IVariableCreditBuilder;
+import itsix.CreditProject.builders.IVariableInterestProductBuilder;
 import itsix.CreditProject.builders.IntervalBuilder;
-import itsix.CreditProject.builders.VariableCreditBuilder;
-import itsix.CreditProject.models.ICredit;
-import itsix.CreditProject.validator.CreditValidator;
-import itsix.CreditProject.validator.ICreditValidator;
+import itsix.CreditProject.builders.VariableInterestProductBuilder;
+import itsix.CreditProject.customs.CreditsList;
+import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.validator.ProductValidator;
+import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidator;
 import itsix.CreditProject.validator.IValidatorResultBuilder;
 import itsix.CreditProject.validator.Validator;
 import itsix.CreditProject.validator.ValidatorResultBuilder;
-import itsix.CreditProject.views.CreditsView;
-import itsix.CreditProject.views.EditCreditView;
-import itsix.CreditProject.views.NewCreditView;
+import itsix.CreditProject.views.ProductsView;
+import itsix.CreditProject.views.EditProductView;
+import itsix.CreditProject.views.NewProductView;
 
-public class CreditsController implements ICreditsController {
+public class ProductsController implements ICreditsController {
 
 	private IRepository repository;
 
-	private CreditsView view;
+	private ProductsView view;
 
-	public CreditsController(IRepository repository) {
+	public ProductsController(IRepository repository) {
 		this.repository = repository;
 	}
 
 	@Override
-	public void setView(CreditsView view) {
+	public void setView(ProductsView view) {
 		this.view = view;
 	}
 
@@ -39,27 +42,27 @@ public class CreditsController implements ICreditsController {
 
 		// Initialize interval and credit builders
 		IIntervalBuilder intervalBuilder = new IntervalBuilder();
-		IFixedCreditBuilder fixedInterestBuilder = new FixedCreditBuilder(intervalBuilder);
-		IVariableCreditBuilder variableInterestBuilder = new VariableCreditBuilder(intervalBuilder, repository);
+		IFixedInterestProductBuilder fixedInterestBuilder = new FixedInterestProductBuilder(intervalBuilder);
+		IVariableInterestProductBuilder variableInterestBuilder = new VariableInterestProductBuilder(intervalBuilder, repository);
 
 		// Initializing creditValidator
 		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
 		StringBuilder errorMessageBuilder = new StringBuilder();
 		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
 
-		ICreditValidator creditValidator = new CreditValidator(validator);
+		IProductValidator creditValidator = new ProductValidator(validator);
 
 		INewCreditController controller = new NewCreditController(repository, fixedInterestBuilder,
 				variableInterestBuilder, creditValidator);
-		NewCreditView newCreditView = new NewCreditView(controller);
+		NewProductView newCreditView = new NewProductView(controller);
 
 		controller.setView(newCreditView);
 		newCreditView.setVisible(true);
 	}
 
 	@Override
-	public List<ICredit> getCreditsList() {
-		return repository.getCreditRepository().getCredits();
+	public List<IProduct> getCreditsList() {
+		return repository.getCreditRepository().getProducts();
 	}
 
 	@Override
@@ -74,12 +77,12 @@ public class CreditsController implements ICreditsController {
 		StringBuilder errorMessageBuilder = new StringBuilder();
 		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
 
-		ICreditValidator creditValidator = new CreditValidator(validator);
+		IProductValidator creditValidator = new ProductValidator(validator);
 
 		IEditCreditController editCreditController = new EditCreditController(repository.getCurrencyRepository(),
 				repository.getCreditRepository(), view.getProductList().getSelectedValue(), creditValidator);
 
-		EditCreditView editCreditView = new EditCreditView(editCreditController);
+		EditProductView editCreditView = new EditProductView(editCreditController);
 		editCreditController.setView(editCreditView);
 
 		editCreditController.populateFields();
@@ -88,14 +91,18 @@ public class CreditsController implements ICreditsController {
 	}
 
 	@Override
-	public void delete(ICredit credit) {
+	public void delete(IProduct credit) {
 		repository.getCreditRepository().delete(credit);
-		;
 	}
 
 	@Override
 	public void clearDescription() {
 		view.clearDescription();
+	}
+
+	@Override
+	public AbstractListModel<IProduct> createCreditList() {
+		return new CreditsList(repository.getCreditRepository().getProducts());
 	}
 
 }

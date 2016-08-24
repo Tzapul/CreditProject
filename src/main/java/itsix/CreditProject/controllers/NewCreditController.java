@@ -4,27 +4,27 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import itsix.CreditProject.builders.ICreditBuilder;
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.builders.IProductBuilder;
+import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.models.ICurrency;
-import itsix.CreditProject.validator.ICreditValidator;
+import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
-import itsix.CreditProject.views.NewCreditView;
+import itsix.CreditProject.views.NewProductView;
 
 public class NewCreditController implements INewCreditController {
 
 	private IRepository repository;
 
-	private NewCreditView view;
+	private NewProductView view;
 
-	private ICreditBuilder fixedInterestBuilder;
-	private ICreditBuilder variableInterestBuilder;
-	private ICreditBuilder currentBuilder;
+	private IProductBuilder fixedInterestBuilder;
+	private IProductBuilder variableInterestBuilder;
+	private IProductBuilder currentBuilder;
 
-	private ICreditValidator validator;
+	private IProductValidator validator;
 
-	public NewCreditController(IRepository repository, ICreditBuilder fixedInterestBuilder,
-			ICreditBuilder variableInterestBuilder, ICreditValidator validator) {
+	public NewCreditController(IRepository repository, IProductBuilder fixedInterestBuilder,
+			IProductBuilder variableInterestBuilder, IProductValidator validator) {
 
 		this.repository = repository;
 		this.fixedInterestBuilder = fixedInterestBuilder;
@@ -36,8 +36,8 @@ public class NewCreditController implements INewCreditController {
 
 	@Override
 	public void createNewCredit() {
-		ICredit credit = currentBuilder.build(view.getCreditName(), view.getMinValue(), view.getMaxValue(),
-				view.getInterestRate(), view.getCurrency(), view.getPeriod());
+		IProduct credit = currentBuilder.build(view.getCreditName(), view.getMinValue(), view.getMaxValue(),
+				view.getInterestRate(), view.getCurrency(), view.getMinPeriod(), view.getMaxPeriod());
 
 		IValidatorResult result = validator.validateFields(credit);
 		
@@ -60,7 +60,7 @@ public class NewCreditController implements INewCreditController {
 	}
 
 	@Override
-	public void setView(NewCreditView newCreditView) {
+	public void setView(NewProductView newCreditView) {
 		this.view = newCreditView;
 	}
 

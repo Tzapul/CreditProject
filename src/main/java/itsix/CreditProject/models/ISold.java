@@ -1,5 +1,5 @@
 package itsix.CreditProject.models;
 
-public interface ICredit {
+public interface ISold {
 
 }
