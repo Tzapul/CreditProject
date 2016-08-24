@@ -11,11 +11,12 @@ public class Account implements IAccount {
 	private ISold sold;
 	
 	
-	public Account(String name, ICurrency currency, List<ICredit> credits) {
+	public Account(String name, ICurrency currency, List<ICredit> credits, ISold sold) {
 		super();
 		this.name = name;
 		this.currency = currency;
 		this.credits = credits;
+		this.sold = sold;
 	}
 	
 	@Override
@@ -29,6 +30,11 @@ public class Account implements IAccount {
 	@Override
 	public String getSymbol() {
 		return currency.getSymbol();
+	}
+
+	@Override
+	public Integer getSold() {
+		return sold.getValue();
 	}
 	
 	

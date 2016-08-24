@@ -7,6 +7,8 @@ import itsix.CreditProject.models.Account;
 import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.ICredit;
 import itsix.CreditProject.models.ICurrency;
+import itsix.CreditProject.models.ISold;
+import itsix.CreditProject.models.Sold;
 
 public class AccountBuilder implements IAccountBuilder {
 
@@ -22,7 +24,8 @@ public class AccountBuilder implements IAccountBuilder {
 	public IAccount buildDefaultAccount() {
 		ICurrency currency = currencyBuillder.build("LEI", "RON");
 		List<ICredit> credits = new ArrayList<>();
-		return new Account("Default", currency, credits);
+		ISold sold = new Sold(0);
+		return new Account("Default", currency, credits, sold);
 	}
 
 

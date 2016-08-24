@@ -8,4 +8,6 @@ public interface IAccount {
 
 	String getSymbol();
 
+	Integer getSold();
+
 }

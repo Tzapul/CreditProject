@@ -10,7 +10,7 @@ public class AccountTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private String[] columnNames = { "Name", "Currency", "Symbol" };
+	private String[] columnNames = { "Name", "Currency", "Symbol", "Sold"};
 
 	private List<IAccount> data;
 
@@ -38,6 +38,8 @@ public class AccountTableModel extends AbstractTableModel {
 			return data.get(row).getCurrencyName();
 		case 2:
 			return data.get(row).getSymbol();
+		case 3:
+			return data.get(row).getSold();
 		}
 
 		return null;
@@ -51,4 +53,5 @@ public class AccountTableModel extends AbstractTableModel {
 	public String getColumnName(int column) {
 		return columnNames[column];
 	}
+	
 }
