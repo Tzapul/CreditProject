@@ -5,7 +5,7 @@ import java.util.Vector;
 import itsix.CreditProject.models.ICurrency;
 import itsix.CreditProject.views.EditProductView;
 
-public interface IEditCreditController {
+public interface IEditProductController {
 
 	Vector<ICurrency> getCurrencies();
 

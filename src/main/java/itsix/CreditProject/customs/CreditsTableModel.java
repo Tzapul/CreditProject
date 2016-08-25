@@ -2,20 +2,20 @@ package itsix.CreditProject.customs;
 
 import java.util.List;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.JTable;
 
 import itsix.CreditProject.models.IAccount;
+import itsix.CreditProject.models.ICredit;
 
-public class AccountTableModel extends AbstractTableModel {
-
+public class CreditsTableModel extends JTable {
+	
 	private static final long serialVersionUID = 1L;
 
-	private String[] columnNames = {"Currency", "Symbol", "Sold"};
+	private String[] columnNames = {"Name", "Monthly Fee", "Interest Rate", "Remaining Months"};
 
-	private List<IAccount> data;
-
-	public AccountTableModel(List<IAccount> data) {
-		super();
+	private List<ICredit> data;
+	
+	public CreditsTableModel(List<ICredit> data) {
 		this.data = data;
 	}
 
@@ -33,17 +33,19 @@ public class AccountTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int column) {
 		switch (column) {
 		case 0:
-			return data.get(row).getCurrencyName();
+			return data.get(row).getName();
 		case 1:
-			return data.get(row).getSymbol();
+			return data.get(row).getMonthlyFee();
 		case 2:
-			return data.get(row).getSold();
+			return data.get(row).getInterestRate();
+		case 3:
+			return data.get(row).getRemainingMonths();
 		}
 
 		return null;
 	}
 
-	public IAccount getRow(Integer row) {
+	public ICredit getRow(Integer row) {
 		return data.get(row);
 	}
 
@@ -51,5 +53,4 @@ public class AccountTableModel extends AbstractTableModel {
 	public String getColumnName(int column) {
 		return columnNames[column];
 	}
-	
 }

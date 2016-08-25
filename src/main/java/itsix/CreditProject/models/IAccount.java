@@ -1,13 +1,23 @@
 package itsix.CreditProject.models;
 
-public interface IAccount {
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.IPublisher;
 
-	String getName();
+public interface IAccount extends IPublisher {
 
 	String getCurrencyName();
 
 	String getSymbol();
 
 	Integer getSold();
+
+	void deposit(Integer moneyToDeposit);
+
+	void setPublisher(IInnerPublisher publisher);
+
+	void withdraw(Integer money);
+
+	ICurrency getCurrency();
+
 
 }

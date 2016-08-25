@@ -24,7 +24,7 @@ public class StartingController implements IStartingController {
 
 	@Override
 	public void goToClientsWindow() {
-		IClientsController controller = new ClientsController(repository.getClientRepository());
+		IClientsController controller = new ClientsController(repository.getClientRepository(), repository.getCurrencyRepository());
 		ClientsView clientView = new ClientsView(controller);
 		clientView.setVisible(true);
 		controller.setView(clientView);

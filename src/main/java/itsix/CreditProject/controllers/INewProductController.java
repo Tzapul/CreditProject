@@ -5,7 +5,7 @@ import java.util.Vector;
 import itsix.CreditProject.models.ICurrency;
 import itsix.CreditProject.views.NewProductView;
 
-public interface INewCreditController {
+public interface INewProductController {
 
 	void createNewCredit();
 

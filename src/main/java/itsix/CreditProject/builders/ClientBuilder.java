@@ -4,6 +4,8 @@ import itsix.CreditProject.controllers.IClientBuilder;
 import itsix.CreditProject.models.Client;
 import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.IClient;
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.Publisher;
 import itsix.CreditProject.repositories.IClientRepository;
 
 public class ClientBuilder implements IClientBuilder {
@@ -19,8 +21,9 @@ public class ClientBuilder implements IClientBuilder {
 	}
 
 	@Override
-	public IClient build(Integer ssn, String firstname, String lastname, String address) {
-		IClient client = new Client(ssn, firstname, lastname, address);
+	public IClient build(Integer ssn, String firstname, String lastname, String address, IInnerPublisher publisher) {
+		
+		IClient client = new Client(ssn, firstname, lastname, address, publisher);
 		
 		IAccount defaultAccount = clientRepository.giveDefaultAccount();
 		

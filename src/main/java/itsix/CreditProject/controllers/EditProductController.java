@@ -12,23 +12,23 @@ import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.EditProductView;
 
-public class EditCreditController implements IEditCreditController {
+public class EditProductController implements IEditProductController {
 
 	private ICurrencyRepository currencyRepository;
 
 	private IProductRepository productRepository;
 
-	private IProduct credit;
+	private IProduct product;
 
 	private EditProductView view;
 
 	private IProductValidator productValidator;
 
-	public EditCreditController(ICurrencyRepository currencyRepository, IProductRepository creditRepository,
-			IProduct credit, IProductValidator productValidator) {
+	public EditProductController(ICurrencyRepository currencyRepository, IProductRepository creditRepository,
+			IProduct product, IProductValidator productValidator) {
 		this.currencyRepository = currencyRepository;
 		this.productRepository = creditRepository;
-		this.credit = credit;
+		this.product = product;
 		this.productValidator = productValidator;
 	}
 
@@ -44,13 +44,13 @@ public class EditCreditController implements IEditCreditController {
 
 	@Override
 	public void populateFields() {
-		view.setCreditName(credit.getName());
-		view.setMinimumSize(credit.getMinValue());
-		view.setMaxValue(credit.getMaxValue());
-		view.setInterestRate(credit.getInterestRate());
-		view.setCurrency(currencyRepository.getCreditIndex(credit));
-		view.setMinPeriod(credit.getMinPeriod());
-		view.setMaxPeriod(credit.getMaxPeriod());
+		view.setCreditName(product.getName());
+		view.setMinimumSize(product.getMinValue());
+		view.setMaxValue(product.getMaxValue());
+		view.setInterestRate(product.getInterestRate());
+		view.setCurrency(currencyRepository.getCreditIndex(product));
+		view.setMinPeriod(product.getMinPeriod());
+		view.setMaxPeriod(product.getMaxPeriod());
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class EditCreditController implements IEditCreditController {
 			return;
 		}
 
-		productRepository.update(credit, updatedCredit);
+		productRepository.update(product, updatedCredit);
 		view.dispose();
 	}
 

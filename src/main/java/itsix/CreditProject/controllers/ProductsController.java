@@ -52,7 +52,7 @@ public class ProductsController implements ICreditsController {
 
 		IProductValidator creditValidator = new ProductValidator(validator);
 
-		INewCreditController controller = new NewCreditController(repository, fixedInterestBuilder,
+		INewProductController controller = new NewProductController(repository, fixedInterestBuilder,
 				variableInterestBuilder, creditValidator);
 		NewProductView newCreditView = new NewProductView(controller);
 
@@ -79,7 +79,7 @@ public class ProductsController implements ICreditsController {
 
 		IProductValidator creditValidator = new ProductValidator(validator);
 
-		IEditCreditController editCreditController = new EditCreditController(repository.getCurrencyRepository(),
+		IEditProductController editCreditController = new EditProductController(repository.getCurrencyRepository(),
 				repository.getCreditRepository(), view.getProductList().getSelectedValue(), creditValidator);
 
 		EditProductView editCreditView = new EditProductView(editCreditController);

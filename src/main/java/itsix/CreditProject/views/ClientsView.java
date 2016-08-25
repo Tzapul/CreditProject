@@ -22,9 +22,11 @@ import javax.swing.table.DefaultTableModel;
 import itsix.CreditProject.controllers.IClientsController;
 import itsix.CreditProject.customs.AccountTableModel;
 import itsix.CreditProject.customs.IntegerJTextField;
+import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.IClient;
+import itsix.CreditProject.pubSub.ISubscriber;
 
-public class ClientsView extends JFrame {
+public class ClientsView extends JFrame implements ISubscriber{
 
 	private static final long serialVersionUID = 1L;
 	private JTextField searchTextField;
@@ -32,9 +34,16 @@ public class ClientsView extends JFrame {
 	private JTextField firstnameTextField;
 	private JTextField lastnameTextField;
 	private JTextField addressTextField;
+	
 	private JTable accountsTable;
+	
 	private IClientsController controller;
+	
+	private AccountTableModel tableModel;
 
+	private JButton btnNewAccount;
+	private JButton btnSaveCredentials;
+	
 	public ClientsView(IClientsController controller) {
 		this.controller = controller;
 		initialize();
@@ -112,7 +121,8 @@ public class ClientsView extends JFrame {
 		getContentPane().add(addressTextField);
 		addressTextField.setColumns(10);
 
-		JButton btnSaveCredentials = new JButton("Save Credentials");
+		btnSaveCredentials = new JButton("Save Credentials");
+		btnSaveCredentials.setEnabled(false);
 		btnSaveCredentials.setBounds(155, 205, 120, 25);
 		getContentPane().add(btnSaveCredentials);
 		btnSaveCredentials.addActionListener(new ActionListener() {
@@ -144,9 +154,18 @@ public class ClientsView extends JFrame {
 		lblAccounts.setBounds(147, 264, 59, 14);
 		getContentPane().add(lblAccounts);
 
-		JButton btnNewAccount = new JButton("New Account");
+		btnNewAccount = new JButton("New Account");
+		btnNewAccount.setEnabled(false);
 		btnNewAccount.setBounds(234, 260, 120, 23);
 		getContentPane().add(btnNewAccount);
+		btnNewAccount.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.goToNewAccountView();
+			}
+		});
+		
 		
 		JButton btnNewClient = new JButton("New Client");
 		btnNewClient.addActionListener(new ActionListener() {
@@ -178,7 +197,10 @@ public class ClientsView extends JFrame {
 		lastnameTextField.setText(currentClient.getLastname());
 		addressTextField.setText(currentClient.getAddress());
 		
-		accountsTable.setModel(new AccountTableModel(currentClient.getAccounts()));
+		tableModel = new AccountTableModel(currentClient.getAccounts());
+		accountsTable.setModel(tableModel);
+		
+		controller.hasAllAccounts();
 	}
 
 	public void clearSearchTextField() {
@@ -195,5 +217,34 @@ public class ClientsView extends JFrame {
 
 	public String getAddress() {
 		return addressTextField.getText();
+	}
+
+	public IAccount getSelectedAccount() {
+		return tableModel.getRow(accountsTable.getSelectedRow());
+	}
+	
+	public void subscribe() {
+		controller.getCurrentClient().subscribe(this);
+	}
+
+	@Override
+	public void update() {
+		controller.updateTableModel();
+	}
+
+	public void setNewAccountDisabled() {
+		 btnNewAccount.setEnabled(false);
+	}
+	
+	public void setNewAccountEnabled() {
+		btnNewAccount.setEnabled(true);
+	}
+
+	public void setUpdateClientEnabled() {
+		btnSaveCredentials.setEnabled(true);
+	}
+
+	public void setUpdateClientDisabled() {
+		btnSaveCredentials.setEnabled(false);
 	}
 }

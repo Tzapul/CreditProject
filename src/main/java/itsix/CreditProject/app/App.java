@@ -28,7 +28,9 @@ import itsix.CreditProject.views.StartingView;
 
 public class App extends JFrame {
 	 
-    public static void main(String[] args) {
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override

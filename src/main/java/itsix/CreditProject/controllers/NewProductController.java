@@ -11,7 +11,7 @@ import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.NewProductView;
 
-public class NewCreditController implements INewCreditController {
+public class NewProductController implements INewProductController {
 
 	private IRepository repository;
 
@@ -23,7 +23,7 @@ public class NewCreditController implements INewCreditController {
 
 	private IProductValidator validator;
 
-	public NewCreditController(IRepository repository, IProductBuilder fixedInterestBuilder,
+	public NewProductController(IRepository repository, IProductBuilder fixedInterestBuilder,
 			IProductBuilder variableInterestBuilder, IProductValidator validator) {
 
 		this.repository = repository;
@@ -36,10 +36,10 @@ public class NewCreditController implements INewCreditController {
 
 	@Override
 	public void createNewCredit() {
-		IProduct credit = currentBuilder.build(view.getCreditName(), view.getMinValue(), view.getMaxValue(),
+		IProduct product = currentBuilder.build(view.getCreditName(), view.getMinValue(), view.getMaxValue(),
 				view.getInterestRate(), view.getCurrency(), view.getMinPeriod(), view.getMaxPeriod());
 
-		IValidatorResult result = validator.validateFields(credit);
+		IValidatorResult result = validator.validateFields(product);
 		
 		if(result.isNotValid()) {
 			JOptionPane.showMessageDialog(null,
@@ -50,7 +50,7 @@ public class NewCreditController implements INewCreditController {
 			return;
 		}
 		
-		repository.getCreditRepository().add(credit);
+		repository.getCreditRepository().add(product);
 		view.dispose();
 	}
 

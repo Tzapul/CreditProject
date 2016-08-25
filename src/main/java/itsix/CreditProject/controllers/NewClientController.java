@@ -1,6 +1,12 @@
 package itsix.CreditProject.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import itsix.CreditProject.models.IClient;
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.ISubscriber;
+import itsix.CreditProject.pubSub.Publisher;
 import itsix.CreditProject.repositories.IClientRepository;
 import itsix.CreditProject.views.NewClientView;
 
@@ -25,7 +31,9 @@ public class NewClientController implements INewClientController{
 
 	@Override
 	public void addClient() {
-		IClient client = builder.build(view.getSSN(), view.getFirstname(), view.getLastname(), view.getAddress());
+		List<ISubscriber> subscribers = new ArrayList<>();
+		IInnerPublisher publisher = new Publisher(subscribers);
+		IClient client = builder.build(view.getSSN(), view.getFirstname(), view.getLastname(), view.getAddress(), publisher);
 		
 		clientRepository.addNewClient(client);
 	}

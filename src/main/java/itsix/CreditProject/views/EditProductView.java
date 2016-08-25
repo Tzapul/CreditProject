@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import itsix.CreditProject.controllers.IEditCreditController;
+import itsix.CreditProject.controllers.IEditProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.Product;
@@ -36,10 +36,10 @@ public class EditProductView extends JFrame {
 
 	private JComboBox<ICurrency> currencyComboBox;
 
-	private IEditCreditController controller;
+	private IEditProductController controller;
 	private JTextField maxPeriodTextField;
 
-	public EditProductView(IEditCreditController controller) {
+	public EditProductView(IEditProductController controller) {
 		this.controller = controller;
 		initialize();
 	}

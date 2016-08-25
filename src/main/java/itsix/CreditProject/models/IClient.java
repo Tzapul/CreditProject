@@ -2,7 +2,10 @@ package itsix.CreditProject.models;
 
 import java.util.List;
 
-public interface IClient {
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.IPublisher;
+
+public interface IClient extends IPublisher{
 
 	void addAccount(IAccount account);
 
@@ -19,5 +22,9 @@ public interface IClient {
 	List<IAccount> getAccounts();
 
 	void update(String firstname, String lastname, String address);
+
+	List<ICurrency> getCurrencies();
+
+	void setPublisher(IInnerPublisher publisher);
 
 }

@@ -14,4 +14,14 @@ public class Sold implements ISold {
 		return value;
 	}
 
+	@Override
+	public void add(Integer money) {
+		value += money;
+	}
+
+	@Override
+	public void subtract(Integer money) {
+		value -= money;
+	}
+
 }

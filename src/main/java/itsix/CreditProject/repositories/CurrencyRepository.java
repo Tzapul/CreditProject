@@ -1,8 +1,11 @@
 package itsix.CreditProject.repositories;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import itsix.CreditProject.models.Currency;
+import itsix.CreditProject.models.IClient;
 import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.models.ICurrency;
 
@@ -30,6 +33,24 @@ public class CurrencyRepository implements ICurrencyRepository {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public Vector<ICurrency> getRemainingCurrencies(List<ICurrency> currencies) {
+		Vector<ICurrency> remainingCurrencies = new Vector<>(this.currencies);
+		
+		remainingCurrencies.removeAll(currencies);
+		
+		return remainingCurrencies;
+	}
+
+	@Override
+	public boolean hasAllCurrenciesOf(IClient currentClient) {
+		List<ICurrency> currencies = new ArrayList<>(this.currencies);
+		
+		currencies.removeAll(currentClient.getCurrencies());
+		
+		return currencies.isEmpty();
 	}
 	
 	

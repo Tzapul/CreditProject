@@ -24,10 +24,10 @@ public class ProductRepository implements IProductRepository {
 	}
 
 	@Override
-	public void insertCredits(IRepository repository) {
+	public void insertCredits(IRepository mainRepository) {
 		IntervalBuilder intervalBuilder = new IntervalBuilder();
 		FixedInterestProductBuilder fixedCreditBuilder = new FixedInterestProductBuilder(intervalBuilder);
-		VariableInterestProductBuilder variableCreditBuilder = new VariableInterestProductBuilder(intervalBuilder, repository);
+		VariableInterestProductBuilder variableCreditBuilder = new VariableInterestProductBuilder(intervalBuilder, mainRepository);
 		
 		products.add(fixedCreditBuilder.build("asdasdasd", 2000, 3000, 1.52, new Currency("USD", "$"), 12, 24));
 		products.add(variableCreditBuilder.build("aseaseasease", 1000, 2500, 2.3, new Currency("EURO", "€"), 6 , 24));
