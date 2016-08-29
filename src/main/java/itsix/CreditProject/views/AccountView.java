@@ -2,20 +2,31 @@ package itsix.CreditProject.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.KeyStroke;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.AbstractTableModel;
 
 import itsix.CreditProject.controllers.IAccountController;
+import itsix.CreditProject.customs.CreditsTableModel;
 import itsix.CreditProject.customs.IntegerJTextField;
+import itsix.CreditProject.models.ICredit;
 import itsix.CreditProject.pubSub.ISubscriber;
 
-public class AccountView extends JFrame implements ISubscriber{
+public class AccountView extends JFrame implements ISubscriber {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +35,12 @@ public class AccountView extends JFrame implements ISubscriber{
 
 	private JTextField soldTextField;
 	private JTextField moneyTextField;
+
 	private JTable creditsTable;
+	private AbstractTableModel creditsModel;
+
+	private JButton btnWithdraw;
+	private JButton btnDeposit;
 
 	public AccountView(IAccountController controller) {
 		this.controller = controller;
@@ -36,6 +52,7 @@ public class AccountView extends JFrame implements ISubscriber{
 		new JFrame();
 		setBounds(100, 100, 437, 460);
 		getContentPane().setLayout(null);
+		setTitle("My account");
 
 		JLabel lblCurrency = new JLabel("Currency :");
 		lblCurrency.setBounds(30, 32, 51, 14);
@@ -60,9 +77,31 @@ public class AccountView extends JFrame implements ISubscriber{
 		getContentPane().add(moneyTextField);
 		moneyTextField.setColumns(10);
 		moneyTextField.setText("0");
+		moneyTextField.getDocument().addDocumentListener(new DocumentListener() {
 
-		JButton btnDeposit = new JButton("Deposit");
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				update();
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				update();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				update();
+			}
+
+			public void update() {
+				controller.toggleOperationButtons();
+			}
+		});
+
+		btnDeposit = new JButton("Deposit");
 		btnDeposit.setBounds(295, 77, 89, 23);
+		btnDeposit.setEnabled(false);
 		getContentPane().add(btnDeposit);
 		btnDeposit.addActionListener(new ActionListener() {
 
@@ -73,11 +112,12 @@ public class AccountView extends JFrame implements ISubscriber{
 			}
 		});
 
-		JButton btnWithdraw = new JButton("Withdraw");
+		btnWithdraw = new JButton("Withdraw");
 		btnWithdraw.setBounds(295, 126, 89, 23);
+		btnWithdraw.setEnabled(false);
 		getContentPane().add(btnWithdraw);
 		btnWithdraw.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controller.withdrawMoney();
@@ -87,10 +127,8 @@ public class AccountView extends JFrame implements ISubscriber{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 225, 354, 140);
 		getContentPane().add(scrollPane);
-
+		
 		creditsTable = new JTable();
-		creditsTable.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null }, },
-				new String[] { "Name", "Monthly Fee", "Interest Rate", "Period" }));
 		scrollPane.setViewportView(creditsTable);
 
 		JLabel lblCurrentCredits = new JLabel("Current Credits");
@@ -99,7 +137,32 @@ public class AccountView extends JFrame implements ISubscriber{
 
 		JButton btnMakeCredit = new JButton("Make Credit");
 		btnMakeCredit.setBounds(152, 376, 89, 23);
+
 		getContentPane().add(btnMakeCredit);
+		btnMakeCredit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.goToMakeCreditView();
+			}
+		});
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				e.getWindow().dispose();
+			}
+		});
+
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				"Cancel");
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 	}
 
 	public void setSold(Integer sold) {
@@ -117,5 +180,24 @@ public class AccountView extends JFrame implements ISubscriber{
 	@Override
 	public void update() {
 		soldTextField.setText(String.valueOf(controller.getAccount().getSold()));
+	}
+
+	public boolean moneyValueisZero() {
+		return moneyTextField.getText().equals("0");
+	}
+
+	public void disableButtons() {
+		btnDeposit.setEnabled(false);
+		btnWithdraw.setEnabled(false);
+	}
+
+	public void enableButtons() {
+		btnDeposit.setEnabled(true);
+		btnWithdraw.setEnabled(true);
+	}
+
+	public void setTableModel(List<ICredit> credits) {
+		creditsModel = new CreditsTableModel(credits);
+		creditsTable.setModel(creditsModel);
 	}
 }

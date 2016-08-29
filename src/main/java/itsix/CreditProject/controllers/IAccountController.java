@@ -15,4 +15,8 @@ public interface IAccountController {
 
 	void withdrawMoney();
 
+	void goToMakeCreditView();
+
+	void toggleOperationButtons();
+
 }

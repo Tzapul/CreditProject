@@ -10,7 +10,7 @@ import itsix.CreditProject.builders.IIntervalBuilder;
 import itsix.CreditProject.builders.IVariableInterestProductBuilder;
 import itsix.CreditProject.builders.IntervalBuilder;
 import itsix.CreditProject.builders.VariableInterestProductBuilder;
-import itsix.CreditProject.customs.CreditsList;
+import itsix.CreditProject.customs.ProductList;
 import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.validator.ProductValidator;
 import itsix.CreditProject.validator.IProductValidator;
@@ -102,7 +102,7 @@ public class ProductsController implements ICreditsController {
 
 	@Override
 	public AbstractListModel<IProduct> createCreditList() {
-		return new CreditsList(repository.getProductRepository().getProducts());
+		return new ProductList(repository.getProductRepository().getProducts());
 	}
 
 }

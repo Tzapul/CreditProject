@@ -14,10 +14,13 @@ public class Client implements IClient {
 	private String address;
 
 	private List<IAccount> accounts;
+	private List<IOperation> operations;
+	
 	private IInnerPublisher publisher;
 
 	public Client(Integer sSN, String firstname, String lastname, String address, IInnerPublisher publisher) {
 		this.accounts = new ArrayList<>();
+		this.operations = new ArrayList<>();
 		this.sSN = sSN;
 		this.firstname = firstname;
 		this.lastname = lastname;

@@ -102,4 +102,13 @@ public class Account implements IAccount {
 		return true;
 	}
 
+	@Override
+	public void addNew(ICredit credit) {
+		credits.add(credit);
+	}
+
+	public List<ICredit> getCredits() {
+		return credits;
+	}
+
 }

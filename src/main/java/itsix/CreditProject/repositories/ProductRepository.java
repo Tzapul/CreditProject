@@ -9,6 +9,7 @@ import itsix.CreditProject.builders.VariableInterestProductBuilder;
 import itsix.CreditProject.controllers.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
 import itsix.CreditProject.models.Currency;
+import itsix.CreditProject.models.ICurrency;
 import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
@@ -83,6 +84,18 @@ public class ProductRepository implements IProductRepository {
 	@Override
 	public void unsubscribe(ISubscriber subscriber) {
 		publisher.unsubscribe(subscriber);
+	}
+
+	@Override
+	public List<IProduct> getProductsWith(ICurrency currency) {
+		List<IProduct> toReturn = new ArrayList<>();
+		
+		for (IProduct product : products) {
+			if(product.hasCurrency(currency)) {
+				toReturn.add(product);
+			}
+		}
+		return toReturn;
 	}
 
 }

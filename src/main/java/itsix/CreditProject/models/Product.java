@@ -9,6 +9,7 @@ public class Product implements IProduct {
 
 	private Double interestRate;
 	private IInterval periodInterval;
+	
 
 	public Product(String name, IInterval interval, ICurrency currency, Double interestRate, IInterval period) {
 		super();
@@ -114,6 +115,11 @@ public class Product implements IProduct {
 	public Integer getMaxPeriod() {
 		return periodInterval.getMax();
 	}
+	
+	@Override
+	public String getType() {
+		return null;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -151,6 +157,5 @@ public class Product implements IProduct {
 			return false;
 		return true;
 	}
-	
 
 }

@@ -63,4 +63,14 @@ public class Validator implements IValidator {
 		return result;
 	}
 
+	@Override
+	public void validateInInterval(String fieldName, Double integer, IInterval interval) {
+		Integer min = interval.getMin();
+		Integer max = interval.getMax();
+		
+		if(!(min <= integer && integer <= max)) {
+			errorMessageBuilder.append(fieldName + " should be between " + min + " - " + max); 
+		}
+	}
+
 }

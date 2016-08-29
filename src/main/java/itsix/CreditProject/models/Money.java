@@ -2,15 +2,16 @@ package itsix.CreditProject.models;
 
 public class Money implements IMoney {
 
-	private Integer value;
+	private Double value;
 
-	public Money(Integer value) {
+	public Money(Double value) {
 		super();
 		this.value = value;
 	}
 
+
 	@Override
-	public Integer getValue() {
+	public Double getValue() {
 		return value;
 	}
 

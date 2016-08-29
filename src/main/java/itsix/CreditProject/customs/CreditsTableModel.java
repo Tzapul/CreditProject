@@ -2,15 +2,15 @@ package itsix.CreditProject.customs;
 
 import java.util.List;
 
-import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 
 import itsix.CreditProject.models.ICredit;
 
-public class CreditsTableModel extends JTable {
+public class CreditsTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String[] columnNames = {"Name", "Monthly Fee", "Interest Rate", "Remaining Months"};
+	private String[] columnNames = {"Name", "Daily Fee", "Interest Rate", "Remaining Days"};
 
 	private List<ICredit> data;
 	
@@ -34,11 +34,11 @@ public class CreditsTableModel extends JTable {
 		case 0:
 			return data.get(row).getName();
 		case 1:
-			return data.get(row).getMonthlyFee();
+			return data.get(row).getDailyRate();
 		case 2:
 			return data.get(row).getInterestRate();
 		case 3:
-			return data.get(row).getRemainingMonths();
+			return data.get(row).getRemainingDays();
 		}
 
 		return null;

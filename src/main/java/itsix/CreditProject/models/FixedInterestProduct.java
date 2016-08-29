@@ -9,8 +9,6 @@ public class FixedInterestProduct implements IProduct {
 
 	private IProduct product;
 
-
-
 	private IIntervalBuilder intervalBuilder = new IntervalBuilder();
 	private IProductBuilder productBuilder = new ProductBuilder(intervalBuilder);
 
@@ -23,7 +21,7 @@ public class FixedInterestProduct implements IProduct {
 	public IProduct getProduct() {
 		return product;
 	}
-	
+
 	@Override
 	public String toString() {
 		return product.getName();
@@ -88,6 +86,11 @@ public class FixedInterestProduct implements IProduct {
 	public Integer getMaxPeriod() {
 		return product.getMaxPeriod();
 	}
+	
+	@Override
+	public String getType() {
+		return "Fixed";
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -98,7 +101,7 @@ public class FixedInterestProduct implements IProduct {
 		if (getClass() != obj.getClass())
 			return false;
 		FixedInterestProduct other = (FixedInterestProduct) obj;
-		
+
 		if (product == null) {
 			if (other.product != null)
 				return false;

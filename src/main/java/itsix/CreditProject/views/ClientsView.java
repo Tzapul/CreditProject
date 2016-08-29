@@ -3,21 +3,24 @@ package itsix.CreditProject.views;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
 
 import itsix.CreditProject.controllers.IClientsController;
 import itsix.CreditProject.customs.AccountTableModel;
@@ -51,34 +54,34 @@ public class ClientsView extends JFrame implements ISubscriber {
 
 	private void initialize() {
 		setResizable(false);
-		setTitle("Client");
+		setTitle("Clients");
 		setBounds(100, 100, 600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		setLayout(null);
 
 		JLabel lblSsn = new JLabel("SSN :");
 		lblSsn.setBounds(47, 108, 26, 14);
-		getContentPane().add(lblSsn);
+		add(lblSsn);
 
 		ssnTextField = new IntegerJTextField();
 		ssnTextField.setBounds(98, 105, 163, 20);
 		ssnTextField.setEditable(false);
-		getContentPane().add(ssnTextField);
+		add(ssnTextField);
 		ssnTextField.setColumns(10);
 
 		JLabel lblFirstname = new JLabel("Firstname :");
 		lblFirstname.setBounds(312, 108, 59, 14);
-		getContentPane().add(lblFirstname);
+		add(lblFirstname);
 
 		firstnameTextField = new JTextField();
 		firstnameTextField.setBounds(387, 105, 163, 20);
-		getContentPane().add(firstnameTextField);
+		add(firstnameTextField);
 		firstnameTextField.setColumns(10);
 
 		JPanel searchPanel = new JPanel();
 		searchPanel.setBounds(0, 0, 594, 78);
 		searchPanel.setBackground(Color.WHITE);
-		getContentPane().add(searchPanel);
+		add(searchPanel);
 		searchPanel.setLayout(null);
 
 		JLabel lblSSNSearch = new JLabel("SSN :");
@@ -105,26 +108,26 @@ public class ClientsView extends JFrame implements ISubscriber {
 
 		JLabel lblLastname = new JLabel("Lastname :");
 		lblLastname.setBounds(312, 159, 62, 14);
-		getContentPane().add(lblLastname);
+		add(lblLastname);
 
 		lastnameTextField = new JTextField();
 		lastnameTextField.setBounds(387, 156, 163, 20);
-		getContentPane().add(lastnameTextField);
+		add(lastnameTextField);
 		lastnameTextField.setColumns(10);
 
 		JLabel lblAddress = new JLabel("Address :");
 		lblAddress.setBounds(28, 159, 46, 14);
-		getContentPane().add(lblAddress);
+		add(lblAddress);
 
 		addressTextField = new JTextField();
 		addressTextField.setBounds(98, 156, 163, 20);
-		getContentPane().add(addressTextField);
+		add(addressTextField);
 		addressTextField.setColumns(10);
 
 		btnSaveCredentials = new JButton("Save Credentials");
 		btnSaveCredentials.setEnabled(false);
 		btnSaveCredentials.setBounds(155, 205, 120, 25);
-		getContentPane().add(btnSaveCredentials);
+		add(btnSaveCredentials);
 		btnSaveCredentials.addActionListener(new ActionListener() {
 
 			@Override
@@ -135,11 +138,9 @@ public class ClientsView extends JFrame implements ISubscriber {
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(42, 301, 508, 152);
-		getContentPane().add(scrollPane);
+		add(scrollPane);
 
 		accountsTable = new JTable();
-		accountsTable.setModel(new DefaultTableModel(new Object[][] { { "LEI", "RON" }, { "EURO", "\u20AC" }, },
-				new String[] { "Name", "Currency" }));
 		accountsTable.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				if (me.getClickCount() == 2) {
@@ -152,12 +153,12 @@ public class ClientsView extends JFrame implements ISubscriber {
 
 		JLabel lblAccounts = new JLabel("Accounts :");
 		lblAccounts.setBounds(147, 264, 59, 14);
-		getContentPane().add(lblAccounts);
+		add(lblAccounts);
 
 		btnNewAccount = new JButton("New Account");
 		btnNewAccount.setEnabled(false);
 		btnNewAccount.setBounds(234, 260, 120, 23);
-		getContentPane().add(btnNewAccount);
+		add(btnNewAccount);
 		btnNewAccount.addActionListener(new ActionListener() {
 
 			@Override
@@ -173,7 +174,7 @@ public class ClientsView extends JFrame implements ISubscriber {
 			}
 		});
 		btnNewClient.setBounds(312, 206, 120, 23);
-		getContentPane().add(btnNewClient);
+		add(btnNewClient);
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -181,6 +182,16 @@ public class ClientsView extends JFrame implements ISubscriber {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				e.getWindow().dispose();
+			}
+		});
+
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				"Cancel"); //$NON-NLS-1$
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 

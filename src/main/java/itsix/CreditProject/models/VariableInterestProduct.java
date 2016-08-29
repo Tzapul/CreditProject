@@ -87,4 +87,9 @@ public class VariableInterestProduct implements IProduct {
 	public boolean equals(Object obj) {
 		return product.equals(obj);
 	}
+
+	@Override
+	public String getType() {
+		return "Variable";
+	}
 }

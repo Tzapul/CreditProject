@@ -2,16 +2,20 @@ package itsix.CreditProject.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -19,7 +23,7 @@ import javax.swing.event.ListSelectionListener;
 
 import itsix.CreditProject.controllers.ICreditsController;
 import itsix.CreditProject.controllers.IRepository;
-import itsix.CreditProject.customs.CreditsList;
+import itsix.CreditProject.customs.ProductList;
 import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.pubSub.ISubscriber;
 
@@ -52,19 +56,18 @@ public class ProductsView extends JFrame implements ISubscriber {
 				controller.goToNewCreditView();
 			}
 		});
-		getContentPane().setLayout(null);
-		getContentPane().add(btnNewProduct);
-		AbstractListModel<IProduct> model = new CreditsList(controller.getCreditsList());
+		setLayout(null);
+		add(btnNewProduct);
 
 		JLabel lblDescription = new JLabel("Description");
 		lblDescription.setBounds(200, 11, 61, 14);
-		getContentPane().add(lblDescription);
+		add(lblDescription);
 
 		descriptionTextPane = new JTextPane();
 		descriptionTextPane.setEditable(false);
 		descriptionTextPane.setBounds(200, 36, 269, 264);
 
-		getContentPane().add(descriptionTextPane);
+		add(descriptionTextPane);
 
 		JButton btnEditProduct = new JButton("Edit Product");
 		btnEditProduct.setBounds(245, 413, 100, 23);
@@ -75,15 +78,16 @@ public class ProductsView extends JFrame implements ISubscriber {
 				controller.goToEditProduct();
 			}
 		});
-		getContentPane().add(btnEditProduct);
+		add(btnEditProduct);
 
 		JScrollPane creditsScrollPane = new JScrollPane();
 		creditsScrollPane.setBounds(48, 36, 133, 353);
-		getContentPane().add(creditsScrollPane);
+		add(creditsScrollPane);
 
 		productsList = new JList<>();
 		creditsScrollPane.setViewportView(productsList);
 
+		AbstractListModel<IProduct> model = new ProductList(controller.getCreditsList());
 		productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		productsList.setModel(model);
 		productsList.setSelectedIndex(0);
@@ -109,7 +113,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 				controller.delete(productsList.getSelectedValue());
 			}
 		});
-		
+
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 
@@ -119,10 +123,20 @@ public class ProductsView extends JFrame implements ISubscriber {
 			}
 		});
 
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				"Cancel"); //$NON-NLS-1$
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 	}
 
 	public String getSelectedProductDescription() {
-		return productsList.getSelectedValue().getDescription();
+		IProduct selectedProduct = productsList.getSelectedValue();
+		return "Type : " + selectedProduct.getType() + "\n" + selectedProduct.getDescription();
 	}
 
 	@Override

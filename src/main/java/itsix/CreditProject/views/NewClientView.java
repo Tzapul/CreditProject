@@ -2,13 +2,17 @@ package itsix.CreditProject.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import itsix.CreditProject.controllers.INewClientController;
@@ -34,6 +38,7 @@ public class NewClientView extends JFrame {
 		setBounds(100, 100, 250, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
+		setTitle("New Client");
 
 		JLabel lblSsn = new JLabel("SSN :");
 		lblSsn.setBounds(58, 38, 40, 14);
@@ -89,6 +94,16 @@ public class NewClientView extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				e.getWindow().dispose();
+			}
+		});
+		
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				"Cancel"); //$NON-NLS-1$
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 	}

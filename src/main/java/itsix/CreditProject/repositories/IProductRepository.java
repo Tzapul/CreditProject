@@ -4,6 +4,8 @@ import java.util.List;
 
 import itsix.CreditProject.controllers.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
+import itsix.CreditProject.models.IAccount;
+import itsix.CreditProject.models.ICurrency;
 import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.pubSub.IPublisher;
 
@@ -18,5 +20,7 @@ public interface IProductRepository extends IPublisher {
 	void update(IProduct credit, IProduct updatedCredit);
 
 	void delete(IProduct credit);
+
+	List<IProduct> getProductsWith(ICurrency currency);
 
 }

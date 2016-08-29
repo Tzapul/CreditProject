@@ -16,4 +16,7 @@ public interface IValidator {
 	void validateDouble(String fieldName, Double value);
 
 
+	void validateInInterval(String fieldName, Double integer, IInterval interval);
+
+
 }

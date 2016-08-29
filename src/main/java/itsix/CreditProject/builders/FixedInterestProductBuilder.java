@@ -8,7 +8,7 @@ import itsix.CreditProject.models.IProduct;
 public class FixedInterestProductBuilder implements IFixedInterestProductBuilder {
 
 	private IIntervalBuilder intervalBuilder;
-	
+
 	public FixedInterestProductBuilder(IIntervalBuilder intervalBuilder) {
 		this.intervalBuilder = intervalBuilder;
 	}
@@ -16,12 +16,10 @@ public class FixedInterestProductBuilder implements IFixedInterestProductBuilder
 	@Override
 	public IProduct build(String name, Integer minValue, Integer maxValue, Double interestRate, ICurrency currency,
 			Integer minPeriod, Integer maxPeriod) {
-		
+
 		IInterval moneyInterval = intervalBuilder.buildMoneyInterval(minValue, maxValue);
 		IInterval periodInterval = intervalBuilder.buildPeriodInterval(minPeriod, maxPeriod);
 		return new FixedInterestProduct(name, moneyInterval, interestRate, currency, periodInterval);
 	}
-
-
 
 }

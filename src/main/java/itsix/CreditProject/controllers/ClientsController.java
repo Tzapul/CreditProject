@@ -11,7 +11,6 @@ import itsix.CreditProject.models.IClient;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
-import itsix.CreditProject.repositories.IClientRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
 import itsix.CreditProject.validator.ClientValidator;
 import itsix.CreditProject.validator.IClientValidator;
@@ -26,7 +25,7 @@ import itsix.CreditProject.views.NewClientView;
 
 public class ClientsController implements IClientsController {
 
-	private IClientRepository clientRepository;
+	private IRepository repository;
 
 	private ICurrencyRepository currencyRepository;
 
@@ -34,9 +33,9 @@ public class ClientsController implements IClientsController {
 
 	private IClient currentClient;
 
-	public ClientsController(IClientRepository clientRepository, ICurrencyRepository currencyRepository) {
-		this.clientRepository = clientRepository;
+	public ClientsController(ICurrencyRepository currencyRepository, IRepository repository) {
 		this.currencyRepository = currencyRepository;
+		this.repository = repository;
 	}
 
 	public void setView(ClientsView view) {
@@ -47,7 +46,7 @@ public class ClientsController implements IClientsController {
 	public void searchForClient() {
 
 		try {
-			currentClient = clientRepository.searchForClient(view.getSearchSSN());
+			currentClient = repository.getClientRepository().searchForClient(view.getSearchSSN());
 
 			view.subscribe();
 			view.paintClient(currentClient);
@@ -68,15 +67,14 @@ public class ClientsController implements IClientsController {
 	@Override
 	public void goToNewClientView() {
 
-		IClientBuilder clientBuilder = new ClientBuilder(clientRepository);
+		IClientBuilder clientBuilder = new ClientBuilder(repository.getClientRepository());
 
-		
 		StringBuilder errorMessageBuilder = new StringBuilder();
 		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
 		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
 		IClientValidator clientValidator = new ClientValidator(validator);
-		
-		INewClientController controller = new NewClientController(clientRepository, clientBuilder, clientValidator);
+
+		INewClientController controller = new NewClientController(repository.getClientRepository(), clientBuilder, clientValidator);
 
 		NewClientView newClientView = new NewClientView(controller);
 
@@ -94,7 +92,7 @@ public class ClientsController implements IClientsController {
 		IInnerPublisher publisher = new Publisher(subscribers);
 		account.setPublisher(publisher);
 
-		IAccountController controller = new AccountController(clientRepository, account);
+		IAccountController controller = new AccountController(account, repository);
 
 		AccountView accountView = new AccountView(controller);
 

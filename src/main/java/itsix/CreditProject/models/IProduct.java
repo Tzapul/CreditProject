@@ -26,4 +26,6 @@ public interface IProduct {
 
 	Integer getMaxPeriod();
 
+	String getType();
+
 }

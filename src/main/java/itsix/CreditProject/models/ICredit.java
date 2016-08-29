@@ -4,10 +4,12 @@ public interface ICredit {
 
 	String getName();
 
-	Integer getRemainingMonths();
+	Integer getRemainingDays();
 
 	Double getInterestRate();
 
-	Double getMonthlyFee();
+	Double getDailyRate();
+
+	Double getMoney();
 
 }

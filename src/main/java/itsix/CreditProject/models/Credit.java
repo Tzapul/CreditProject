@@ -1,5 +1,7 @@
 package itsix.CreditProject.models;
 
+import java.text.DecimalFormat;
+
 public class Credit implements ICredit {
 
 	private String name;
@@ -9,7 +11,16 @@ public class Credit implements ICredit {
 	private Double interestRate;
 	private IPeriod period;
 
-	private IFee monthlyFee;
+	private IRate dailyRate;
+
+	public Credit(String name, IMoney money, Double interestRate, IPeriod period, IRate dailyRate) {
+		super();
+		this.name = name;
+		this.money = money;
+		this.interestRate = interestRate;
+		this.period = period;
+		this.dailyRate = dailyRate;
+	}
 
 	@Override
 	public String getName() {
@@ -17,8 +28,8 @@ public class Credit implements ICredit {
 	}
 
 	@Override
-	public Integer getRemainingMonths() {
-		return period.getNumberOfMonths();
+	public Integer getRemainingDays() {
+		return period.getNumberOfDays();
 	}
 
 	@Override
@@ -27,8 +38,9 @@ public class Credit implements ICredit {
 	}
 
 	@Override
-	public Double getMonthlyFee() {
-		return monthlyFee.getValue();
+	public Double getDailyRate() {
+		DecimalFormat df = new DecimalFormat("#.###");
+		return Double.valueOf(df.format(dailyRate.getRate()));
 	}
 
 	@Override
@@ -50,10 +62,10 @@ public class Credit implements ICredit {
 				return false;
 		} else if (!money.equals(other.money))
 			return false;
-		if (monthlyFee == null) {
-			if (other.monthlyFee != null)
+		if (dailyRate == null) {
+			if (other.dailyRate != null)
 				return false;
-		} else if (!monthlyFee.equals(other.monthlyFee))
+		} else if (!dailyRate.equals(other.dailyRate))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -66,6 +78,11 @@ public class Credit implements ICredit {
 		} else if (!period.equals(other.period))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Double getMoney() {
+		return money.getValue();
 	}
 	
 }

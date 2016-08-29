@@ -1,5 +1,7 @@
 package itsix.CreditProject.models;
 
+import java.util.List;
+
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.IPublisher;
@@ -19,5 +21,9 @@ public interface IAccount extends IPublisher {
 	void withdraw(Integer money) throws SoldLesserThanZeroException;
 
 	ICurrency getCurrency();
+
+	void addNew(ICredit credit);
+
+	List<ICredit> getCredits();
 
 }
