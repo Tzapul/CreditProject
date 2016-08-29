@@ -26,7 +26,7 @@ import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.IClient;
 import itsix.CreditProject.pubSub.ISubscriber;
 
-public class ClientsView extends JFrame implements ISubscriber{
+public class ClientsView extends JFrame implements ISubscriber {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField searchTextField;
@@ -34,16 +34,16 @@ public class ClientsView extends JFrame implements ISubscriber{
 	private JTextField firstnameTextField;
 	private JTextField lastnameTextField;
 	private JTextField addressTextField;
-	
+
 	private JTable accountsTable;
-	
+
 	private IClientsController controller;
-	
+
 	private AccountTableModel tableModel;
 
 	private JButton btnNewAccount;
 	private JButton btnSaveCredentials;
-	
+
 	public ClientsView(IClientsController controller) {
 		this.controller = controller;
 		initialize();
@@ -96,7 +96,7 @@ public class ClientsView extends JFrame implements ISubscriber{
 		searchPanel.add(btnSearch);
 		btnSearch.setIcon(new ImageIcon(getClass().getClassLoader().getResource("search-icon.png")));
 		btnSearch.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controller.searchForClient();
@@ -126,7 +126,7 @@ public class ClientsView extends JFrame implements ISubscriber{
 		btnSaveCredentials.setBounds(155, 205, 120, 25);
 		getContentPane().add(btnSaveCredentials);
 		btnSaveCredentials.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controller.updateClient();
@@ -141,13 +141,13 @@ public class ClientsView extends JFrame implements ISubscriber{
 		accountsTable.setModel(new DefaultTableModel(new Object[][] { { "LEI", "RON" }, { "EURO", "\u20AC" }, },
 				new String[] { "Name", "Currency" }));
 		accountsTable.addMouseListener(new MouseAdapter() {
-			 public void mousePressed(MouseEvent me) {
-			        if (me.getClickCount() == 2) {
-			        	controller.goToAccountView();
-			        }
-			    }
+			public void mousePressed(MouseEvent me) {
+				if (me.getClickCount() == 2) {
+					controller.goToAccountView();
+				}
+			}
 		});
-		
+
 		scrollPane.setViewportView(accountsTable);
 
 		JLabel lblAccounts = new JLabel("Accounts :");
@@ -159,14 +159,13 @@ public class ClientsView extends JFrame implements ISubscriber{
 		btnNewAccount.setBounds(234, 260, 120, 23);
 		getContentPane().add(btnNewAccount);
 		btnNewAccount.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.goToNewAccountView();
 			}
 		});
-		
-		
+
 		JButton btnNewClient = new JButton("New Client");
 		btnNewClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -196,10 +195,10 @@ public class ClientsView extends JFrame implements ISubscriber{
 		firstnameTextField.setText(currentClient.getFirstname());
 		lastnameTextField.setText(currentClient.getLastname());
 		addressTextField.setText(currentClient.getAddress());
-		
+
 		tableModel = new AccountTableModel(currentClient.getAccounts());
 		accountsTable.setModel(tableModel);
-		
+
 		controller.hasAllAccounts();
 	}
 
@@ -222,7 +221,7 @@ public class ClientsView extends JFrame implements ISubscriber{
 	public IAccount getSelectedAccount() {
 		return tableModel.getRow(accountsTable.getSelectedRow());
 	}
-	
+
 	public void subscribe() {
 		controller.getCurrentClient().subscribe(this);
 	}
@@ -233,9 +232,9 @@ public class ClientsView extends JFrame implements ISubscriber{
 	}
 
 	public void setNewAccountDisabled() {
-		 btnNewAccount.setEnabled(false);
+		btnNewAccount.setEnabled(false);
 	}
-	
+
 	public void setNewAccountEnabled() {
 		btnNewAccount.setEnabled(true);
 	}

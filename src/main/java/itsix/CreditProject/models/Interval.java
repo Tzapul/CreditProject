@@ -25,4 +25,26 @@ public class Interval implements IInterval {
 		return minValue + "-" + maxValue;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Interval other = (Interval) obj;
+		if (maxValue == null) {
+			if (other.maxValue != null)
+				return false;
+		} else if (!maxValue.equals(other.maxValue))
+			return false;
+		if (minValue == null) {
+			if (other.minValue != null)
+				return false;
+		} else if (!minValue.equals(other.minValue))
+			return false;
+		return true;
+	}
+
 }

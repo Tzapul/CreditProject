@@ -24,7 +24,7 @@ public class MainRepository implements IRepository {
 	}
 
 	@Override
-	public IProductRepository getCreditRepository() {
+	public IProductRepository getProductRepository() {
 		return creditRepository;
 	}
 

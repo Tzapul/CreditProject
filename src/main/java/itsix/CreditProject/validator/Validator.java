@@ -14,40 +14,43 @@ public class Validator implements IValidator {
 		this.resultBuilder = resultBuilder;
 	}
 
-	public void validatePeriod(Integer period) {
-		if (period <= 0 || period == null) {
-			errorMessageBuilder.append("Invalid period input\n");
-		}
-	}
-
-	public void validateInterestRate(Double interestRate) {
-		if (interestRate <= 0 || interestRate == null) {
-			errorMessageBuilder.append("Invalid interest rate input\n");
-		}
-	}
-
-	public void validateMaxValue(Integer maxValue) {
-		if (maxValue <= 0 || maxValue == null) {
-			errorMessageBuilder.append("Invalid max value input\n");
-		}
-	}
-
-	public void validateMinValue(Integer minValue) {
-		if (minValue <= 0 || minValue == null) {
-			errorMessageBuilder.append("Invalid min value input\n");
+	@Override
+	public void validateString(String fieldName, String value) {
+		if (value.equals(null) || value.equals("")) {
+			errorMessageBuilder.append("Invalid " + fieldName + " input\n");
 		}
 	}
 
 	@Override
-	public void validateIntervalBounds(Integer minValue, Integer maxValue) {
-		if (!(minValue < maxValue)) {
-			errorMessageBuilder.append("Min should be lesser than Max\n");
+	public void validateInteger(String fieldName, Integer value) {
+		if (value <= 0 || value == null) {
+			errorMessageBuilder.append("Invalid " + fieldName + " input\n");
 		}
 	}
 
-	public void validateName(String name) {
-		if (name.equals(null) || name.equals("")) {
-			errorMessageBuilder.append("Invalid name input\n");
+	@Override
+	public void validateInterval(String fieldName, IInterval value) {
+		Integer min = value.getMin();
+		Integer max = value.getMax();
+
+		if (!(min < max)) {
+			errorMessageBuilder.append("Min should be lesser than Max" + "(" + fieldName + ")" + "\n");
+			return;
+		}
+
+		if (min <= 0 || min == null) {
+			errorMessageBuilder.append("Invalid min value input(" + fieldName + ")" + "\n");
+		}
+
+		if (max <= 0 || max == null) {
+			errorMessageBuilder.append("Invalid max value input(" + fieldName + ")" + "\n");
+		}
+	}
+	
+	@Override
+	public void validateDouble(String fieldName, Double value) {
+		if (value <= 0.0 || value == null) {
+			errorMessageBuilder.append("Invalid" + fieldName + " input\n");
 		}
 	}
 
@@ -58,12 +61,6 @@ public class Validator implements IValidator {
 
 		errorMessageBuilder.setLength(0);
 		return result;
-	}
-
-	@Override
-	public void validatePeriod(IInterval iInterval) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -62,7 +62,7 @@ public class ProductsController implements ICreditsController {
 
 	@Override
 	public List<IProduct> getCreditsList() {
-		return repository.getCreditRepository().getProducts();
+		return repository.getProductRepository().getProducts();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class ProductsController implements ICreditsController {
 		IProductValidator creditValidator = new ProductValidator(validator);
 
 		IEditProductController editCreditController = new EditProductController(repository.getCurrencyRepository(),
-				repository.getCreditRepository(), view.getProductList().getSelectedValue(), creditValidator);
+				repository.getProductRepository(), view.getProductList().getSelectedValue(), creditValidator);
 
 		EditProductView editCreditView = new EditProductView(editCreditController);
 		editCreditController.setView(editCreditView);
@@ -92,7 +92,7 @@ public class ProductsController implements ICreditsController {
 
 	@Override
 	public void delete(IProduct credit) {
-		repository.getCreditRepository().delete(credit);
+		repository.getProductRepository().delete(credit);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class ProductsController implements ICreditsController {
 
 	@Override
 	public AbstractListModel<IProduct> createCreditList() {
-		return new CreditsList(repository.getCreditRepository().getProducts());
+		return new CreditsList(repository.getProductRepository().getProducts());
 	}
 
 }

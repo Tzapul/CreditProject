@@ -24,28 +24,28 @@ public class Currency implements ICurrency {
 	public String getSymbol() {
 		return symbol;
 	}
-	
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
-		
-		if(!Currency.class.isAssignableFrom(obj.getClass())) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		
-		final ICurrency currency = (ICurrency) obj;
-		
-		if((this.name == null) ? (currency.getName() != null) : !this.name.equals(currency.getName())) {
+		Currency other = (Currency) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
 			return false;
-		}
-		
-		if((this.symbol == null) ? (currency.getSymbol() != null) : !this.symbol.equals(currency.getSymbol())) {
+		if (symbol == null) {
+			if (other.symbol != null)
+				return false;
+		} else if (!symbol.equals(other.symbol))
 			return false;
-		}
-		
 		return true;
 	}
+
+
 }

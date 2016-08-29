@@ -1,5 +1,8 @@
 package itsix.CreditProject.controllers;
 
+import javax.swing.JOptionPane;
+
+import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.repositories.IClientRepository;
 import itsix.CreditProject.views.AccountView;
@@ -41,7 +44,11 @@ public class AccountController implements IAccountController {
 
 	@Override
 	public void withdrawMoney() {
-		account.withdraw(view.getMoney());
+		try {
+			account.withdraw(view.getMoney());
+		} catch (SoldLesserThanZeroException e) {
+			JOptionPane.showMessageDialog(null, "Sold can't be lesser than 0!", null, JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 }

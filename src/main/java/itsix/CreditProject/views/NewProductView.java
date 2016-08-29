@@ -52,44 +52,44 @@ public class NewProductView extends JFrame {
 		setTitle("Create Product");
 		setBounds(100, 100, 300, 504);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(null);
+		getContentPane().setLayout(null);
 
 		JLabel lblName = new JLabel("Name :");
 		lblName.setBounds(25, 25, 99, 14);
-		add(lblName);
+		getContentPane().add(lblName);
 
-		JLabel lblMinValue = new JLabel("Min. Value :");
+		JLabel lblMinValue = new JLabel("Min. Money :");
 		lblMinValue.setBounds(25, 66, 99, 14);
-		add(lblMinValue);
+		getContentPane().add(lblMinValue);
 
-		JLabel lblMaxValue = new JLabel("Max. Value :");
+		JLabel lblMaxValue = new JLabel("Max. Money:");
 		lblMaxValue.setBounds(25, 106, 99, 14);
-		add(lblMaxValue);
+		getContentPane().add(lblMaxValue);
 
 		JLabel lblInterestRate = new JLabel("Interest rate (%) :");
 		lblInterestRate.setBounds(25, 149, 99, 14);
-		add(lblInterestRate);
+		getContentPane().add(lblInterestRate);
 
 		nameTextField = new JTextField();
 		nameTextField.setBounds(179, 19, 86, 20);
-		add(nameTextField);
+		getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 
 		minValueTextField = new IntegerJTextField();
 		minValueTextField.setBounds(179, 60, 86, 20);
-		add(minValueTextField);
+		getContentPane().add(minValueTextField);
 		minValueTextField.setColumns(10);
 		minValueTextField.setText("0");
 
 		maxValueTextField = new IntegerJTextField();
 		maxValueTextField.setBounds(179, 100, 86, 20);
-		add(maxValueTextField);
+		getContentPane().add(maxValueTextField);
 		maxValueTextField.setColumns(10);
 		maxValueTextField.setText("0");
 
 		interestRateTextField = new DoubleJTextField();
 		interestRateTextField.setBounds(178, 143, 86, 20);
-		add(interestRateTextField);
+		getContentPane().add(interestRateTextField);
 		interestRateTextField.setColumns(10);
 		interestRateTextField.setText("0");
 		interestRateTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -118,12 +118,12 @@ public class NewProductView extends JFrame {
 
 		JLabel lblCurrency = new JLabel("Currency :");
 		lblCurrency.setBounds(25, 189, 99, 14);
-		add(lblCurrency);
+		getContentPane().add(lblCurrency);
 
 		currencyComboBox = new JComboBox<>();
 		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getCurrencies()));
 		currencyComboBox.setBounds(179, 183, 85, 20);
-		add(currencyComboBox);
+		getContentPane().add(currencyComboBox);
 
 		buttonGroup = new ButtonGroup();
 
@@ -138,7 +138,7 @@ public class NewProductView extends JFrame {
 				controller.setLabelsInvisible();
 			}
 		});
-		add(rdbtnFixedInterest);
+		getContentPane().add(rdbtnFixedInterest);
 
 		JRadioButton rdbtnVariableInterest = new JRadioButton("Variable Interest");
 		rdbtnVariableInterest.setBounds(156, 369, 109, 23);
@@ -150,7 +150,7 @@ public class NewProductView extends JFrame {
 				controller.setLabelsVisible();
 			}
 		});
-		add(rdbtnVariableInterest);
+		getContentPane().add(rdbtnVariableInterest);
 
 		buttonGroup.add(rdbtnVariableInterest);
 		buttonGroup.add(rdbtnFixedInterest);
@@ -165,34 +165,34 @@ public class NewProductView extends JFrame {
 			}
 		});
 
-		add(btnCreate);
+		getContentPane().add(btnCreate);
 
 		JLabel lblMinPeriod = new JLabel("Min. Period (months) :");
 		lblMinPeriod.setBounds(25, 232, 113, 14);
-		add(lblMinPeriod);
+		getContentPane().add(lblMinPeriod);
 
 		minPeriodTextField = new IntegerJTextField();
 		minPeriodTextField.setBounds(179, 226, 86, 20);
-		add(minPeriodTextField);
+		getContentPane().add(minPeriodTextField);
 		minPeriodTextField.setColumns(10);
 		minPeriodTextField.setText("0");
 
 		lblRealInterestRate = new JLabel("Real interest rate (%) :");
 		lblRealInterestRate.setBounds(25, 326, 113, 14);
-		add(lblRealInterestRate);
+		getContentPane().add(lblRealInterestRate);
 
 		lblRealInterestRateValue = new JLabel("");
 		lblRealInterestRateValue.setBounds(154, 326, 67, 14);
-		add(lblRealInterestRateValue);
+		getContentPane().add(lblRealInterestRateValue);
 		
 		JLabel lblMaxPeriod = new JLabel("Max. Period (months) :");
 		lblMaxPeriod.setBounds(25, 277, 113, 14);
-		add(lblMaxPeriod);
+		getContentPane().add(lblMaxPeriod);
 		
-		maxPeriodTextField = new JTextField();
+		maxPeriodTextField = new IntegerJTextField();
 		maxPeriodTextField.setText("0");
 		maxPeriodTextField.setBounds(179, 274, 86, 20);
-		add(maxPeriodTextField);
+		getContentPane().add(maxPeriodTextField);
 		maxPeriodTextField.setColumns(10);
 
 		lblRealInterestRate.setVisible(false);

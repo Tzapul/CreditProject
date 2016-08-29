@@ -7,6 +7,7 @@ import itsix.CreditProject.builders.FixedInterestProductBuilder;
 import itsix.CreditProject.builders.IntervalBuilder;
 import itsix.CreditProject.builders.VariableInterestProductBuilder;
 import itsix.CreditProject.controllers.IRepository;
+import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
 import itsix.CreditProject.models.Currency;
 import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
@@ -39,9 +40,18 @@ public class ProductRepository implements IProductRepository {
 	}
 
 	@Override
-	public void add(IProduct product) {
+	public void add(IProduct product) throws ProductAlreadyExistsException {
+		searchFor(product);
 		products.add(product);
 		publisher.notifySubscribers();
+	}
+
+	private void searchFor(IProduct product) throws ProductAlreadyExistsException {
+		for (IProduct myProduct : products) {
+			if(myProduct.equals(product)) {
+				throw new ProductAlreadyExistsException();
+			}
+		}
 	}
 
 	@Override

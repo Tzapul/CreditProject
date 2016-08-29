@@ -11,14 +11,14 @@ public class ProductValidator implements IProductValidator {
 	}
 
 	@Override
-	public IValidatorResult validateFields(IProduct credit) {
+	public IValidatorResult validateFields(IProduct product) {
 		
-		validator.validateName(credit.getName());
-		validator.validateMinValue(credit.getMinValue());
-		validator.validateMaxValue(credit.getMaxValue());
-		validator.validateInterestRate(credit.getInterestRate());
-		validator.validatePeriod(credit.getPeriod());
-		validator.validateIntervalBounds(credit.getMinValue(), credit.getMaxValue());
+		validator.validateString("name", product.getName());
+		validator.validateInteger("min",product.getMinValue());
+		validator.validateInteger("max", product.getMaxValue());
+		validator.validateDouble("interest rate", product.getInterestRate());
+		validator.validateInterval("period", product.getPeriodInterval());
+		validator.validateInterval("money", product.getMoneyInterval());
 		
 		return validator.buildResult();
 	}

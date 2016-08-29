@@ -8,7 +8,7 @@ public interface IRepository {
 
 	Double getIndicator();
 
-	IProductRepository getCreditRepository();
+	IProductRepository getProductRepository();
 
 	ICurrencyRepository getCurrencyRepository();
 

@@ -1,5 +1,6 @@
 package itsix.CreditProject.models;
 
+import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.IPublisher;
 
@@ -15,9 +16,8 @@ public interface IAccount extends IPublisher {
 
 	void setPublisher(IInnerPublisher publisher);
 
-	void withdraw(Integer money);
+	void withdraw(Integer money) throws SoldLesserThanZeroException;
 
 	ICurrency getCurrency();
-
 
 }

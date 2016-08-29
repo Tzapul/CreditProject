@@ -14,17 +14,16 @@ public interface IProduct {
 
 	ICurrency getCurrency();
 
-	IInterval getPeriod();
+	IInterval getPeriodInterval();
 
 	boolean hasCurrency(ICurrency currency);
 
 	void updateFields(IProduct credit);
 
-	IInterval getInterval();
+	IInterval getMoneyInterval();
 
 	Integer getMinPeriod();
 
 	Integer getMaxPeriod();
-
 
 }

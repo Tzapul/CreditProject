@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.swing.JTable;
 
-import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.ICredit;
 
 public class CreditsTableModel extends JTable {

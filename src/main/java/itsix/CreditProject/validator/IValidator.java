@@ -4,18 +4,16 @@ import itsix.CreditProject.models.IInterval;
 
 public interface IValidator {
 
-	void validateName(String name);
+	void validateString(String fieldName, String value);
 
-	void validateMinValue(Integer minValue);
+	void validateInteger(String fieldName, Integer value);
 
-	void validateMaxValue(Integer maxValue);
-
-	void validateInterestRate(Double interestRate);
-
-	void validatePeriod(IInterval iInterval);
+	void validateInterval(String fieldName, IInterval value);
 
 	IValidatorResult buildResult();
 
-	void validateIntervalBounds(Integer minValue, Integer maxValue);
+
+	void validateDouble(String fieldName, Double value);
+
 
 }

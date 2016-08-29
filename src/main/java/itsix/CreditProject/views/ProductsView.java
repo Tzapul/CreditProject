@@ -33,7 +33,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 	public ProductsView(ICreditsController controller, IRepository repository) {
 		this.controller = controller;
-		repository.getCreditRepository().subscribe(this);
+		repository.getProductRepository().subscribe(this);
 		initialize();
 	}
 

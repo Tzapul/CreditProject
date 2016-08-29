@@ -5,8 +5,9 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.IProductBuilder;
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
 import itsix.CreditProject.models.ICurrency;
+import itsix.CreditProject.models.IProduct;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.NewProductView;
@@ -50,8 +51,17 @@ public class NewProductController implements INewProductController {
 			return;
 		}
 		
-		repository.getCreditRepository().add(product);
-		view.dispose();
+		try {
+			repository.getProductRepository().add(product);
+			view.dispose();
+		} catch (ProductAlreadyExistsException e) {
+			JOptionPane.showMessageDialog(null,
+				    "Product already exists",
+				    "Client",
+				    JOptionPane.WARNING_MESSAGE);
+
+		}
+		
 	}
 
 	@Override

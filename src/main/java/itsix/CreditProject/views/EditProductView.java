@@ -51,53 +51,53 @@ public class EditProductView extends JFrame {
 		setTitle("Edit Product");
 		setBounds(100, 100, 300, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		setLayout(null);
 
 		JLabel lblName = new JLabel("Name :");
 		lblName.setBounds(25, 25, 99, 14);
-		getContentPane().add(lblName);
+		add(lblName);
 
-		JLabel lblMinValue = new JLabel("Min. Value :");
+		JLabel lblMinValue = new JLabel("Min. Money :");
 		lblMinValue.setBounds(25, 66, 99, 14);
-		getContentPane().add(lblMinValue);
+		add(lblMinValue);
 
-		JLabel lblMaxValue = new JLabel("Max. Value :");
+		JLabel lblMaxValue = new JLabel("Max. Money :");
 		lblMaxValue.setBounds(25, 106, 99, 14);
-		getContentPane().add(lblMaxValue);
+		add(lblMaxValue);
 
 		JLabel lblInterestRate = new JLabel("Interest rate (%) :");
 		lblInterestRate.setBounds(25, 149, 99, 14);
-		getContentPane().add(lblInterestRate);
+		add(lblInterestRate);
 
 		nameTextField = new JTextField();
 		nameTextField.setBounds(170, 22, 86, 20);
-		getContentPane().add(nameTextField);
+		add(nameTextField);
 		nameTextField.setColumns(10);
 
 		minValueTextField = new IntegerJTextField();
 		minValueTextField.setBounds(170, 63, 86, 20);
-		getContentPane().add(minValueTextField);
+		add(minValueTextField);
 		minValueTextField.setColumns(10);
 
 		maxValueTextField = new IntegerJTextField();
 		maxValueTextField.setBounds(170, 103, 86, 20);
-		getContentPane().add(maxValueTextField);
+		add(maxValueTextField);
 		maxValueTextField.setColumns(10);
 
 		interestRateTextField = new DoubleJTextField();
 		interestRateTextField.setBounds(170, 146, 86, 20);
-		getContentPane().add(interestRateTextField);
+		add(interestRateTextField);
 		interestRateTextField.setColumns(10);
 
 		JLabel lblCurrency = new JLabel("Currency :");
 		lblCurrency.setBounds(25, 189, 99, 14);
-		getContentPane().add(lblCurrency);
+		add(lblCurrency);
 
 		currencyComboBox = new JComboBox<>();
 		currencyComboBox.setEnabled(false);
 		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getCurrencies()));
 		currencyComboBox.setBounds(170, 186, 85, 20);
-		getContentPane().add(currencyComboBox);
+		add(currencyComboBox);
 
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.setBounds(89, 325, 100, 25);
@@ -109,24 +109,24 @@ public class EditProductView extends JFrame {
 			}
 		});
 
-		getContentPane().add(btnEdit);
+		add(btnEdit);
 
 		JLabel lblMinPeriod = new JLabel("Min. Period (months) :");
 		lblMinPeriod.setBounds(25, 232, 118, 14);
-		getContentPane().add(lblMinPeriod);
+		add(lblMinPeriod);
 
 		minPeriodTextField = new IntegerJTextField();
 		minPeriodTextField.setBounds(170, 229, 86, 20);
-		getContentPane().add(minPeriodTextField);
+		add(minPeriodTextField);
 		minPeriodTextField.setColumns(10);
-		
+
 		JLabel lblMaxPeriod = new JLabel("Max. Period (months) :");
 		lblMaxPeriod.setBounds(25, 275, 118, 14);
-		getContentPane().add(lblMaxPeriod);
-		
+		add(lblMaxPeriod);
+
 		maxPeriodTextField = new JTextField();
 		maxPeriodTextField.setBounds(170, 272, 86, 20);
-		getContentPane().add(maxPeriodTextField);
+		add(maxPeriodTextField);
 		maxPeriodTextField.setColumns(10);
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -165,14 +165,14 @@ public class EditProductView extends JFrame {
 
 	public IProduct getUpdatedProduct() {
 		String name = nameTextField.getText();
-		
+
 		Integer minValue = Integer.valueOf(minValueTextField.getText());
 		Integer maxValue = Integer.valueOf(maxValueTextField.getText());
 		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
-		
+
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
 		Double interestRate = Double.valueOf(interestRateTextField.getText());
-		
+
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());
 		IInterval period = new PeriodInterval(new Interval(minPeriod, maxPeriod));
@@ -185,7 +185,7 @@ public class EditProductView extends JFrame {
 	public void setMinPeriod(Integer minPeriod) {
 		minPeriodTextField.setText(String.valueOf(minPeriod));
 	}
-	
+
 	public void setMaxPeriod(Integer maxPeriod) {
 		maxPeriodTextField.setText(String.valueOf(maxPeriod));
 	}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import itsix.CreditProject.builders.IAccountBuilder;
-import itsix.CreditProject.controllers.IRepository;
+import itsix.CreditProject.exceptions.ClientNotFoundException;
 import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.IClient;
 
@@ -20,8 +20,17 @@ public class ClientRepository implements IClientRepository {
 	}
 
 	@Override
-	public void addNewClient(IClient client) {
+	public void addNewClient(IClient client) throws ClientNotFoundException {
+		searchFor(client);
 		clients.add(client);
+	}
+
+	private void searchFor(IClient client) throws ClientNotFoundException {
+		for (IClient myClient : clients) {
+			if(myClient.hasTheSameSSN(client)) {
+				throw new ClientNotFoundException();
+			}
+		}
 	}
 
 	@Override

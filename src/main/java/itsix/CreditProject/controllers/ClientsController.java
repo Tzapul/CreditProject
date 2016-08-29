@@ -5,11 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import itsix.CreditProject.builders.AccountBuilder;
 import itsix.CreditProject.builders.ClientBuilder;
-import itsix.CreditProject.builders.CurrencyBuilder;
-import itsix.CreditProject.builders.IAccountBuilder;
-import itsix.CreditProject.builders.ICurrencyBuilder;
 import itsix.CreditProject.models.IAccount;
 import itsix.CreditProject.models.IClient;
 import itsix.CreditProject.pubSub.IInnerPublisher;
@@ -17,6 +13,12 @@ import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
 import itsix.CreditProject.repositories.IClientRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
+import itsix.CreditProject.validator.ClientValidator;
+import itsix.CreditProject.validator.IClientValidator;
+import itsix.CreditProject.validator.IValidator;
+import itsix.CreditProject.validator.IValidatorResultBuilder;
+import itsix.CreditProject.validator.Validator;
+import itsix.CreditProject.validator.ValidatorResultBuilder;
 import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.ClientsView;
 import itsix.CreditProject.views.NewAccountView;
@@ -66,12 +68,15 @@ public class ClientsController implements IClientsController {
 	@Override
 	public void goToNewClientView() {
 
-		ICurrencyBuilder currencyBuilder = new CurrencyBuilder();
-		IAccountBuilder accountBuilder = new AccountBuilder(currencyBuilder);
+		IClientBuilder clientBuilder = new ClientBuilder(clientRepository);
 
-		IClientBuilder clientBuilder = new ClientBuilder(accountBuilder, clientRepository);
-
-		INewClientController controller = new NewClientController(clientRepository, clientBuilder);
+		
+		StringBuilder errorMessageBuilder = new StringBuilder();
+		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
+		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
+		IClientValidator clientValidator = new ClientValidator(validator);
+		
+		INewClientController controller = new NewClientController(clientRepository, clientBuilder, clientValidator);
 
 		NewClientView newClientView = new NewClientView(controller);
 

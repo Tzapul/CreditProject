@@ -1,6 +1,6 @@
 package itsix.CreditProject.models;
 
-public interface IInnerProduct extends IProduct{
+public interface IInnerProduct extends IProduct {
 
 	String getDescription();
 

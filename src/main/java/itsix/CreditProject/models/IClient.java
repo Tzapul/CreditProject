@@ -5,7 +5,7 @@ import java.util.List;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.IPublisher;
 
-public interface IClient extends IPublisher{
+public interface IClient extends IPublisher {
 
 	void addAccount(IAccount account);
 
@@ -26,5 +26,7 @@ public interface IClient extends IPublisher{
 	List<ICurrency> getCurrencies();
 
 	void setPublisher(IInnerPublisher publisher);
+
+	boolean hasTheSameSSN(IClient client);
 
 }

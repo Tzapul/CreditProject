@@ -4,19 +4,19 @@ public class Product implements IProduct {
 
 	private String name;
 
-	private IInterval interval;
+	private IInterval moneyInterval;
 	private ICurrency currency;
 
 	private Double interestRate;
-	private IInterval period;
+	private IInterval periodInterval;
 
 	public Product(String name, IInterval interval, ICurrency currency, Double interestRate, IInterval period) {
 		super();
 		this.name = name;
-		this.interval = interval;
+		this.moneyInterval = interval;
 		this.currency = currency;
 		this.interestRate = interestRate;
-		this.period = period;
+		this.periodInterval = period;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class Product implements IProduct {
 	}
 
 	private void appendPeriod(StringBuilder builder) {
-		builder.append("Period : " + period.getMin() + "-" + period.getMax() + " (months)");
+		builder.append("Period : " + periodInterval.getMin() + "-" + periodInterval.getMax() + " (months)");
 		builder.append("\n");
 	}
 
@@ -47,7 +47,7 @@ public class Product implements IProduct {
 	}
 
 	private void appendInterval(StringBuilder builder) {
-		builder.append("Money interval : " + interval.getMin().intValue() + " - " + interval.getMax().intValue());
+		builder.append("Money interval : " + moneyInterval.getMin().intValue() + " - " + moneyInterval.getMax().intValue());
 		builder.append("\n");
 	}
 
@@ -63,12 +63,12 @@ public class Product implements IProduct {
 
 	@Override
 	public Integer getMinValue() {
-		return interval.getMin();
+		return moneyInterval.getMin();
 	}
 
 	@Override
 	public Integer getMaxValue() {
-		return interval.getMax();
+		return moneyInterval.getMax();
 	}
 
 	@Override
@@ -82,13 +82,13 @@ public class Product implements IProduct {
 	}
 
 	@Override
-	public IInterval getPeriod() {
-		return period;
+	public IInterval getPeriodInterval() {
+		return periodInterval;
 	}
 
 	@Override
-	public IInterval getInterval() {
-		return interval;
+	public IInterval getMoneyInterval() {
+		return moneyInterval;
 	}
 
 	@Override
@@ -99,20 +99,58 @@ public class Product implements IProduct {
 	@Override
 	public void updateFields(IProduct credit) {
 		this.name = credit.getName();
-		this.period = credit.getPeriod();
+		this.periodInterval = credit.getPeriodInterval();
 		this.interestRate = credit.getInterestRate();
 		this.currency = credit.getCurrency();
-		this.interval = credit.getInterval();
+		this.moneyInterval = credit.getMoneyInterval();
 	}
 
 	@Override
 	public Integer getMinPeriod() {
-		return period.getMin();
+		return periodInterval.getMin();
 	}
 
 	@Override
 	public Integer getMaxPeriod() {
-		return period.getMax();
+		return periodInterval.getMax();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (currency == null) {
+			if (other.currency != null)
+				return false;
+		} else if (!currency.equals(other.currency))
+			return false;
+		if (interestRate == null) {
+			if (other.interestRate != null)
+				return false;
+		} else if (!interestRate.equals(other.interestRate))
+			return false;
+		if (moneyInterval == null) {
+			if (other.moneyInterval != null)
+				return false;
+		} else if (!moneyInterval.equals(other.moneyInterval))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (periodInterval == null) {
+			if (other.periodInterval != null)
+				return false;
+		} else if (!periodInterval.equals(other.periodInterval))
+			return false;
+		return true;
+	}
+	
 
 }
