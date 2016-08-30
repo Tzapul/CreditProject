@@ -20,10 +20,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 
-import itsix.CreditProject.controllers.IAccountController;
+import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.customs.CreditsTableModel;
 import itsix.CreditProject.customs.IntegerJTextField;
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.pubSub.ISubscriber;
 
 public class AccountView extends JFrame implements ISubscriber {
@@ -50,7 +50,7 @@ public class AccountView extends JFrame implements ISubscriber {
 
 	private void initialize() {
 		new JFrame();
-		setBounds(100, 100, 437, 460);
+		setBounds(100, 100, 599, 470);
 		getContentPane().setLayout(null);
 		setTitle("My account");
 
@@ -73,7 +73,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		soldTextField.setColumns(10);
 
 		moneyTextField = new IntegerJTextField();
-		moneyTextField.setBounds(298, 32, 86, 20);
+		moneyTextField.setBounds(446, 32, 86, 20);
 		getContentPane().add(moneyTextField);
 		moneyTextField.setColumns(10);
 		moneyTextField.setText("0");
@@ -100,7 +100,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		});
 
 		btnDeposit = new JButton("Deposit");
-		btnDeposit.setBounds(295, 77, 89, 23);
+		btnDeposit.setBounds(443, 77, 89, 23);
 		btnDeposit.setEnabled(false);
 		getContentPane().add(btnDeposit);
 		btnDeposit.addActionListener(new ActionListener() {
@@ -113,7 +113,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		});
 
 		btnWithdraw = new JButton("Withdraw");
-		btnWithdraw.setBounds(295, 126, 89, 23);
+		btnWithdraw.setBounds(443, 126, 89, 23);
 		btnWithdraw.setEnabled(false);
 		getContentPane().add(btnWithdraw);
 		btnWithdraw.addActionListener(new ActionListener() {
@@ -125,18 +125,18 @@ public class AccountView extends JFrame implements ISubscriber {
 		});
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(30, 225, 354, 140);
+		scrollPane.setBounds(30, 225, 521, 140);
 		getContentPane().add(scrollPane);
 		
 		creditsTable = new JTable();
 		scrollPane.setViewportView(creditsTable);
 
 		JLabel lblCurrentCredits = new JLabel("Current Credits");
-		lblCurrentCredits.setBounds(165, 194, 76, 14);
+		lblCurrentCredits.setBounds(252, 189, 89, 14);
 		getContentPane().add(lblCurrentCredits);
 
 		JButton btnMakeCredit = new JButton("Make Credit");
-		btnMakeCredit.setBounds(152, 376, 89, 23);
+		btnMakeCredit.setBounds(252, 386, 89, 23);
 
 		getContentPane().add(btnMakeCredit);
 		btnMakeCredit.addActionListener(new ActionListener() {
@@ -165,7 +165,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		});
 	}
 
-	public void setSold(Integer sold) {
+	public void setSold(Double sold) {
 		soldTextField.setText(String.valueOf(sold));
 	}
 
@@ -173,8 +173,8 @@ public class AccountView extends JFrame implements ISubscriber {
 		lblCurrenyValue.setText(currencyName);
 	}
 
-	public Integer getMoney() {
-		return Integer.valueOf(moneyTextField.getText());
+	public Double getMoney() {
+		return Double.valueOf(moneyTextField.getText());
 	}
 
 	@Override

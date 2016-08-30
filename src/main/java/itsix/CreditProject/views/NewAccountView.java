@@ -8,10 +8,10 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import itsix.CreditProject.controllers.IClientsController;
-import itsix.CreditProject.controllers.INewAccountController;
+import itsix.CreditProject.controllers.interfaces.IClientsController;
+import itsix.CreditProject.controllers.interfaces.INewAccountController;
 import itsix.CreditProject.customs.IntegerJTextField;
-import itsix.CreditProject.models.ICurrency;
+import itsix.CreditProject.models.interfaces.ICurrency;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,8 +98,8 @@ public class NewAccountView extends JFrame {
 		});
 	}
 
-	public Integer getSold() {
-		return Integer.valueOf(soldTextField.getText());
+	public Double getSold() {
+		return Double.valueOf(soldTextField.getText());
 	}
 
 	public ICurrency getCurrency() {

@@ -6,12 +6,12 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import itsix.CreditProject.builders.AccountBuilder;
-import itsix.CreditProject.builders.CurrencyBuilder;
-import itsix.CreditProject.builders.IAccountBuilder;
-import itsix.CreditProject.builders.ICurrencyBuilder;
-import itsix.CreditProject.controllers.IRepository;
-import itsix.CreditProject.controllers.StartingController;
+import itsix.CreditProject.builders.implementations.AccountBuilder;
+import itsix.CreditProject.builders.implementations.CurrencyBuilder;
+import itsix.CreditProject.builders.interfaces.IAccountBuilder;
+import itsix.CreditProject.builders.interfaces.ICurrencyBuilder;
+import itsix.CreditProject.controllers.implementation.StartingController;
+import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;

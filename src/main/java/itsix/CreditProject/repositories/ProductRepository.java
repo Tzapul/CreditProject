@@ -3,14 +3,14 @@ package itsix.CreditProject.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
-import itsix.CreditProject.builders.FixedInterestProductBuilder;
-import itsix.CreditProject.builders.IntervalBuilder;
-import itsix.CreditProject.builders.VariableInterestProductBuilder;
-import itsix.CreditProject.controllers.IRepository;
+import itsix.CreditProject.builders.implementations.FixedInterestProductBuilder;
+import itsix.CreditProject.builders.implementations.IntervalBuilder;
+import itsix.CreditProject.builders.implementations.VariableInterestProductBuilder;
+import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
-import itsix.CreditProject.models.Currency;
-import itsix.CreditProject.models.ICurrency;
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.implementations.Currency;
+import itsix.CreditProject.models.interfaces.ICurrency;
+import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 

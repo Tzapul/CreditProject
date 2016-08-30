@@ -1,7 +1,7 @@
 package itsix.CreditProject.validator;
 
-import itsix.CreditProject.models.ICredit;
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.interfaces.ICredit;
+import itsix.CreditProject.models.interfaces.IProduct;
 
 public interface ICreditValidator {
 

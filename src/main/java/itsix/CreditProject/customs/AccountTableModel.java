@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import itsix.CreditProject.models.IAccount;
+import itsix.CreditProject.models.interfaces.IAccount;
 
 public class AccountTableModel extends AbstractTableModel {
 

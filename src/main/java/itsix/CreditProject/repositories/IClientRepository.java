@@ -1,8 +1,8 @@
 package itsix.CreditProject.repositories;
 
 import itsix.CreditProject.exceptions.ClientNotFoundException;
-import itsix.CreditProject.models.IAccount;
-import itsix.CreditProject.models.IClient;
+import itsix.CreditProject.models.interfaces.IAccount;
+import itsix.CreditProject.models.interfaces.IClient;
 
 public interface IClientRepository {
 

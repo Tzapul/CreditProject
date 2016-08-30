@@ -1,6 +1,6 @@
 package itsix.CreditProject.controllers.interfaces;
 
-import itsix.CreditProject.models.IAccount;
+import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.views.AccountView;
 
 public interface IAccountController {
@@ -18,7 +18,5 @@ public interface IAccountController {
 	void goToMakeCreditView();
 
 	void toggleOperationButtons();
-
-	void showWindow(IAccount account);
 
 }

@@ -22,10 +22,10 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import itsix.CreditProject.controllers.INewProductController;
+import itsix.CreditProject.controllers.interfaces.INewProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
-import itsix.CreditProject.models.ICurrency;
+import itsix.CreditProject.models.interfaces.ICurrency;
 
 public class NewProductView extends JFrame {
 

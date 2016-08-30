@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import itsix.CreditProject.models.Currency;
-import itsix.CreditProject.models.IClient;
-import itsix.CreditProject.models.IProduct;
-import itsix.CreditProject.models.ICurrency;
+import itsix.CreditProject.models.implementations.Currency;
+import itsix.CreditProject.models.interfaces.IClient;
+import itsix.CreditProject.models.interfaces.ICurrency;
+import itsix.CreditProject.models.interfaces.IProduct;
 
 public class CurrencyRepository implements ICurrencyRepository {
 

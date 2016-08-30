@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import itsix.CreditProject.controllers.INewClientController;
+import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.customs.IntegerJTextField;
 
 public class NewClientView extends JFrame {

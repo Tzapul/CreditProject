@@ -1,6 +1,6 @@
 package itsix.CreditProject.repositories;
 
-import itsix.CreditProject.controllers.IRepository;
+import itsix.CreditProject.controllers.interfaces.IRepository;
 
 public class MainRepository implements IRepository {
 

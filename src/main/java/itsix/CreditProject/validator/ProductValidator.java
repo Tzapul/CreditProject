@@ -1,6 +1,6 @@
 package itsix.CreditProject.validator;
 
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.interfaces.IProduct;
 
 public class ProductValidator implements IProductValidator {
 

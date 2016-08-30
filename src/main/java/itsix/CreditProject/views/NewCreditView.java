@@ -18,11 +18,11 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import itsix.CreditProject.controllers.AccountController;
-import itsix.CreditProject.controllers.IMakeCreditController;
+import itsix.CreditProject.controllers.implementation.AccountController;
+import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.ProductList;
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.interfaces.IProduct;
 
 public class NewCreditView extends JFrame {
 
@@ -31,7 +31,7 @@ public class NewCreditView extends JFrame {
 	private JList<IProduct> productsList;
 	private JTextPane descriptionTextPane;
 
-	private IMakeCreditController controller;
+	private INewCreditController controller;
 	private AccountController accountController;
 	
 	private JTextField moneyTextField;
@@ -43,7 +43,7 @@ public class NewCreditView extends JFrame {
 
 
 
-	public NewCreditView(IMakeCreditController controller, AccountController accountController) {
+	public NewCreditView(INewCreditController controller, AccountController accountController) {
 		this.controller = controller;
 		this.accountController = accountController;
 		initialize();

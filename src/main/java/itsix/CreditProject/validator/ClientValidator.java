@@ -1,6 +1,6 @@
 package itsix.CreditProject.validator;
 
-import itsix.CreditProject.models.IClient;
+import itsix.CreditProject.models.interfaces.IClient;
 
 public class ClientValidator implements IClientValidator {
 

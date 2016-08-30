@@ -1,22 +1,26 @@
 package itsix.CreditProject.controllers.interfaces;
 
-import itsix.CreditProject.models.IClient;
-import itsix.CreditProject.views.ClientsView;
+import itsix.CreditProject.models.interfaces.IClient;
+import itsix.CreditProject.views.ClientView;
 
 public interface IClientsController {
 
+	void goToNewClientView();
+
 	void searchForClient();
 
-	void setView(ClientsView clientView);
+	void setView(ClientView clientView);
 
 	void updateClient();
+
+	void goToAccountView();
+
+	void goToNewAccountView();
 
 	void updateTableModel();
 
 	IClient getCurrentClient();
 
 	void hasAllAccounts();
-
-	void showWindow();
 
 }

@@ -21,10 +21,10 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import itsix.CreditProject.controllers.ICreditsController;
-import itsix.CreditProject.controllers.IRepository;
+import itsix.CreditProject.controllers.interfaces.IProductsController;
+import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.customs.ProductList;
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.ISubscriber;
 
 public class ProductsView extends JFrame implements ISubscriber {
@@ -33,9 +33,9 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 	private JList<IProduct> productsList;
 	private JTextPane descriptionTextPane;
-	private ICreditsController controller;
+	private IProductsController controller;
 
-	public ProductsView(ICreditsController controller, IRepository repository) {
+	public ProductsView(IProductsController controller, IRepository repository) {
 		this.controller = controller;
 		repository.getProductRepository().subscribe(this);
 		initialize();

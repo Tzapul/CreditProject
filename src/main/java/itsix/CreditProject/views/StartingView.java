@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import itsix.CreditProject.controllers.IStartingController;
+import itsix.CreditProject.controllers.interfaces.IStartingController;
 
 public class StartingView extends JFrame {
 

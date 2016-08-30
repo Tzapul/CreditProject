@@ -3,10 +3,10 @@ package itsix.CreditProject.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
-import itsix.CreditProject.builders.IAccountBuilder;
+import itsix.CreditProject.builders.interfaces.IAccountBuilder;
 import itsix.CreditProject.exceptions.ClientNotFoundException;
-import itsix.CreditProject.models.IAccount;
-import itsix.CreditProject.models.IClient;
+import itsix.CreditProject.models.interfaces.IAccount;
+import itsix.CreditProject.models.interfaces.IClient;
 
 public class ClientRepository implements IClientRepository {
 

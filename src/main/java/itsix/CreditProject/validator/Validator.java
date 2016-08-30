@@ -1,6 +1,6 @@
 package itsix.CreditProject.validator;
 
-import itsix.CreditProject.models.IInterval;
+import itsix.CreditProject.models.interfaces.IInterval;
 
 public class Validator implements IValidator {
 

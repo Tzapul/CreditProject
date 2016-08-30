@@ -2,11 +2,10 @@ package itsix.CreditProject.repositories;
 
 import java.util.List;
 
-import itsix.CreditProject.controllers.IRepository;
+import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
-import itsix.CreditProject.models.IAccount;
-import itsix.CreditProject.models.ICurrency;
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.interfaces.ICurrency;
+import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.IPublisher;
 
 public interface IProductRepository extends IPublisher {

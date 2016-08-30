@@ -17,16 +17,16 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import itsix.CreditProject.controllers.IEditProductController;
+import itsix.CreditProject.controllers.interfaces.IEditProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
-import itsix.CreditProject.models.Product;
-import itsix.CreditProject.models.IProduct;
-import itsix.CreditProject.models.ICurrency;
-import itsix.CreditProject.models.IInterval;
-import itsix.CreditProject.models.Interval;
-import itsix.CreditProject.models.MoneyInterval;
-import itsix.CreditProject.models.PeriodInterval;
+import itsix.CreditProject.models.implementations.Interval;
+import itsix.CreditProject.models.implementations.MoneyInterval;
+import itsix.CreditProject.models.implementations.PeriodInterval;
+import itsix.CreditProject.models.implementations.Product;
+import itsix.CreditProject.models.interfaces.ICurrency;
+import itsix.CreditProject.models.interfaces.IInterval;
+import itsix.CreditProject.models.interfaces.IProduct;
 
 public class EditProductView extends JFrame {
 

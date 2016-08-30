@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import itsix.CreditProject.models.IProduct;
+import itsix.CreditProject.models.interfaces.IProduct;
 
 public class ProductList extends AbstractListModel<IProduct> {
 

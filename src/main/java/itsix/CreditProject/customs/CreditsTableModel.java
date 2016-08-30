@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import itsix.CreditProject.models.ICredit;
+import itsix.CreditProject.models.interfaces.ICredit;
 
 public class CreditsTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String[] columnNames = {"Name", "Daily Fee", "Interest Rate", "Remaining Days"};
+	private String[] columnNames = {"Name", "Daily Fee", "Interest Rate", "Remaining Days", "Remaining Money"};
 
 	private List<ICredit> data;
 	
@@ -39,6 +39,8 @@ public class CreditsTableModel extends AbstractTableModel {
 			return data.get(row).getInterestRate();
 		case 3:
 			return data.get(row).getRemainingDays();
+		case 4:
+			return data.get(row).getRemainingMoney();
 		}
 
 		return null;
