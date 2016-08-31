@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -16,8 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-import itsix.CreditProject.controllers.interfaces.IEditFixedProductController;
+import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.implementations.Interval;
@@ -28,10 +31,10 @@ import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IInterval;
 import itsix.CreditProject.models.interfaces.IProduct;
 
-public class EditFixedProductView extends JFrame implements IEditProductView {
+public class EditVariableProductView extends JFrame implements IEditProductView {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private JTextField nameTextField;
 	
 	private JTextField minValueTextField;
@@ -42,71 +45,97 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 	private JTextField minPeriodTextField;
 	private JTextField maxPeriodTextField;
 
+	private JLabel lblRealInterestRateValue;
+	
 	private JComboBox<ICurrency> currencyComboBox;
 
-	private IEditFixedProductController controller;
+	private IEditVariableProductController controller;
 
-	public EditFixedProductView(IEditFixedProductController controller) {
+	
+	public EditVariableProductView(IEditVariableProductController controller) {
 		this.controller = controller;
 		initialize();
 	}
 
 	private void initialize() {
-
-		setTitle("Edit Fixed Product");
-		setBounds(100, 100, 300, 400);
+		
+		setTitle("Edit Variable Product");
+		setBounds(100, 100, 300, 500);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		setLayout(null);
 
 		JLabel lblName = new JLabel("Name :");
 		lblName.setBounds(25, 25, 99, 14);
-		getContentPane().add(lblName);
+		add(lblName);
 
 		JLabel lblMinValue = new JLabel("Min. Money :");
 		lblMinValue.setBounds(25, 66, 99, 14);
-		getContentPane().add(lblMinValue);
+		add(lblMinValue);
 
 		JLabel lblMaxValue = new JLabel("Max. Money :");
 		lblMaxValue.setBounds(25, 106, 99, 14);
-		getContentPane().add(lblMaxValue);
+		add(lblMaxValue);
 
 		JLabel lblInterestRate = new JLabel("Interest rate (%) :");
 		lblInterestRate.setBounds(25, 149, 99, 14);
-		getContentPane().add(lblInterestRate);
+		add(lblInterestRate);
 
 		nameTextField = new JTextField();
 		nameTextField.setBounds(170, 22, 86, 20);
-		getContentPane().add(nameTextField);
+		add(nameTextField);
 		nameTextField.setColumns(10);
 
 		minValueTextField = new IntegerJTextField();
 		minValueTextField.setBounds(170, 63, 86, 20);
-		getContentPane().add(minValueTextField);
+		add(minValueTextField);
 		minValueTextField.setColumns(10);
 
 		maxValueTextField = new IntegerJTextField();
 		maxValueTextField.setBounds(170, 103, 86, 20);
-		getContentPane().add(maxValueTextField);
+		add(maxValueTextField);
 		maxValueTextField.setColumns(10);
 
 		interestRateTextField = new DoubleJTextField();
 		interestRateTextField.setBounds(170, 146, 86, 20);
-		getContentPane().add(interestRateTextField);
+		add(interestRateTextField);
 		interestRateTextField.setColumns(10);
+		interestRateTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				update();
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				update();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				update();
+			}
+
+			public void update() {
+				if (interestIsNotNull()) {
+					controller.updateRealInterestRate();
+				}
+			}
+		});
 
 		JLabel lblCurrency = new JLabel("Currency :");
 		lblCurrency.setBounds(25, 189, 99, 14);
-		getContentPane().add(lblCurrency);
+		add(lblCurrency);
 
 		currencyComboBox = new JComboBox<>();
 		currencyComboBox.setEnabled(false);
 		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getCurrencies()));
 		currencyComboBox.setBounds(170, 186, 85, 20);
-		getContentPane().add(currencyComboBox);
+		add(currencyComboBox);
 
 		JButton btnEdit = new JButton("Edit");
-		btnEdit.setBounds(88, 325, 100, 25);
+		btnEdit.setBounds(91, 411, 100, 25);
 		btnEdit.addActionListener(new ActionListener() {
 
 			@Override
@@ -115,25 +144,42 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 			}
 		});
 
-		getContentPane().add(btnEdit);
+		add(btnEdit);
 
 		JLabel lblMinPeriod = new JLabel("Min. Period (months) :");
 		lblMinPeriod.setBounds(25, 232, 118, 14);
-		getContentPane().add(lblMinPeriod);
+		add(lblMinPeriod);
 
 		minPeriodTextField = new IntegerJTextField();
 		minPeriodTextField.setBounds(170, 229, 86, 20);
-		getContentPane().add(minPeriodTextField);
+		add(minPeriodTextField);
 		minPeriodTextField.setColumns(10);
 
 		JLabel lblMaxPeriod = new JLabel("Max. Period (months) :");
 		lblMaxPeriod.setBounds(25, 275, 118, 14);
-		getContentPane().add(lblMaxPeriod);
+		add(lblMaxPeriod);
 
 		maxPeriodTextField = new JTextField();
 		maxPeriodTextField.setBounds(170, 272, 86, 20);
-		getContentPane().add(maxPeriodTextField);
+		add(maxPeriodTextField);
 		maxPeriodTextField.setColumns(10);
+		
+		JLabel lblRealInterestRate = new JLabel("Real Interest rate (%) :");
+		lblRealInterestRate.setBounds(25, 320, 118, 14);
+		add(lblRealInterestRate);
+		
+		lblRealInterestRateValue = new JLabel("");
+		lblRealInterestRateValue.setBounds(170, 320, 86, 14);
+		add(lblRealInterestRateValue);
+		
+		JLabel lblIndicator = new JLabel("Indicator :");
+		lblIndicator.setBounds(25, 358, 99, 14);
+		add(lblIndicator);
+		
+		JLabel lblIndicatorValue = new JLabel("");
+		lblIndicatorValue.setBounds(170, 358, 86, 14);
+		lblIndicatorValue.setText(controller.getIndicator());
+		add(lblIndicatorValue);
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -153,6 +199,10 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 				dispose();
 			}
 		});
+	}
+
+	protected boolean interestIsNotNull() {
+		return !interestRateTextField.getText().equals(null) && interestRateTextField.getText().length() != 0;
 	}
 
 	public void setCreditName(String name) {
@@ -205,8 +255,8 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 	public void setMaxPeriod(Integer maxPeriod) {
 		maxPeriodTextField.setText(String.valueOf(maxPeriod));
 	}
-
-	public IEditFixedProductController getController() {
+	
+	public IEditVariableProductController getController() {
 		return controller;
 	}
 
@@ -214,14 +264,16 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 	public void setControllerProduct(IProduct product) {
 		controller.setProduct(product);
 	}
+	
+	public void assignInterestRateValue(Double value) {
+		if (interestIsNotNull()) {
+			DecimalFormat df = new DecimalFormat("#.###");
+			lblRealInterestRateValue.setText(df.format(value));
+		}
+	}
 
 	@Override
 	public Double getInterestRate() {
 		return Double.valueOf(interestRateTextField.getText());
-	}
-
-	@Override
-	public void assignInterestRateValue(Double value) {
-		return;
 	}
 }

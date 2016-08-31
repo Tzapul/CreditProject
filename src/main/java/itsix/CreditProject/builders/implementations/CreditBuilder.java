@@ -32,7 +32,7 @@ public class CreditBuilder implements ICreditBuilder {
 		IMoney myMoney = moneyBuilder.build(money);
 		IPeriod myPeriod = periodBuilder.build(period);
 		IRate dailyRate = rateBuilder.build(myPeriod.getNumberOfDays(), money, interestRate);
-		IMoney remainingMoney = moneyBuilder.build(interestRate * money);
+		IMoney remainingMoney = moneyBuilder.build(money * (1 + interestRate / 100));
 		return new Credit(creditName, myMoney, remainingMoney, interestRate, myPeriod, dailyRate);
 	}
 

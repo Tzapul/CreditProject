@@ -35,4 +35,16 @@ public class CreditController implements ICreditController {
 	public void setView(CreditView view) {
 		this.view = view;
 	}
+
+
+	@Override
+	public void changeToCashPayment() {
+		currentPayment = cashPayment;
+	}
+
+
+	@Override
+	public void changeToSoldPayment() {
+		currentPayment = soldPayment;
+	}
 }

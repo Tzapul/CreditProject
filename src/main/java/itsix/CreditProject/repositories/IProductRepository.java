@@ -16,10 +16,12 @@ public interface IProductRepository extends IPublisher {
 
 	void insertCredits(IRepository repository);
 
-	void update(IProduct credit, IProduct updatedCredit);
+	void updateFixed(IProduct credit, IProduct updatedCredit);
 
 	void delete(IProduct credit);
 
 	List<IProduct> getProductsWith(ICurrency currency);
+
+	void updateVariable(IProduct product, IProduct updatedCredit);
 
 }

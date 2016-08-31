@@ -8,4 +8,8 @@ public interface ICreditController {
 
 	void setView(CreditView view);
 
+	void changeToCashPayment();
+
+	void changeToSoldPayment();
+
 }

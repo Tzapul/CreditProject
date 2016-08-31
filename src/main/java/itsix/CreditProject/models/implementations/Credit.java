@@ -94,7 +94,8 @@ public class Credit implements ICredit {
 
 	@Override
 	public Double getBorrowedMoney() {
-		return borrowedMoney.getValue();
+		DecimalFormat df = new DecimalFormat("#.###");
+		return Double.valueOf(df.format(borrowedMoney.getValue()));
 	}
 
 }

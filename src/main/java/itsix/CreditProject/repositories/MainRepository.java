@@ -9,13 +9,15 @@ public class MainRepository implements IRepository {
 	private IClientRepository clientRepository;
 
 	private IIndicator indicator;
-
+	private Integer currentDate;
+	
 	public MainRepository(IProductRepository creditRepository, ICurrencyRepository currencyRepository,
-			IIndicator indicator, IClientRepository clientRepository) {
+			IIndicator indicator, IClientRepository clientRepository, Integer currentDate) {
 		this.creditRepository = creditRepository;
 		this.currencyRepository = currencyRepository;
 		this.indicator = indicator;
 		this.clientRepository = clientRepository;
+		this.currentDate = currentDate;
 	}
 
 	@Override
@@ -36,6 +38,11 @@ public class MainRepository implements IRepository {
 	@Override
 	public IClientRepository getClientRepository() {
 		return clientRepository;
+	}
+
+	@Override
+	public Integer getCurrentDay() {
+		return currentDate;
 	}
 
 }

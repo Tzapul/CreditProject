@@ -47,7 +47,7 @@ public class App extends JFrame {
 				IInnerPublisher publisher = new Publisher(subscribers);
 				IProductRepository creditRepository = new ProductRepository(publisher);
 				
-				IRepository mainRepository = new MainRepository(creditRepository, currencyRepository, indicator, clientRepository);
+				IRepository mainRepository = new MainRepository(creditRepository, currencyRepository, indicator, clientRepository, 1); // day 1
 				
 				creditRepository.insertCredits(mainRepository);
 				

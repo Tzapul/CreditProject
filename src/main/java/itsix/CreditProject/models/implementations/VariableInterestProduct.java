@@ -88,7 +88,20 @@ public class VariableInterestProduct implements IProduct {
 
 	@Override
 	public boolean equals(Object obj) {
-		return product.equals(obj);
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FixedInterestProduct other = (FixedInterestProduct) obj;
+
+		if (product == null) {
+			if (other.getProduct() != null)
+				return false;
+		} else if (!product.equals(other.getProduct()))
+			return false;
+		return true;
 	}
 
 	@Override

@@ -29,4 +29,6 @@ public interface IClient extends IPublisher {
 
 	boolean hasTheSameSSN(IClient client);
 
+	void addOperation(IOperation operation);
+
 }

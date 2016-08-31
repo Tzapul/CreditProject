@@ -4,16 +4,16 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import itsix.CreditProject.controllers.interfaces.IEditProductController;
+import itsix.CreditProject.controllers.interfaces.IEditFixedProductController;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
-import itsix.CreditProject.repositories.IProductRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
+import itsix.CreditProject.repositories.IProductRepository;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
-import itsix.CreditProject.views.EditProductView;
+import itsix.CreditProject.views.IEditProductView;
 
-public class EditProductController implements IEditProductController {
+public class EditFixedProductController implements IEditFixedProductController {
 
 	private ICurrencyRepository currencyRepository;
 
@@ -21,20 +21,24 @@ public class EditProductController implements IEditProductController {
 
 	private IProduct product;
 
-	private EditProductView view;
+	private IEditProductView view;
 
 	private IProductValidator productValidator;
 
-	public EditProductController(ICurrencyRepository currencyRepository, IProductRepository creditRepository,
-			IProduct product, IProductValidator productValidator) {
+	public EditFixedProductController(ICurrencyRepository currencyRepository, IProductRepository creditRepository,
+			IProductValidator productValidator) {
 		this.currencyRepository = currencyRepository;
 		this.productRepository = creditRepository;
-		this.product = product;
 		this.productValidator = productValidator;
 	}
 
+	public void setProduct(IProduct product) {
+		this.product = product;
+		populateFields();
+	}
+
 	@Override
-	public void setView(EditProductView view) {
+	public void setView(IEditProductView view) {
 		this.view = view;
 	}
 
@@ -66,7 +70,7 @@ public class EditProductController implements IEditProductController {
 			return;
 		}
 
-		productRepository.update(product, updatedCredit);
+		productRepository.updateFixed(product, updatedCredit);
 		view.dispose();
 	}
 

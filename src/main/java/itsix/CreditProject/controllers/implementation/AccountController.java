@@ -8,6 +8,7 @@ import itsix.CreditProject.builders.implementations.MoneyBuilder;
 import itsix.CreditProject.builders.implementations.RateBuilder;
 import itsix.CreditProject.builders.interfaces.ICreditBuilder;
 import itsix.CreditProject.builders.interfaces.IMoneyBuilder;
+import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
 import itsix.CreditProject.builders.interfaces.IPeriodBuilder;
 import itsix.CreditProject.builders.interfaces.IRateBuilder;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
@@ -15,6 +16,7 @@ import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 import itsix.CreditProject.models.interfaces.IAccount;
+import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.validator.CreditValidator;
 import itsix.CreditProject.validator.ICreditValidator;
 import itsix.CreditProject.validator.IValidator;
@@ -31,10 +33,16 @@ public class AccountController implements IAccountController {
 	private AccountView view;
 
 	private IAccount account;
+	private IClient client;
 
-	public AccountController(IAccount account, IRepository repository) {
-		this.account = account;
+	private IOpertationBuilder operationBuilder;
+
+	public AccountController(IClient client, IAccount account, IRepository repository,
+			IOpertationBuilder operationBuilder) {
+		this.client = client;
 		this.repository = repository;
+		this.operationBuilder = operationBuilder;
+		this.account = account;
 	}
 
 	@Override
@@ -52,6 +60,7 @@ public class AccountController implements IAccountController {
 	@Override
 	public void depositMoney() {
 		account.deposit(view.getMoney());
+		client.addOperation(operationBuilder.buildDepositOperation(repository.getCurrentDay()));
 	}
 
 	@Override
@@ -63,6 +72,7 @@ public class AccountController implements IAccountController {
 	public void withdrawMoney() {
 		try {
 			account.withdraw(view.getMoney());
+			client.addOperation(operationBuilder.buildWithdrawOperation(repository.getCurrentDay()));
 		} catch (SoldLesserThanZeroException e) {
 			JOptionPane.showMessageDialog(null, "Sold can't be lesser than 0!", null, JOptionPane.WARNING_MESSAGE);
 		}

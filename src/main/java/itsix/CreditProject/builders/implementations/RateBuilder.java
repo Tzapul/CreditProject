@@ -8,7 +8,7 @@ public class RateBuilder implements IRateBuilder {
 
 	@Override
 	public IRate build(Integer myPeriod, Double money, Double interestRate) {
-		return new Rate((money * interestRate) / myPeriod);
+		return new Rate((money * ( 1 + interestRate / 100) / myPeriod));
 	}
 
 }

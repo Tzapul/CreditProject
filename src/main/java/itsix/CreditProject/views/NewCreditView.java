@@ -33,15 +33,13 @@ public class NewCreditView extends JFrame {
 
 	private INewCreditController controller;
 	private AccountController accountController;
-	
+
 	private JTextField moneyTextField;
 	private JTextField periodTextField;
 
 	private JButton btnMakeCredit;
 	private JLabel lblName;
 	private JTextField nameTextField;
-
-
 
 	public NewCreditView(INewCreditController controller, AccountController accountController) {
 		this.controller = controller;
@@ -77,7 +75,7 @@ public class NewCreditView extends JFrame {
 		productsList.setModel(model);
 		productsList.setSelectedIndex(0);
 		productsList.addListSelectionListener(new ListSelectionListener() {
-	
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!productsList.isSelectionEmpty()) {
@@ -119,11 +117,11 @@ public class NewCreditView extends JFrame {
 				accountController.updateFields();
 			}
 		});
-		
+
 		lblName = new JLabel("Name :");
 		lblName.setBounds(220, 322, 46, 14);
 		getContentPane().add(lblName);
-		
+
 		nameTextField = new JTextField();
 		nameTextField.setBounds(294, 319, 110, 20);
 		getContentPane().add(nameTextField);

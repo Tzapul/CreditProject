@@ -14,5 +14,7 @@ public interface IRepository {
 
 	IClientRepository getClientRepository();
 
+	Integer getCurrentDay();
+
 
 }

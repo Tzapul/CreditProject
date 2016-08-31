@@ -37,47 +37,47 @@ public class CreditView extends JFrame {
 	private void initialize() {
 		setBounds(100, 100, 450, 340);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		setLayout(null);
 
 		JLabel lblName = new JLabel("Name :");
 		lblName.setBounds(39, 40, 46, 14);
-		getContentPane().add(lblName);
+		add(lblName);
 
 		lblNameValue = new JLabel("");
 		lblNameValue.setBounds(168, 40, 112, 14);
-		getContentPane().add(lblNameValue);
+		add(lblNameValue);
 
 		JLabel lblPerioddays = new JLabel("Period(days) :");
 		lblPerioddays.setBounds(39, 75, 75, 14);
-		getContentPane().add(lblPerioddays);
+		add(lblPerioddays);
 
 		lblPeriodValue = new JLabel("");
 		lblPeriodValue.setBounds(168, 75, 112, 14);
-		getContentPane().add(lblPeriodValue);
+		add(lblPeriodValue);
 
 		JLabel lblDailyRate = new JLabel("Daily Rate :");
 		lblDailyRate.setBounds(39, 114, 63, 14);
-		getContentPane().add(lblDailyRate);
+		add(lblDailyRate);
 
 		lblDailyRateValue = new JLabel("");
 		lblDailyRateValue.setBounds(168, 114, 112, 14);
-		getContentPane().add(lblDailyRateValue);
+		add(lblDailyRateValue);
 
 		JLabel lblRemainingMoney = new JLabel("Remaining Money :");
 		lblRemainingMoney.setBounds(39, 156, 97, 14);
-		getContentPane().add(lblRemainingMoney);
+		add(lblRemainingMoney);
 
 		lblRemainingValue = new JLabel("");
 		lblRemainingValue.setBounds(168, 156, 112, 14);
-		getContentPane().add(lblRemainingValue);
+		add(lblRemainingValue);
 
 		JButton btnAdvancedPayment = new JButton("Advanced Payment");
 		btnAdvancedPayment.setBounds(155, 253, 140, 23);
-		getContentPane().add(btnAdvancedPayment);
+		add(btnAdvancedPayment);
 		
 		advancedMoneyTextField = new DoubleJTextField();
 		advancedMoneyTextField.setBounds(155, 203, 140, 20);
-		getContentPane().add(advancedMoneyTextField);
+		add(advancedMoneyTextField);
 		advancedMoneyTextField.setColumns(10);
 		advancedMoneyTextField.setText("0");
 		
@@ -85,12 +85,26 @@ public class CreditView extends JFrame {
 		rdbtnCashPayment.setSelected(true);
 		buttonGroup.add(rdbtnCashPayment);
 		rdbtnCashPayment.setBounds(27, 225, 109, 23);
-		getContentPane().add(rdbtnCashPayment);
+		add(rdbtnCashPayment);
+		rdbtnCashPayment.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creditController.changeToCashPayment();
+			}
+		});
 		
 		JRadioButton rdbtnSoldPayment = new JRadioButton("Sold Payment");
 		buttonGroup.add(rdbtnSoldPayment);
 		rdbtnSoldPayment.setBounds(319, 225, 109, 23);
-		getContentPane().add(rdbtnSoldPayment);
+		add(rdbtnSoldPayment);
+		rdbtnSoldPayment.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creditController.changeToSoldPayment();
+			}
+		});
 		
 		btnAdvancedPayment.addActionListener(new ActionListener() {
 

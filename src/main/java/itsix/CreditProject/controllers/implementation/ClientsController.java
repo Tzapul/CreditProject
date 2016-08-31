@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.implementations.ClientBuilder;
+import itsix.CreditProject.builders.implementations.OperationBuilder;
+import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.controllers.interfaces.IClientBuilder;
 import itsix.CreditProject.controllers.interfaces.IClientsController;
@@ -98,7 +100,9 @@ public class ClientsController implements IClientsController {
 		IInnerPublisher publisher = new Publisher(subscribers);
 		account.setPublisher(publisher);
 
-		IAccountController controller = new AccountController(account, repository);
+		IOpertationBuilder operationBuilder = new OperationBuilder();
+		
+		IAccountController controller = new AccountController(currentClient, account, repository, operationBuilder);
 
 		AccountView accountView = new AccountView(controller);
 

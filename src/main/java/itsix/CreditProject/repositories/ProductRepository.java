@@ -19,7 +19,7 @@ public class ProductRepository implements IProductRepository {
 	private List<IProduct> products;
 
 	private IInnerPublisher publisher;
-	
+
 	public ProductRepository(IInnerPublisher publisher) {
 		this.products = new ArrayList<>();
 		this.publisher = publisher;
@@ -29,10 +29,11 @@ public class ProductRepository implements IProductRepository {
 	public void insertCredits(IRepository mainRepository) {
 		IntervalBuilder intervalBuilder = new IntervalBuilder();
 		FixedInterestProductBuilder fixedCreditBuilder = new FixedInterestProductBuilder(intervalBuilder);
-		VariableInterestProductBuilder variableCreditBuilder = new VariableInterestProductBuilder(intervalBuilder, mainRepository);
-		
+		VariableInterestProductBuilder variableCreditBuilder = new VariableInterestProductBuilder(intervalBuilder,
+				mainRepository);
+
 		products.add(fixedCreditBuilder.build("asdasdasd", 2000, 3000, 1.52, new Currency("USD", "$"), 12, 24));
-		products.add(variableCreditBuilder.build("aseaseasease", 1000, 2500, 2.3, new Currency("EURO", "€"), 6 , 24));
+		products.add(variableCreditBuilder.build("aseaseasease", 1000, 2500, 2.3, new Currency("EURO", "€"), 6, 24));
 	}
 
 	@Override
@@ -49,16 +50,16 @@ public class ProductRepository implements IProductRepository {
 
 	private void searchFor(IProduct product) throws ProductAlreadyExistsException {
 		for (IProduct myProduct : products) {
-			if(myProduct.equals(product)) {
+			if (myProduct.equals(product)) {
 				throw new ProductAlreadyExistsException();
 			}
 		}
 	}
 
 	@Override
-	public void update(IProduct product, IProduct updatedProduct) {
+	public void updateFixed(IProduct product, IProduct updatedProduct) {
 		for (IProduct myProduct : products) {
-			if(myProduct.equals(product)) {
+			if (myProduct.equals(product)) {
 				myProduct.updateFields(updatedProduct);
 			}
 		}
@@ -68,7 +69,7 @@ public class ProductRepository implements IProductRepository {
 	@Override
 	public void delete(IProduct product) {
 		for (IProduct myProduct : products) {
-			if(myProduct.equals(product)) {
+			if (myProduct.equals(product)) {
 				products.remove(myProduct);
 				break;
 			}
@@ -89,13 +90,23 @@ public class ProductRepository implements IProductRepository {
 	@Override
 	public List<IProduct> getProductsWith(ICurrency currency) {
 		List<IProduct> toReturn = new ArrayList<>();
-		
+
 		for (IProduct product : products) {
-			if(product.hasCurrency(currency)) {
+			if (product.hasCurrency(currency)) {
 				toReturn.add(product);
 			}
 		}
 		return toReturn;
+	}
+
+	@Override
+	public void updateVariable(IProduct product, IProduct updatedProduct) {
+		for (IProduct myProduct : products) {
+			if (myProduct.equals(product)) {
+				myProduct.updateFields(updatedProduct);
+			}
+		}
+		publisher.notifySubscribers();
 	}
 
 }

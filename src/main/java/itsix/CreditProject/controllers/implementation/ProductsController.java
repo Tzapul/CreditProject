@@ -1,6 +1,8 @@
 package itsix.CreditProject.controllers.implementation;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractListModel;
 
@@ -10,30 +12,32 @@ import itsix.CreditProject.builders.implementations.VariableInterestProductBuild
 import itsix.CreditProject.builders.interfaces.IFixedInterestProductBuilder;
 import itsix.CreditProject.builders.interfaces.IIntervalBuilder;
 import itsix.CreditProject.builders.interfaces.IVariableInterestProductBuilder;
-import itsix.CreditProject.controllers.interfaces.IProductsController;
-import itsix.CreditProject.controllers.interfaces.IEditProductController;
 import itsix.CreditProject.controllers.interfaces.INewProductController;
+import itsix.CreditProject.controllers.interfaces.IProductsController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.customs.ProductList;
 import itsix.CreditProject.models.interfaces.IProduct;
-import itsix.CreditProject.validator.ProductValidator;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidator;
 import itsix.CreditProject.validator.IValidatorResultBuilder;
+import itsix.CreditProject.validator.ProductValidator;
 import itsix.CreditProject.validator.Validator;
 import itsix.CreditProject.validator.ValidatorResultBuilder;
-import itsix.CreditProject.views.ProductsView;
-import itsix.CreditProject.views.EditProductView;
+import itsix.CreditProject.views.IEditProductView;
 import itsix.CreditProject.views.NewProductView;
+import itsix.CreditProject.views.ProductsView;
 
 public class ProductsController implements IProductsController {
 
 	private IRepository repository;
 
 	private ProductsView view;
+	
+	private Map<Class<?>, IEditProductView> editViews = new HashMap<>();
 
-	public ProductsController(IRepository repository) {
+	public ProductsController(IRepository repository, Map<Class<?>, IEditProductView> editViews) {
 		this.repository = repository;
+		this.editViews = editViews;
 	}
 
 	@Override
@@ -77,20 +81,10 @@ public class ProductsController implements IProductsController {
 	@Override
 	public void goToEditProduct() {
 
-		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
-		StringBuilder errorMessageBuilder = new StringBuilder();
-		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
-
-		IProductValidator creditValidator = new ProductValidator(validator);
-
-		IEditProductController editCreditController = new EditProductController(repository.getCurrencyRepository(),
-				repository.getProductRepository(), view.getProductList().getSelectedValue(), creditValidator);
-
-		EditProductView editCreditView = new EditProductView(editCreditController);
-		editCreditController.setView(editCreditView);
-
-		editCreditController.populateFields();
-
+		IProduct product = view.getProductList().getSelectedValue();
+		IEditProductView editCreditView = editViews.get(product.getClass());
+		
+		editCreditView.setControllerProduct(product);
 		editCreditView.setVisible(true);
 	}
 
