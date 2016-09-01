@@ -7,10 +7,12 @@ import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.implementations.ClientBuilder;
 import itsix.CreditProject.builders.implementations.OperationBuilder;
+import itsix.CreditProject.builders.implementations.PaymentBuilder;
 import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
+import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.controllers.interfaces.IClientBuilder;
-import itsix.CreditProject.controllers.interfaces.IClientsController;
+import itsix.CreditProject.controllers.interfaces.IClientController;
 import itsix.CreditProject.controllers.interfaces.INewAccountController;
 import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
@@ -31,7 +33,7 @@ import itsix.CreditProject.views.ClientView;
 import itsix.CreditProject.views.NewAccountView;
 import itsix.CreditProject.views.NewClientView;
 
-public class ClientsController implements IClientsController {
+public class ClientController implements IClientController {
 
 	private IRepository repository;
 
@@ -41,7 +43,7 @@ public class ClientsController implements IClientsController {
 
 	private IClient currentClient;
 
-	public ClientsController(ICurrencyRepository currencyRepository, IRepository repository) {
+	public ClientController(ICurrencyRepository currencyRepository, IRepository repository) {
 		this.currencyRepository = currencyRepository;
 		this.repository = repository;
 	}
@@ -102,7 +104,9 @@ public class ClientsController implements IClientsController {
 
 		IOpertationBuilder operationBuilder = new OperationBuilder();
 		
-		IAccountController controller = new AccountController(currentClient, account, repository, operationBuilder);
+		IPaymentBuilder paymentBuilder = new PaymentBuilder();
+		
+		IAccountController controller = new AccountController(currentClient, account, repository, operationBuilder, paymentBuilder);
 
 		AccountView accountView = new AccountView(controller);
 

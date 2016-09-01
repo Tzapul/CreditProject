@@ -6,6 +6,8 @@ import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IMoney;
 import itsix.CreditProject.models.interfaces.IPeriod;
 import itsix.CreditProject.models.interfaces.IRate;
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.ISubscriber;
 
 public class Credit implements ICredit {
 
@@ -15,23 +17,30 @@ public class Credit implements ICredit {
 	private IMoney remainingMoney;
 
 	private Double interestRate;
+
 	private IPeriod period;
+	private IPeriod remainingDays;
 
 	private IRate dailyRate;
+	
+	private IInnerPublisher publisher;
 
 	public Credit(String name, IMoney borrowedMoney, IMoney remainingMoney, Double interestRate, IPeriod period,
-			IRate dailyRate) {
+			IRate dailyRate, IPeriod remainingDays, IInnerPublisher publisher) {
 		this.name = name;
 		this.borrowedMoney = borrowedMoney;
 		this.interestRate = interestRate;
 		this.period = period;
 		this.dailyRate = dailyRate;
 		this.remainingMoney = remainingMoney;
+		this.remainingDays = remainingDays;
+		this.publisher = publisher;
 	}
 
 	@Override
 	public Double getRemainingMoney() {
-		return remainingMoney.getValue();
+		DecimalFormat df = new DecimalFormat("#.###");
+		return Double.valueOf(df.format(remainingMoney.getValue()));
 	}
 
 	@Override
@@ -41,7 +50,7 @@ public class Credit implements ICredit {
 
 	@Override
 	public Integer getRemainingDays() {
-		return period.getNumberOfDays();
+		return remainingDays.getNumberOfDays();
 	}
 
 	@Override
@@ -96,6 +105,30 @@ public class Credit implements ICredit {
 	public Double getBorrowedMoney() {
 		DecimalFormat df = new DecimalFormat("#.###");
 		return Double.valueOf(df.format(borrowedMoney.getValue()));
+	}
+
+	@Override
+	public void recalculate(Double money) {
+		Double previousValue = remainingMoney.getValue();
+		remainingMoney.take(money);
+
+		dailyRate.recalculate(previousValue, remainingMoney.getValue(), remainingDays.getNumberOfDays());
+		publisher.notifySubscribers();
+	}
+
+	@Override
+	public Integer getPeriod() {
+		return period.getNumberOfDays();
+	}
+
+	@Override
+	public void subscribe(ISubscriber subscriber) {
+		publisher.subscribe(subscriber);
+	}
+
+	@Override
+	public void unsubscribe(ISubscriber subscriber) {
+		publisher.unsubscribe(subscriber);
 	}
 
 }

@@ -218,7 +218,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 	}
 
 	public void setInterestRate(Double interestRate) {
-		interestRateTextField.setText(Double.toString(interestRate));
+		interestRateTextField.setText(String.valueOf(interestRate));
 	}
 
 	public void setCurrency(ICurrency currency) {
@@ -237,7 +237,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
 
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
-		Double interestRate = Double.valueOf(interestRateTextField.getText());
+		Double interestRate = Double.valueOf(interestRateTextField.getText()) + Double.valueOf(controller.getIndicator());
 
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());

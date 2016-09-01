@@ -10,6 +10,11 @@ public class SoldPayment implements IPayment {
 	
 	private IAccount account;
 	
+	public SoldPayment(IPayment payment, IAccount account) {
+		this.payment = payment;
+		this.account = account;
+	}
+
 	@Override
 	public void pay(Double money) {
 		try {

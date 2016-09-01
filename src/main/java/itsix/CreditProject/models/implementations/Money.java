@@ -34,4 +34,10 @@ public class Money implements IMoney {
 		return true;
 	}
 
+
+	@Override
+	public void take(Double money) {
+		value -= money;
+	}
+
 }

@@ -19,4 +19,6 @@ public interface IAccountController {
 
 	void toggleOperationButtons();
 
+	void goToCreditView();
+
 }

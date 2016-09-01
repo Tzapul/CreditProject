@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import itsix.CreditProject.controllers.interfaces.IClientsController;
+import itsix.CreditProject.controllers.interfaces.IClientController;
 import itsix.CreditProject.controllers.interfaces.INewAccountController;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.interfaces.ICurrency;
@@ -33,9 +33,9 @@ public class NewAccountView extends JFrame {
 
 	private JComboBox<ICurrency> currencyComboBox;
 	
-	private IClientsController clientController;
+	private IClientController clientController;
 
-	public NewAccountView(INewAccountController controller, IClientsController clientController) {
+	public NewAccountView(INewAccountController controller, IClientController clientController) {
 		this.controller = controller;
 		this.clientController = clientController;
 		initialize();

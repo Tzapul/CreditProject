@@ -1,6 +1,8 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface ICredit {
+import itsix.CreditProject.pubSub.IPublisher;
+
+public interface ICredit extends IPublisher{
 
 	String getName();
 
@@ -13,5 +15,9 @@ public interface ICredit {
 	Double getBorrowedMoney();
 
 	Double getRemainingMoney();
+
+	void recalculate(Double money);
+
+	Integer getPeriod();
 
 }

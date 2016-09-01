@@ -4,4 +4,6 @@ public interface IMoney {
 
 	Double getValue();
 
+	void take(Double money);
+
 }

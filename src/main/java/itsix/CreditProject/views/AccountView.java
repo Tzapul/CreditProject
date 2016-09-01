@@ -3,6 +3,8 @@ package itsix.CreditProject.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -18,7 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.AbstractTableModel;
 
 import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.customs.CreditsTableModel;
@@ -37,7 +38,7 @@ public class AccountView extends JFrame implements ISubscriber {
 	private JTextField moneyTextField;
 
 	private JTable creditsTable;
-	private AbstractTableModel creditsModel;
+	private CreditsTableModel creditsModel;
 
 	private JButton btnWithdraw;
 	private JButton btnDeposit;
@@ -129,6 +130,13 @@ public class AccountView extends JFrame implements ISubscriber {
 		getContentPane().add(scrollPane);
 		
 		creditsTable = new JTable();
+		creditsTable.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent me) {
+				if (me.getClickCount() == 2) {
+					controller.goToCreditView();
+				}
+			}
+		});
 		scrollPane.setViewportView(creditsTable);
 
 		JLabel lblCurrentCredits = new JLabel("Current Credits");
@@ -180,6 +188,8 @@ public class AccountView extends JFrame implements ISubscriber {
 	@Override
 	public void update() {
 		soldTextField.setText(String.valueOf(controller.getAccount().getSold()));
+		creditsModel = new CreditsTableModel(controller.getAccount().getCredits());
+		creditsTable.setModel(creditsModel);
 	}
 
 	public boolean moneyValueisZero() {
@@ -199,5 +209,9 @@ public class AccountView extends JFrame implements ISubscriber {
 	public void setTableModel(List<ICredit> credits) {
 		creditsModel = new CreditsTableModel(credits);
 		creditsTable.setModel(creditsModel);
+	}
+
+	public ICredit getSelectedCredit() {
+		return creditsModel.getRow(creditsTable.getSelectedRow());
 	}
 }

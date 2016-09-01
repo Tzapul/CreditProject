@@ -121,10 +121,4 @@ public class Account implements IAccount {
 		publisher.notifySubscribers();
 	}
 
-	@Override
-	public void advancePayment(Double money) {
-		// DASDHAUSDHUASDhUIASHDuiASHduiashduihasuidhasuidhasuid
-		// asdjkosivgashyudfvyuasdgyuasdghasdgyu
-	}
-
 }

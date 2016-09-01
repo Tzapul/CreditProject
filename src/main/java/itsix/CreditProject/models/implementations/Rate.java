@@ -14,5 +14,10 @@ public class Rate implements IRate {
 	public Double getRate() {
 		return rate;
 	}
+
+	@Override
+	public void recalculate(Double previousValue, Double remainingMoney, Integer remainingDays) {
+		rate = (remainingMoney / previousValue) * remainingDays;
+	}
 	
 }

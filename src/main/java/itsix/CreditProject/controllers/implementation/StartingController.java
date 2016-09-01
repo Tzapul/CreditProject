@@ -3,7 +3,7 @@ package itsix.CreditProject.controllers.implementation;
 import java.util.HashMap;
 import java.util.Map;
 
-import itsix.CreditProject.controllers.interfaces.IClientsController;
+import itsix.CreditProject.controllers.interfaces.IClientController;
 import itsix.CreditProject.controllers.interfaces.IEditFixedProductController;
 import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
 import itsix.CreditProject.controllers.interfaces.IProductsController;
@@ -72,7 +72,7 @@ public class StartingController implements IStartingController {
 
 	@Override
 	public void goToClientsWindow() {
-		IClientsController controller = new ClientsController(repository.getCurrencyRepository(), repository);
+		IClientController controller = new ClientController(repository.getCurrencyRepository(), repository);
 		ClientView clientView = new ClientView(controller);
 		clientView.setVisible(true);
 		controller.setView(clientView);

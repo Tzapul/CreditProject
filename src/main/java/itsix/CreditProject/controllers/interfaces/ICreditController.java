@@ -12,4 +12,6 @@ public interface ICreditController {
 
 	void changeToSoldPayment();
 
+	void populateFields();
+
 }

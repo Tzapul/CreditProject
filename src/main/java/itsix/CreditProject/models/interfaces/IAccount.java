@@ -26,8 +26,6 @@ public interface IAccount extends IPublisher {
 
 	void add(Double money);
 
-	void advancePayment(Double advancedPaymentMoney);
-
 	void withdraw(Double money) throws SoldLesserThanZeroException;
 
 }
