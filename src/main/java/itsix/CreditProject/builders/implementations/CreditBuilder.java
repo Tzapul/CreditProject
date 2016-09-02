@@ -11,6 +11,7 @@ import itsix.CreditProject.models.implementations.Credit;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IMoney;
 import itsix.CreditProject.models.interfaces.IPeriod;
+import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.models.interfaces.IRate;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
@@ -34,7 +35,7 @@ public class CreditBuilder implements ICreditBuilder {
 
 
 	@Override
-	public ICredit build(String creditName, Double money, Double interestRate, Integer period) {
+	public ICredit build(String creditName, Double money, Double interestRate, Integer period, IProduct product) {
 		
 		IPeriod remainingDays = periodBuilder.build(period);
 		IPeriod myPeriod = periodBuilder.build(period);
@@ -46,7 +47,7 @@ public class CreditBuilder implements ICreditBuilder {
 		
 		List<ISubscriber> subscribers = new ArrayList<>();
 		IInnerPublisher publisher = new Publisher(subscribers);
-		return new Credit(creditName, myMoney, remainingMoney, interestRate, myPeriod, dailyRate, remainingDays, publisher);
+		return new Credit(creditName, myMoney, remainingMoney, interestRate, myPeriod, dailyRate, remainingDays, publisher, product);
 	}
 
 	

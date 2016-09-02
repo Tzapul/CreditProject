@@ -102,12 +102,12 @@ public class Product implements IProduct {
 	}
 
 	@Override
-	public void updateFields(IProduct credit) {
-		this.name = credit.getName();
-		this.periodInterval = credit.getPeriodInterval();
-		this.interestRate = credit.getInterestRate();
-		this.currency = credit.getCurrency();
-		this.moneyInterval = credit.getMoneyInterval();
+	public void updateFields(IProduct product) {
+		this.name = product.getName();
+		this.periodInterval = product.getPeriodInterval();
+		this.interestRate = product.getInterestRate();
+		this.currency = product.getCurrency();
+		this.moneyInterval = product.getMoneyInterval();
 	}
 
 	@Override

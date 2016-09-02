@@ -46,7 +46,7 @@ public class NewCreditController implements INewCreditController {
 	@Override
 	public void makeCredit() {
 		ICredit credit = creditBuilder.build(view.getCreditName(), view.getMoney(), view.getInterestRate(),
-				view.getPeriod());
+				view.getPeriod(), view.getSelectedProduct());
 
 		IValidatorResult result = validator.validateFields(credit, view.getSelectedProduct());
 

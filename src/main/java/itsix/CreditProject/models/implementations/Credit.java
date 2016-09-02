@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IMoney;
 import itsix.CreditProject.models.interfaces.IPeriod;
+import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.models.interfaces.IRate;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
@@ -24,17 +25,19 @@ public class Credit implements ICredit {
 	private IRate dailyRate;
 	
 	private IInnerPublisher publisher;
+	private IProduct product;
 
 	public Credit(String name, IMoney borrowedMoney, IMoney remainingMoney, Double interestRate, IPeriod period,
-			IRate dailyRate, IPeriod remainingDays, IInnerPublisher publisher) {
+			IRate dailyRate, IPeriod remainingDays, IInnerPublisher publisher, IProduct product) {
 		this.name = name;
 		this.borrowedMoney = borrowedMoney;
-		this.interestRate = interestRate;
 		this.period = period;
 		this.dailyRate = dailyRate;
 		this.remainingMoney = remainingMoney;
 		this.remainingDays = remainingDays;
 		this.publisher = publisher;
+		this.product = product;
+		this.interestRate = this.product.getInterestRate();
 	}
 
 	@Override

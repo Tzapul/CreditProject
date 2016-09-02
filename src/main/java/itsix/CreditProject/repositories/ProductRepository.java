@@ -57,16 +57,6 @@ public class ProductRepository implements IProductRepository {
 	}
 
 	@Override
-	public void updateFixed(IProduct product, IProduct updatedProduct) {
-		for (IProduct myProduct : products) {
-			if (myProduct.equals(product)) {
-				myProduct.updateFields(updatedProduct);
-			}
-		}
-		publisher.notifySubscribers();
-	}
-
-	@Override
 	public void delete(IProduct product) {
 		for (IProduct myProduct : products) {
 			if (myProduct.equals(product)) {
@@ -97,6 +87,16 @@ public class ProductRepository implements IProductRepository {
 			}
 		}
 		return toReturn;
+	}
+	
+	@Override
+	public void updateFixed(IProduct product, IProduct updatedProduct) {
+		for (IProduct myProduct : products) {
+			if (myProduct.equals(product)) {
+				myProduct.updateFields(updatedProduct);
+			}
+		}
+		publisher.notifySubscribers();
 	}
 
 	@Override
