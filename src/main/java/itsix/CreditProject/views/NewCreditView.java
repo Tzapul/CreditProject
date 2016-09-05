@@ -2,21 +2,27 @@ package itsix.CreditProject.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.apache.commons.lang.mutable.MutableDouble;
 
 import itsix.CreditProject.controllers.implementation.AccountController;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
@@ -136,6 +142,16 @@ public class NewCreditView extends JFrame {
 			}
 		});
 
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				"Cancel"); //$NON-NLS-1$
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
 	}
 
 	public String getSelectedProductDescription() {
@@ -162,7 +178,7 @@ public class NewCreditView extends JFrame {
 		return Double.valueOf(moneyTextField.getText());
 	}
 
-	public Double getInterestRate() {
+	public MutableDouble getInterestRate() {
 		return productsList.getSelectedValue().getInterestRate();
 	}
 

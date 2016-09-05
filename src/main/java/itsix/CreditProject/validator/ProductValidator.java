@@ -16,7 +16,7 @@ public class ProductValidator implements IProductValidator {
 		validator.validateString("name", product.getName());
 		validator.validateInteger("min",product.getMinValue());
 		validator.validateInteger("max", product.getMaxValue());
-		validator.validateDouble("interest rate", product.getInterestRate());
+		validator.validateDouble("interest rate", product.getInterestRate().doubleValue());
 		validator.validateInterval("period", product.getPeriodInterval());
 		validator.validateInterval("money", product.getMoneyInterval());
 		

@@ -33,11 +33,11 @@ public class StartingController implements IStartingController {
 
 	@Override
 	public void goToProductsWindow() {
-		
+
 		Map<Class<?>, IEditProductView> editViews = new HashMap<>();
-		
+
 		IProductValidator productValidator = initializeProductValidator();
-		
+
 		initializeMap(editViews, productValidator);
 
 		IProductsController controller = new ProductsController(repository, editViews);
@@ -48,7 +48,15 @@ public class StartingController implements IStartingController {
 		creditView.setVisible(true);
 	}
 
-	public IProductValidator initializeProductValidator() {
+	@Override
+	public void goToClientsWindow() {
+		IClientController controller = new ClientController(repository.getCurrencyRepository(), repository);
+		ClientView clientView = new ClientView(controller);
+		clientView.setVisible(true);
+		controller.setView(clientView);
+	}
+
+	private IProductValidator initializeProductValidator() {
 		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
 		StringBuilder errorMessageBuilder = new StringBuilder();
 		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
@@ -57,25 +65,19 @@ public class StartingController implements IStartingController {
 		return productValidator;
 	}
 
-	public void initializeMap(Map<Class<?>, IEditProductView> editViews, IProductValidator productValidator) {
-		
-		IEditVariableProductController editVariableController = new EditVariableProductController(repository, productValidator);
+	private void initializeMap(Map<Class<?>, IEditProductView> editViews, IProductValidator productValidator) {
+
+		IEditVariableProductController editVariableController = new EditVariableProductController(repository,
+				productValidator);
 		IEditProductView editVariableView = new EditVariableProductView(editVariableController);
 		editVariableController.setView(editVariableView);
 		editViews.put(VariableInterestProduct.class, editVariableView);
-		
-		IEditFixedProductController editFixedController = new EditFixedProductController(repository.getCurrencyRepository(), repository.getProductRepository(), productValidator);
+
+		IEditFixedProductController editFixedController = new EditFixedProductController(
+				repository.getCurrencyRepository(), repository.getProductRepository(), productValidator);
 		IEditProductView editFixedView = new EditFixedProductView(editFixedController);
 		editFixedController.setView(editFixedView);
 		editViews.put(FixedInterestProduct.class, editFixedView);
-	}
-
-	@Override
-	public void goToClientsWindow() {
-		IClientController controller = new ClientController(repository.getCurrencyRepository(), repository);
-		ClientView clientView = new ClientView(controller);
-		clientView.setVisible(true);
-		controller.setView(clientView);
 	}
 
 }

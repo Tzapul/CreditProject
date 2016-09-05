@@ -1,5 +1,7 @@
 package itsix.CreditProject.controllers.implementation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -10,6 +12,9 @@ import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.ISubscriber;
+import itsix.CreditProject.pubSub.Publisher;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.NewProductView;
@@ -39,8 +44,12 @@ public class NewProductController implements INewProductController {
 
 	@Override
 	public void createNewCredit() {
+		
+		List<ISubscriber> subscribers = new ArrayList<>();
+		IInnerPublisher publisher = new Publisher(subscribers);
+		
 		IProduct product = currentBuilder.build(view.getCreditName(), view.getMinValue(), view.getMaxValue(),
-				view.getInterestRate(), view.getCurrency(), view.getMinPeriod(), view.getMaxPeriod());
+				view.getInterestRate(), view.getCurrency(), view.getMinPeriod(), view.getMaxPeriod(), publisher);
 
 		IValidatorResult result = validator.validateFields(product);
 		
@@ -108,7 +117,7 @@ public class NewProductController implements INewProductController {
 	}
 
 	public void updateValue() {
-		Double value = repository.getIndicator() + view.getInterestRate();
+		double value = repository.getIndicator().doubleValue() + view.getInterestRate().doubleValue();
 		view.assignInterestRateValue(value);
 	}
 

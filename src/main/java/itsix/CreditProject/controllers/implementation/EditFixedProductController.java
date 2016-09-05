@@ -52,7 +52,7 @@ public class EditFixedProductController implements IEditFixedProductController {
 		view.setCreditName(product.getName());
 		view.setMinimumSize(product.getMinValue());
 		view.setMaxValue(product.getMaxValue());
-		view.setInterestRate(product.getInterestRate());
+		view.setInterestRate(product.getInterestRate().doubleValue());
 		view.setCurrency(currencyRepository.getCreditIndex(product));
 		view.setMinPeriod(product.getMinPeriod());
 		view.setMaxPeriod(product.getMaxPeriod());
@@ -70,7 +70,7 @@ public class EditFixedProductController implements IEditFixedProductController {
 			return;
 		}
 
-		productRepository.updateFixed(product, updatedCredit);
+		productRepository.updateProduct(product, updatedCredit);
 		view.dispose();
 	}
 

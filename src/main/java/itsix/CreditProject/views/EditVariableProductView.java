@@ -20,6 +20,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
@@ -237,13 +239,15 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
 
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
-		Double interestRate = Double.valueOf(interestRateTextField.getText()) + Double.valueOf(controller.getIndicator());
-
+		
+		double interestRateValue = Double.valueOf(interestRateTextField.getText()) + Double.valueOf(controller.getIndicator());
+		MutableDouble interestRate = new MutableDouble(interestRateValue);
+		
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());
 		IInterval period = new PeriodInterval(new Interval(minPeriod, maxPeriod));
 
-		IProduct credit = new Product(name, moneyInterval, currency, interestRate, period);
+		IProduct credit = new Product(name, moneyInterval, currency, interestRate, period, null);
 
 		return credit;
 	}

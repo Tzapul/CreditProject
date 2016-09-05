@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.controllers.interfaces.IEditFixedProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
@@ -168,7 +170,7 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 	}
 
 	public void setInterestRate(Double interestRate) {
-		interestRateTextField.setText(Double.toString(interestRate));
+		interestRateTextField.setText(String.valueOf(interestRate));
 	}
 
 	public void setCurrency(ICurrency currency) {
@@ -187,15 +189,17 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
 
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
-		Double interestRate = Double.valueOf(interestRateTextField.getText());
-
+		
+		double interestRateValue = Double.valueOf(interestRateTextField.getText());
+		MutableDouble interestRate = new MutableDouble(interestRateValue);
+		
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());
 		IInterval period = new PeriodInterval(new Interval(minPeriod, maxPeriod));
 
-		IProduct credit = new Product(name, moneyInterval, currency, interestRate, period);
+		IProduct product = new Product(name, moneyInterval, currency, interestRate, period, null);
 
-		return credit;
+		return product;
 	}
 
 	public void setMinPeriod(Integer minPeriod) {

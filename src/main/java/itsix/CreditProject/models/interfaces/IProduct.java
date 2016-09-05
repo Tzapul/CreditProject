@@ -1,6 +1,10 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface IProduct {
+import org.apache.commons.lang.mutable.MutableDouble;
+
+import itsix.CreditProject.pubSub.IPublisher;
+
+public interface IProduct extends IPublisher {
 
 	String getDescription();
 
@@ -10,7 +14,7 @@ public interface IProduct {
 
 	Integer getMaxValue();
 
-	Double getInterestRate();
+	MutableDouble getInterestRate();
 
 	ICurrency getCurrency();
 

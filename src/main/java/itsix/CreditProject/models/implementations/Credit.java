@@ -2,6 +2,8 @@ package itsix.CreditProject.models.implementations;
 
 import java.text.DecimalFormat;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IMoney;
 import itsix.CreditProject.models.interfaces.IPeriod;
@@ -17,17 +19,17 @@ public class Credit implements ICredit {
 	private IMoney borrowedMoney;
 	private IMoney remainingMoney;
 
-	private Double interestRate;
+	private MutableDouble interestRate;
 
 	private IPeriod period;
 	private IPeriod remainingDays;
 
 	private IRate dailyRate;
-	
+
 	private IInnerPublisher publisher;
 	private IProduct product;
 
-	public Credit(String name, IMoney borrowedMoney, IMoney remainingMoney, Double interestRate, IPeriod period,
+	public Credit(String name, IMoney borrowedMoney, IMoney remainingMoney, MutableDouble interestRate, IPeriod period,
 			IRate dailyRate, IPeriod remainingDays, IInnerPublisher publisher, IProduct product) {
 		this.name = name;
 		this.borrowedMoney = borrowedMoney;
@@ -57,7 +59,7 @@ public class Credit implements ICredit {
 	}
 
 	@Override
-	public Double getInterestRate() {
+	public MutableDouble getInterestRate() {
 		return interestRate;
 	}
 
@@ -132,6 +134,11 @@ public class Credit implements ICredit {
 	@Override
 	public void unsubscribe(ISubscriber subscriber) {
 		publisher.unsubscribe(subscriber);
+	}
+
+	@Override
+	public void update() {
+		// TODO recalculate dailyRate
 	}
 
 }

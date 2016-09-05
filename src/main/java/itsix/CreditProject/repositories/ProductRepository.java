@@ -3,6 +3,8 @@ package itsix.CreditProject.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.builders.implementations.FixedInterestProductBuilder;
 import itsix.CreditProject.builders.implementations.IntervalBuilder;
 import itsix.CreditProject.builders.implementations.VariableInterestProductBuilder;
@@ -13,6 +15,7 @@ import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
+import itsix.CreditProject.pubSub.Publisher;
 
 public class ProductRepository implements IProductRepository {
 
@@ -31,9 +34,12 @@ public class ProductRepository implements IProductRepository {
 		FixedInterestProductBuilder fixedCreditBuilder = new FixedInterestProductBuilder(intervalBuilder);
 		VariableInterestProductBuilder variableCreditBuilder = new VariableInterestProductBuilder(intervalBuilder,
 				mainRepository);
+		
+		List<ISubscriber> subscribers = new ArrayList<>();
+		IInnerPublisher publisher = new Publisher(subscribers);
 
-		products.add(fixedCreditBuilder.build("asdasdasd", 2000, 3000, 1.52, new Currency("USD", "$"), 12, 24));
-		products.add(variableCreditBuilder.build("aseaseasease", 1000, 2500, 2.3, new Currency("EURO", "€"), 6, 24));
+		products.add(fixedCreditBuilder.build("asdasdasd", 2000, 3000, new MutableDouble(1.52), new Currency("USD", "$"), 12, 24, publisher));
+		products.add(variableCreditBuilder.build("aseaseasease", 1000, 2500, new MutableDouble(2.3), new Currency("EURO", "€"), 6, 24, publisher));
 	}
 
 	@Override
@@ -88,19 +94,9 @@ public class ProductRepository implements IProductRepository {
 		}
 		return toReturn;
 	}
-	
-	@Override
-	public void updateFixed(IProduct product, IProduct updatedProduct) {
-		for (IProduct myProduct : products) {
-			if (myProduct.equals(product)) {
-				myProduct.updateFields(updatedProduct);
-			}
-		}
-		publisher.notifySubscribers();
-	}
 
 	@Override
-	public void updateVariable(IProduct product, IProduct updatedProduct) {
+	public void updateProduct(IProduct product, IProduct updatedProduct) {
 		for (IProduct myProduct : products) {
 			if (myProduct.equals(product)) {
 				myProduct.updateFields(updatedProduct);

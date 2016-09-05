@@ -3,6 +3,8 @@ package itsix.CreditProject.builders.implementations;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.builders.interfaces.ICreditBuilder;
 import itsix.CreditProject.builders.interfaces.IMoneyBuilder;
 import itsix.CreditProject.builders.interfaces.IPeriodBuilder;
@@ -35,13 +37,13 @@ public class CreditBuilder implements ICreditBuilder {
 
 
 	@Override
-	public ICredit build(String creditName, Double money, Double interestRate, Integer period, IProduct product) {
+	public ICredit build(String creditName, Double money, MutableDouble interestRate, Integer period, IProduct product) {
 		
 		IPeriod remainingDays = periodBuilder.build(period);
 		IPeriod myPeriod = periodBuilder.build(period);
 		
 		IRate dailyRate = rateBuilder.build(myPeriod.getNumberOfDays(), money, interestRate);
-		IMoney remainingMoney = moneyBuilder.build(money * (1 + interestRate / 100));
+		IMoney remainingMoney = moneyBuilder.build(money * (1 + interestRate.doubleValue() / 100));
 		
 		IMoney myMoney = moneyBuilder.build(money);
 		

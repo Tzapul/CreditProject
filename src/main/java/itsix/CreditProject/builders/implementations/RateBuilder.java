@@ -1,5 +1,7 @@
 package itsix.CreditProject.builders.implementations;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.builders.interfaces.IRateBuilder;
 import itsix.CreditProject.models.implementations.Rate;
 import itsix.CreditProject.models.interfaces.IRate;
@@ -7,8 +9,8 @@ import itsix.CreditProject.models.interfaces.IRate;
 public class RateBuilder implements IRateBuilder {
 
 	@Override
-	public IRate build(Integer myPeriod, Double money, Double interestRate) {
-		return new Rate((money * ( 1 + interestRate / 100) / myPeriod));
+	public IRate build(Integer myPeriod, Double money, MutableDouble interestRate) {
+		return new Rate((money * ( 1 + interestRate.doubleValue() / 100) / myPeriod));
 	}
 
 }

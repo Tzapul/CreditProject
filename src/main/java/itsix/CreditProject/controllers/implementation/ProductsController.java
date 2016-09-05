@@ -1,6 +1,5 @@
 package itsix.CreditProject.controllers.implementation;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public class ProductsController implements IProductsController {
 
 	private ProductsView view;
 	
-	private Map<Class<?>, IEditProductView> editViews = new HashMap<>();
+	private Map<Class<?>, IEditProductView> editViews;
 
 	public ProductsController(IRepository repository, Map<Class<?>, IEditProductView> editViews) {
 		this.repository = repository;
@@ -53,19 +52,24 @@ public class ProductsController implements IProductsController {
 		IFixedInterestProductBuilder fixedInterestBuilder = new FixedInterestProductBuilder(intervalBuilder);
 		IVariableInterestProductBuilder variableInterestBuilder = new VariableInterestProductBuilder(intervalBuilder, repository);
 
-		// Initializing creditValidator
-		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
-		StringBuilder errorMessageBuilder = new StringBuilder();
-		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
-
-		IProductValidator creditValidator = new ProductValidator(validator);
+		IProductValidator productValidator = initializeProductValidator();
 
 		INewProductController controller = new NewProductController(repository, fixedInterestBuilder,
-				variableInterestBuilder, creditValidator);
+				variableInterestBuilder, productValidator);
 		NewProductView newCreditView = new NewProductView(controller);
 
 		controller.setView(newCreditView);
 		newCreditView.setVisible(true);
+	}
+
+	public IProductValidator initializeProductValidator() {
+		
+		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
+		StringBuilder errorMessageBuilder = new StringBuilder();
+		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
+		IProductValidator creditValidator = new ProductValidator(validator);
+		
+		return creditValidator;
 	}
 
 	@Override

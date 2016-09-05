@@ -1,14 +1,17 @@
 package itsix.CreditProject.models.interfaces;
 
-import itsix.CreditProject.pubSub.IPublisher;
+import org.apache.commons.lang.mutable.MutableDouble;
 
-public interface ICredit extends IPublisher{
+import itsix.CreditProject.pubSub.IPublisher;
+import itsix.CreditProject.pubSub.ISubscriber;
+
+public interface ICredit extends IPublisher, ISubscriber {
 
 	String getName();
 
 	Integer getRemainingDays();
 
-	Double getInterestRate();
+	MutableDouble getInterestRate();
 
 	Double getDailyRate();
 

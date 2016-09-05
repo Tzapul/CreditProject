@@ -1,12 +1,14 @@
 package itsix.CreditProject.controllers.implementation;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.interfaces.ICreditBuilder;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
+import itsix.CreditProject.dispatcher.IDispatcher;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IProduct;
@@ -26,11 +28,15 @@ public class NewCreditController implements INewCreditController {
 
 	private ICreditValidator validator;
 
-	public NewCreditController(IRepository repository, IAccount account, ICreditBuilder creditBuilder, ICreditValidator validator) {
+	private Map<Class<?>, IDispatcher> dispatchers;
+
+	public NewCreditController(IRepository repository, IAccount account, ICreditBuilder creditBuilder,
+			ICreditValidator validator, Map<Class<?>, IDispatcher> dispatchers) {
 		this.repository = repository;
 		this.account = account;
 		this.creditBuilder = creditBuilder;
 		this.validator = validator;
+		this.dispatchers = dispatchers;
 	}
 
 	@Override
@@ -45,16 +51,22 @@ public class NewCreditController implements INewCreditController {
 
 	@Override
 	public void makeCredit() {
-		ICredit credit = creditBuilder.build(view.getCreditName(), view.getMoney(), view.getInterestRate(),
-				view.getPeriod(), view.getSelectedProduct());
 
-		IValidatorResult result = validator.validateFields(credit, view.getSelectedProduct());
+		IProduct selectedProduct = view.getSelectedProduct();
+		IDispatcher dispatcher = dispatchers.get(selectedProduct.getClass());
+
+		ICredit credit = creditBuilder.build(view.getCreditName(), view.getMoney(), view.getInterestRate(),
+				view.getPeriod(), dispatcher.dispatch(selectedProduct));
+
+		IValidatorResult result = validator.validateFields(credit, selectedProduct);
 
 		if (result.isNotValid()) {
 			JOptionPane.showMessageDialog(null, result.getDescription(), "Invalid Fields", JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
+
+		selectedProduct.subscribe(credit);
 
 		account.addNew(credit);
 		account.add(credit.getBorrowedMoney());

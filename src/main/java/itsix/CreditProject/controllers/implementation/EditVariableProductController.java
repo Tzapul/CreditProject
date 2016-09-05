@@ -44,7 +44,7 @@ public class EditVariableProductController implements IEditVariableProductContro
 			return;
 		}
 
-		repository.getProductRepository().updateVariable(product, updatedCredit);
+		repository.getProductRepository().updateProduct(product, updatedCredit);
 		view.dispose();
 	}
 
@@ -68,11 +68,16 @@ public class EditVariableProductController implements IEditVariableProductContro
 		view.setCreditName(product.getName());
 		view.setMinimumSize(product.getMinValue());
 		view.setMaxValue(product.getMaxValue());
-		view.setInterestRate(product.getInterestRate() - repository.getIndicator());
+		
+		System.out.println(repository.getIndicator().doubleValue());
+		System.out.println(product.getInterestRate().doubleValue());
+		System.out.println(product.getInterestRate().doubleValue() - repository.getIndicator().doubleValue());
+		
+		view.setInterestRate(product.getInterestRate().doubleValue() - repository.getIndicator().doubleValue());
 		view.setCurrency(repository.getCurrencyRepository().getCreditIndex(product));
 		view.setMinPeriod(product.getMinPeriod());
 		view.setMaxPeriod(product.getMaxPeriod());
-		view.assignInterestRateValue(product.getInterestRate());
+		view.assignInterestRateValue(product.getInterestRate().doubleValue());
 	}
 
 	@Override

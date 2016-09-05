@@ -1,8 +1,12 @@
 package itsix.CreditProject.models.implementations;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IInterval;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.ISubscriber;
 
 public class Product implements IProduct {
 
@@ -11,16 +15,19 @@ public class Product implements IProduct {
 	private IInterval moneyInterval;
 	private ICurrency currency;
 
-	private Double interestRate;
+	private MutableDouble interestRate;
 	private IInterval periodInterval;
 
-	public Product(String name, IInterval interval, ICurrency currency, Double interestRate, IInterval period) {
+	private IInnerPublisher publisher;
+	
+	public Product(String name, IInterval moneyInterval, ICurrency currency, MutableDouble interestRate, IInterval period, IInnerPublisher publisher) {
 		super();
 		this.name = name;
-		this.moneyInterval = interval;
+		this.moneyInterval = moneyInterval;
 		this.currency = currency;
 		this.interestRate = interestRate;
 		this.periodInterval = period;
+		this.publisher = publisher;
 	}
 
 	@Override
@@ -77,7 +84,7 @@ public class Product implements IProduct {
 	}
 
 	@Override
-	public Double getInterestRate() {
+	public MutableDouble getInterestRate() {
 		return interestRate;
 	}
 
@@ -105,9 +112,10 @@ public class Product implements IProduct {
 	public void updateFields(IProduct product) {
 		this.name = product.getName();
 		this.periodInterval = product.getPeriodInterval();
-		this.interestRate = product.getInterestRate();
+		this.interestRate.setValue(product.getInterestRate().doubleValue());
 		this.currency = product.getCurrency();
 		this.moneyInterval = product.getMoneyInterval();
+		publisher.notifySubscribers();
 	}
 
 	@Override
@@ -160,6 +168,16 @@ public class Product implements IProduct {
 		} else if (!periodInterval.equals(other.periodInterval))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void subscribe(ISubscriber subscriber) {
+		publisher.subscribe(subscriber);
+	}
+
+	@Override
+	public void unsubscribe(ISubscriber subscriber) {
+		publisher.unsubscribe(subscriber);
 	}
 
 }

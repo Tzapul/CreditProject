@@ -1,5 +1,8 @@
 package itsix.CreditProject.controllers.implementation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.implementations.CreditBuilder;
@@ -16,9 +19,14 @@ import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.controllers.interfaces.ICreditController;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
+import itsix.CreditProject.dispatcher.FixedProductDispatcher;
+import itsix.CreditProject.dispatcher.IDispatcher;
+import itsix.CreditProject.dispatcher.VariableProductDispatcher;
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 import itsix.CreditProject.models.implementations.CashPayment;
+import itsix.CreditProject.models.implementations.FixedInterestProduct;
 import itsix.CreditProject.models.implementations.SoldPayment;
+import itsix.CreditProject.models.implementations.VariableInterestProduct;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.models.interfaces.ICredit;
@@ -90,22 +98,41 @@ public class AccountController implements IAccountController {
 	@Override
 	public void goToMakeCreditView() {
 
-		IRateBuilder feeBuilder = new RateBuilder();
-		IMoneyBuilder moneyBuilder = new MoneyBuilder();
-		IPeriodBuilder periodBuilder = new DaysPeriodBuilder();
-		ICreditBuilder creditBuilder = new CreditBuilder(moneyBuilder, periodBuilder, feeBuilder);
+		ICreditBuilder creditBuilder = initializeCreditBuilder();
 
-		StringBuilder errorMessageBuilder = new StringBuilder();
-		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
-		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
-		ICreditValidator creditValidator = new CreditValidator(validator);
+		ICreditValidator creditValidator = initializeCreditValidator();
+		
+		Map<Class<?>, IDispatcher> dispatchers = new HashMap<>();
+		
+		dispatchers.put(FixedInterestProduct.class, new FixedProductDispatcher());
+		dispatchers.put(VariableInterestProduct.class, new VariableProductDispatcher());
 
-		INewCreditController controller = new NewCreditController(repository, account, creditBuilder, creditValidator);
+		INewCreditController controller = new NewCreditController(repository, account, creditBuilder, creditValidator, dispatchers);
 
 		NewCreditView view = new NewCreditView(controller, this);
 
 		view.setVisible(true);
 		controller.setView(view);
+	}
+
+	public ICreditBuilder initializeCreditBuilder() {
+		
+		IRateBuilder feeBuilder = new RateBuilder();
+		IMoneyBuilder moneyBuilder = new MoneyBuilder();
+		IPeriodBuilder periodBuilder = new DaysPeriodBuilder();
+		ICreditBuilder creditBuilder = new CreditBuilder(moneyBuilder, periodBuilder, feeBuilder);
+		
+		return creditBuilder;
+	}
+
+	public ICreditValidator initializeCreditValidator() {
+		
+		StringBuilder errorMessageBuilder = new StringBuilder();
+		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
+		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
+		ICreditValidator creditValidator = new CreditValidator(validator);
+		
+		return creditValidator;
 	}
 
 	@Override

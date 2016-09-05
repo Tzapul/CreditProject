@@ -1,5 +1,7 @@
 package itsix.CreditProject.models.implementations;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.builders.implementations.IntervalBuilder;
 import itsix.CreditProject.builders.implementations.ProductBuilder;
 import itsix.CreditProject.builders.interfaces.IIntervalBuilder;
@@ -7,6 +9,8 @@ import itsix.CreditProject.builders.interfaces.IProductBuilder;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IInterval;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.pubSub.ISubscriber;
 
 public class FixedInterestProduct implements IProduct {
 
@@ -15,10 +19,10 @@ public class FixedInterestProduct implements IProduct {
 	private IIntervalBuilder intervalBuilder = new IntervalBuilder();
 	private IProductBuilder productBuilder = new ProductBuilder(intervalBuilder);
 
-	public FixedInterestProduct(String name, IInterval interval, Double interestRate, ICurrency currency,
-			IInterval periodInterval) {
+	public FixedInterestProduct(String name, IInterval interval, MutableDouble interestRate, ICurrency currency,
+			IInterval periodInterval, IInnerPublisher publisher) {
 		this.product = productBuilder.build(name, interval.getMin(), interval.getMax(), interestRate, currency,
-				periodInterval.getMin(), periodInterval.getMax());
+				periodInterval.getMin(), periodInterval.getMax(), publisher);
 	}
 
 	public IProduct getProduct() {
@@ -51,7 +55,7 @@ public class FixedInterestProduct implements IProduct {
 	}
 
 	@Override
-	public Double getInterestRate() {
+	public MutableDouble getInterestRate() {
 		return product.getInterestRate();
 	}
 
@@ -111,6 +115,16 @@ public class FixedInterestProduct implements IProduct {
 		} else if (!product.equals(other.getProduct()))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void subscribe(ISubscriber subscriber) {
+		product.subscribe(subscriber);
+	}
+
+	@Override
+	public void unsubscribe(ISubscriber subscriber) {
+		product.unsubscribe(subscriber);
 	}
 
 }

@@ -22,6 +22,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.controllers.interfaces.INewProductController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
@@ -230,8 +232,8 @@ public class NewProductView extends JFrame {
 		return Integer.valueOf(maxValueTextField.getText());
 	}
 
-	public Double getInterestRate() {
-		return Double.valueOf(interestRateTextField.getText());
+	public MutableDouble getInterestRate() {
+		return new MutableDouble(interestRateTextField.getText());
 	}
 
 	public ICurrency getCurrency() {
@@ -254,7 +256,7 @@ public class NewProductView extends JFrame {
 		lblRealInterestRateValue.setVisible(true);
 	}
 
-	public void assignInterestRateValue(Double value) {
+	public void assignInterestRateValue(double value) {
 		if (interestIsNotNull()) {
 			DecimalFormat df = new DecimalFormat("#.###");
 			lblRealInterestRateValue.setText(df.format(value));
