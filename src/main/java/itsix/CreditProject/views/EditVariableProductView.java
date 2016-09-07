@@ -161,7 +161,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 		lblMaxPeriod.setBounds(25, 275, 118, 14);
 		add(lblMaxPeriod);
 
-		maxPeriodTextField = new JTextField();
+		maxPeriodTextField = new IntegerJTextField();
 		maxPeriodTextField.setBounds(170, 272, 86, 20);
 		add(maxPeriodTextField);
 		maxPeriodTextField.setColumns(10);

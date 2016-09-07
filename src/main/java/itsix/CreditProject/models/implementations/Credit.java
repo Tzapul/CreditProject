@@ -70,6 +70,43 @@ public class Credit implements ICredit {
 	}
 
 	@Override
+	public Double getBorrowedMoney() {
+		DecimalFormat df = new DecimalFormat("#.###");
+		return Double.valueOf(df.format(borrowedMoney.getValue()));
+	}
+
+	@Override
+	public void recalculate(Double money) {
+		Double previousValue = remainingMoney.getValue();
+		remainingMoney.take(money);
+
+		dailyRate.recalculate(previousValue, remainingMoney.getValue(), remainingDays.getNumberOfDays());
+		publisher.notifySubscribers();
+	}
+
+	@Override
+	public Integer getPeriod() {
+		return period.getNumberOfDays();
+	}
+
+	@Override
+	public void subscribe(ISubscriber subscriber) {
+		publisher.subscribe(subscriber);
+	}
+
+	@Override
+	public void unsubscribe(ISubscriber subscriber) {
+		publisher.unsubscribe(subscriber);
+	}
+
+	@Override
+	public void update() {
+		remainingMoney.recalculate(borrowedMoney.getValue(), interestRate, remainingDays.getNumberOfDays(), period.getNumberOfDays());
+		dailyRate.recalculate(remainingMoney.getValue(), remainingDays.getNumberOfDays());
+		publisher.notifySubscribers();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -105,40 +142,4 @@ public class Credit implements ICredit {
 			return false;
 		return true;
 	}
-
-	@Override
-	public Double getBorrowedMoney() {
-		DecimalFormat df = new DecimalFormat("#.###");
-		return Double.valueOf(df.format(borrowedMoney.getValue()));
-	}
-
-	@Override
-	public void recalculate(Double money) {
-		Double previousValue = remainingMoney.getValue();
-		remainingMoney.take(money);
-
-		dailyRate.recalculate(previousValue, remainingMoney.getValue(), remainingDays.getNumberOfDays());
-		publisher.notifySubscribers();
-	}
-
-	@Override
-	public Integer getPeriod() {
-		return period.getNumberOfDays();
-	}
-
-	@Override
-	public void subscribe(ISubscriber subscriber) {
-		publisher.subscribe(subscriber);
-	}
-
-	@Override
-	public void unsubscribe(ISubscriber subscriber) {
-		publisher.unsubscribe(subscriber);
-	}
-
-	@Override
-	public void update() {
-		// TODO recalculate dailyRate
-	}
-
 }

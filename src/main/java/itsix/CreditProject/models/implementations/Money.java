@@ -1,5 +1,7 @@
 package itsix.CreditProject.models.implementations;
 
+import org.apache.commons.lang.mutable.MutableDouble;
+
 import itsix.CreditProject.models.interfaces.IMoney;
 
 public class Money implements IMoney {
@@ -38,6 +40,12 @@ public class Money implements IMoney {
 	@Override
 	public void take(Double money) {
 		value -= money;
+	}
+
+
+	@Override
+	public void recalculate(Double remainingMoney, MutableDouble interestRate, Integer remainingDays, Integer days) {
+		value = (remainingMoney * ( 1 + interestRate.doubleValue())) * (remainingDays / days);
 	}
 
 }

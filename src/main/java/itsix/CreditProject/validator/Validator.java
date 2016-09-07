@@ -50,7 +50,7 @@ public class Validator implements IValidator {
 	@Override
 	public void validateDouble(String fieldName, Double value) {
 		if (value <= 0.0 || value == null) {
-			errorMessageBuilder.append("Invalid" + fieldName + " input\n");
+			errorMessageBuilder.append("Invalid " + fieldName + " input\n");
 		}
 	}
 
