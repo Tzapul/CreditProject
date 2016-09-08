@@ -12,5 +12,7 @@ public interface IClientRepository {
 
 	IAccount giveDefaultAccount();
 
+	void passDay();
+
 
 }

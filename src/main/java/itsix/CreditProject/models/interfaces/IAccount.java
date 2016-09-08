@@ -28,4 +28,8 @@ public interface IAccount extends IPublisher {
 
 	void withdraw(Double money) throws SoldLesserThanZeroException;
 
+	void payCredits();
+
+	void withdrawForCredit(Double dailyRate);
+
 }

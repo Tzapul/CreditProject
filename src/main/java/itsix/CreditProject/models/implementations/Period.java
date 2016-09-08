@@ -5,7 +5,7 @@ import itsix.CreditProject.models.interfaces.IPeriod;
 public class Period implements IPeriod {
 
 	private Integer days;
-	
+
 	public Period(Integer days) {
 		this.days = days;
 	}
@@ -15,4 +15,14 @@ public class Period implements IPeriod {
 		return days;
 	}
 
+	@Override
+	public void decrement() {
+		days--;
+	}
+
+	@Override
+	public boolean isZero() {
+		return days == 0;
+	}
+	
 }

@@ -11,6 +11,8 @@ import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.controllers.interfaces.IStartingController;
 import itsix.CreditProject.models.implementations.FixedInterestProduct;
 import itsix.CreditProject.models.implementations.VariableInterestProduct;
+import itsix.CreditProject.validator.ClientValidator;
+import itsix.CreditProject.validator.IClientValidator;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidator;
 import itsix.CreditProject.validator.IValidatorResultBuilder;
@@ -50,7 +52,14 @@ public class StartingController implements IStartingController {
 
 	@Override
 	public void goToClientsWindow() {
-		IClientController controller = new ClientController(repository.getCurrencyRepository(), repository);
+
+		StringBuilder errorMessageBuilder = new StringBuilder();
+		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
+		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
+		IClientValidator clientValidator = new ClientValidator(validator);
+
+		IClientController controller = new ClientController(repository.getCurrencyRepository(), repository,
+				clientValidator);
 		ClientView clientView = new ClientView(controller);
 		clientView.setVisible(true);
 		controller.setView(clientView);

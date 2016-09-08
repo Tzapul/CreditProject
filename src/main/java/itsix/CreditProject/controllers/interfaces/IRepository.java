@@ -16,5 +16,7 @@ public interface IRepository {
 
 	Integer getCurrentDay();
 
+	void addDays(Integer days);
+
 
 }

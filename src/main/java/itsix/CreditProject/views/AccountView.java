@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -24,6 +25,7 @@ import javax.swing.event.DocumentListener;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.customs.CreditsTableModel;
 import itsix.CreditProject.customs.IntegerJTextField;
+import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.pubSub.ISubscriber;
 
@@ -174,7 +176,8 @@ public class AccountView extends JFrame implements ISubscriber {
 	}
 
 	public void setSold(Double sold) {
-		soldTextField.setText(String.valueOf(sold));
+		DecimalFormat df = new DecimalFormat("#.###");
+		soldTextField.setText(String.valueOf(df.format(sold)));
 	}
 
 	public void setCurrency(String currencyName) {
@@ -187,8 +190,10 @@ public class AccountView extends JFrame implements ISubscriber {
 
 	@Override
 	public void update() {
-		soldTextField.setText(String.valueOf(controller.getAccount().getSold()));
-		creditsModel = new CreditsTableModel(controller.getAccount().getCredits());
+		IAccount account = controller.getAccount();
+		DecimalFormat df = new DecimalFormat("#.###");
+		soldTextField.setText(String.valueOf(df.format(account.getSold())));
+		creditsModel = new CreditsTableModel(account.getCredits());
 		creditsTable.setModel(creditsModel);
 	}
 

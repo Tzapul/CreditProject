@@ -16,18 +16,15 @@ import itsix.CreditProject.controllers.interfaces.IClientController;
 import itsix.CreditProject.controllers.interfaces.INewAccountController;
 import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
+import itsix.CreditProject.models.implementations.Client;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
 import itsix.CreditProject.repositories.ICurrencyRepository;
-import itsix.CreditProject.validator.ClientValidator;
 import itsix.CreditProject.validator.IClientValidator;
-import itsix.CreditProject.validator.IValidator;
-import itsix.CreditProject.validator.IValidatorResultBuilder;
-import itsix.CreditProject.validator.Validator;
-import itsix.CreditProject.validator.ValidatorResultBuilder;
+import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.ClientView;
 import itsix.CreditProject.views.NewAccountView;
@@ -43,9 +40,13 @@ public class ClientController implements IClientController {
 
 	private IClient currentClient;
 
-	public ClientController(ICurrencyRepository currencyRepository, IRepository repository) {
+	private IClientValidator clientValidator;
+
+	public ClientController(ICurrencyRepository currencyRepository, IRepository repository,
+			IClientValidator clientValidator) {
 		this.currencyRepository = currencyRepository;
 		this.repository = repository;
+		this.clientValidator = clientValidator;
 	}
 
 	public void setView(ClientView view) {
@@ -64,6 +65,7 @@ public class ClientController implements IClientController {
 			view.setUpdateClientEnabled();
 
 		} catch (Exception e) {
+			view.resetClient();
 			JOptionPane.showMessageDialog(null, "Client not found!", null, JOptionPane.WARNING_MESSAGE);
 		}
 
@@ -71,7 +73,20 @@ public class ClientController implements IClientController {
 
 	@Override
 	public void updateClient() {
+
+		IClient updatedClient = new Client(view.getsSN(), view.getFirstname(), view.getLastname(), view.getAddress(),
+				null);
+
+		IValidatorResult result = clientValidator.validateFields(updatedClient);
+
+		if (result.isNotValid()) {
+			JOptionPane.showMessageDialog(null, result.getDescription(), "Invalid fields", JOptionPane.WARNING_MESSAGE);
+
+			return;
+		}
+
 		currentClient.update(view.getFirstname(), view.getLastname(), view.getAddress());
+		JOptionPane.showMessageDialog(null, "Client was successfully updated!", "Client Updated", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
@@ -79,12 +94,8 @@ public class ClientController implements IClientController {
 
 		IClientBuilder clientBuilder = new ClientBuilder(repository.getClientRepository());
 
-		StringBuilder errorMessageBuilder = new StringBuilder();
-		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
-		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
-		IClientValidator clientValidator = new ClientValidator(validator);
-
-		INewClientController controller = new NewClientController(repository.getClientRepository(), clientBuilder, clientValidator);
+		INewClientController controller = new NewClientController(repository.getClientRepository(), clientBuilder,
+				clientValidator);
 
 		NewClientView newClientView = new NewClientView(controller);
 
@@ -103,10 +114,11 @@ public class ClientController implements IClientController {
 		account.setPublisher(publisher);
 
 		IOpertationBuilder operationBuilder = new OperationBuilder();
-		
+
 		IPaymentBuilder paymentBuilder = new PaymentBuilder();
-		
-		IAccountController controller = new AccountController(currentClient, account, repository, operationBuilder, paymentBuilder);
+
+		IAccountController controller = new AccountController(currentClient, account, repository, operationBuilder,
+				paymentBuilder);
 
 		AccountView accountView = new AccountView(controller);
 

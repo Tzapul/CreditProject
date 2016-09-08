@@ -31,4 +31,6 @@ public interface IClient extends IPublisher {
 
 	void addOperation(IOperation operation);
 
+	void payCredits();
+
 }

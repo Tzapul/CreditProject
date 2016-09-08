@@ -1,5 +1,6 @@
 package itsix.CreditProject.models.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
@@ -118,6 +119,27 @@ public class Account implements IAccount {
 	@Override
 	public void add(Double money) {
 		sold.add(money);
+		publisher.notifySubscribers();
+	}
+
+	@Override
+	public void payCredits() {
+		List<ICredit> creditsCopy = new ArrayList<>(credits);
+
+		for (ICredit credit : creditsCopy) {
+
+			credit.takeMoneyFrom(this);
+			credit.decrementRemainingDays();
+
+			if (credit.hasExpired()) {
+				credits.remove(credit);
+			}
+		}
+	}
+
+	@Override
+	public void withdrawForCredit(Double dailyRate) {
+		sold.take(dailyRate);
 		publisher.notifySubscribers();
 	}
 

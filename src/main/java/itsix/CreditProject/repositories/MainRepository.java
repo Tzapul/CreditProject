@@ -4,20 +4,20 @@ import itsix.CreditProject.controllers.interfaces.IRepository;
 
 public class MainRepository implements IRepository {
 
-	private IProductRepository creditRepository;
+	private IProductRepository productRepository;
 	private ICurrencyRepository currencyRepository;
 	private IClientRepository clientRepository;
 
 	private IIndicator indicator;
-	private Integer currentDate;
+	private Integer currentDay;
 	
-	public MainRepository(IProductRepository creditRepository, ICurrencyRepository currencyRepository,
-			IIndicator indicator, IClientRepository clientRepository, Integer currentDate) {
-		this.creditRepository = creditRepository;
+	public MainRepository(IProductRepository productRepository, ICurrencyRepository currencyRepository,
+			IIndicator indicator, IClientRepository clientRepository, Integer currentDay) {
+		this.productRepository = productRepository;
 		this.currencyRepository = currencyRepository;
 		this.indicator = indicator;
 		this.clientRepository = clientRepository;
-		this.currentDate = currentDate;
+		this.currentDay = currentDay;
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class MainRepository implements IRepository {
 
 	@Override
 	public IProductRepository getProductRepository() {
-		return creditRepository;
+		return productRepository;
 	}
 
 	@Override
@@ -42,7 +42,15 @@ public class MainRepository implements IRepository {
 
 	@Override
 	public Integer getCurrentDay() {
-		return currentDate;
+		return currentDay;
+	}
+
+	@Override
+	public void addDays(Integer days) {
+		currentDay += days;
+		for (int i = 0; i < days; i++) {
+			clientRepository.passDay();
+		}
 	}
 
 }

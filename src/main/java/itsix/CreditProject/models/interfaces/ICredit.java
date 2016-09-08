@@ -23,4 +23,10 @@ public interface ICredit extends IPublisher, ISubscriber {
 
 	Integer getPeriod();
 
+	void takeMoneyFrom(IAccount account);
+
+	void decrementRemainingDays();
+
+	boolean hasExpired();
+
 }

@@ -21,7 +21,7 @@ public class Client implements IClient {
 	private List<IOperation> operations;
 
 	private IInnerPublisher publisher;
-	
+
 	public Client(Integer sSN, String firstname, String lastname, String address, IInnerPublisher publisher) {
 		this.accounts = new ArrayList<>();
 		this.operations = new ArrayList<>();
@@ -31,7 +31,7 @@ public class Client implements IClient {
 		this.address = address;
 		this.publisher = publisher;
 	}
-	
+
 	@Override
 	public void addOperation(IOperation operation) {
 		operations.add(operation);
@@ -110,7 +110,13 @@ public class Client implements IClient {
 	public boolean hasTheSameSSN(IClient client) {
 		return client.hasSSN(sSN);
 	}
-	
+
+	@Override
+	public void payCredits() {
+		for (IAccount account : accounts) {
+			account.payCredits();
+		}
+	}
 
 	@Override
 	public boolean equals(Object obj) {

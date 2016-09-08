@@ -49,4 +49,11 @@ public class ClientRepository implements IClientRepository {
 		return accountBuilder.buildDefaultAccount();
 	}
 
+	@Override
+	public void passDay() {
+		for (IClient client : clients) {
+			client.payCredits();
+		}
+	}
+
 }

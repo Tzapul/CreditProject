@@ -10,4 +10,6 @@ public interface ISold {
 
 	void subtract(Double money) throws SoldLesserThanZeroException;
 
+	void take(Double dailyRate);
+
 }

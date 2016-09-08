@@ -51,5 +51,10 @@ public class Sold implements ISold {
 		return true;
 	}
 
+	@Override
+	public void take(Double dailyRate) {
+		value -= dailyRate;
+	}
+
 	
 }

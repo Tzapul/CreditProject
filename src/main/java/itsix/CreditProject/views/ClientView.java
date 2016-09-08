@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -140,7 +141,8 @@ public class ClientView extends JFrame implements ISubscriber {
 		scrollPane.setBounds(42, 301, 508, 152);
 		add(scrollPane);
 
-		accountsTable = new JTable();
+		tableModel = new AccountTableModel(new ArrayList<IAccount>());
+		accountsTable = new JTable(tableModel);
 		accountsTable.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				if (me.getClickCount() == 2) {
@@ -256,5 +258,24 @@ public class ClientView extends JFrame implements ISubscriber {
 
 	public void setUpdateClientDisabled() {
 		btnSaveCredentials.setEnabled(false);
+	}
+
+	public void resetClient() {
+		ssnTextField.setText("");
+		firstnameTextField.setText("");
+		lastnameTextField.setText("");
+		addressTextField.setText("");
+		
+		btnNewAccount.setEnabled(false);
+		btnSaveCredentials.setEnabled(false);
+		
+		searchTextField.setText("0");
+		
+		tableModel = new AccountTableModel(new ArrayList<IAccount>());
+		accountsTable.setModel(tableModel);
+	}
+
+	public Integer getsSN() {
+		return Integer.valueOf(ssnTextField.getText());
 	}
 }

@@ -257,7 +257,7 @@ public class NewProductView extends JFrame {
 	}
 
 	public void assignInterestRateValue(double value) {
-		if (interestIsNotNull()) {
+		if (interestIsNotNull()) {	
 			DecimalFormat df = new DecimalFormat("#.###");
 			lblRealInterestRateValue.setText(df.format(value));
 		}

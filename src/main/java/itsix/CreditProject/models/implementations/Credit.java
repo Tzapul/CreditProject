@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import org.apache.commons.lang.mutable.MutableDouble;
 
+import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IMoney;
 import itsix.CreditProject.models.interfaces.IPeriod;
@@ -101,7 +102,8 @@ public class Credit implements ICredit {
 
 	@Override
 	public void update() {
-		remainingMoney.recalculate(borrowedMoney.getValue(), interestRate, remainingDays.getNumberOfDays(), period.getNumberOfDays());
+		remainingMoney.recalculate(borrowedMoney.getValue(), interestRate, remainingDays.getNumberOfDays(),
+				period.getNumberOfDays());
 		dailyRate.recalculate(remainingMoney.getValue(), remainingDays.getNumberOfDays());
 		publisher.notifySubscribers();
 	}
@@ -141,5 +143,21 @@ public class Credit implements ICredit {
 		} else if (!period.equals(other.period))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void takeMoneyFrom(IAccount account) {
+		remainingMoney.take(getDailyRate());
+		account.withdrawForCredit(getDailyRate());
+	}
+
+	@Override
+	public void decrementRemainingDays() {
+		remainingDays.decrement();
+	}
+
+	@Override
+	public boolean hasExpired() {
+		return remainingDays.isZero();
 	}
 }
