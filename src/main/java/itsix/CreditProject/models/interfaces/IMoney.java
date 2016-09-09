@@ -8,6 +8,6 @@ public interface IMoney {
 
 	void take(Double money);
 
-	void recalculate(Double remainingMoney, MutableDouble interestRate, Integer remainingDays, Integer days);
+	void recalculate(Double borrowedMoney, Double previousInterestRate, MutableDouble interestRate);
 
 }

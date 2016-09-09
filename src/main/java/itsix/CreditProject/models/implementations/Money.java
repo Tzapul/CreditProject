@@ -44,8 +44,8 @@ public class Money implements IMoney {
 
 
 	@Override
-	public void recalculate(Double remainingMoney, MutableDouble interestRate, Integer remainingDays, Integer days) {
-		value = (remainingMoney * ( 1 + interestRate.doubleValue())) * (remainingDays / days);
+	public void recalculate(Double borrowedMoney, Double previousInterestRate, MutableDouble interestRate) {
+		value = borrowedMoney * ((value / borrowedMoney) * (interestRate.toDouble() / previousInterestRate));
 	}
 
 }

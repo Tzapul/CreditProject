@@ -21,6 +21,7 @@ public class Credit implements ICredit {
 	private IMoney remainingMoney;
 
 	private MutableDouble interestRate;
+	private Double previousInterestRate;
 
 	private IPeriod period;
 	private IPeriod remainingDays;
@@ -41,6 +42,7 @@ public class Credit implements ICredit {
 		this.publisher = publisher;
 		this.product = product;
 		this.interestRate = this.product.getInterestRate();
+		this.previousInterestRate = this.interestRate.toDouble();
 	}
 
 	@Override
@@ -102,9 +104,9 @@ public class Credit implements ICredit {
 
 	@Override
 	public void update() {
-		remainingMoney.recalculate(borrowedMoney.getValue(), interestRate, remainingDays.getNumberOfDays(),
-				period.getNumberOfDays());
+		remainingMoney.recalculate(borrowedMoney.getValue(), previousInterestRate, interestRate);
 		dailyRate.recalculate(remainingMoney.getValue(), remainingDays.getNumberOfDays());
+		previousInterestRate = interestRate.toDouble();
 		publisher.notifySubscribers();
 	}
 
