@@ -14,4 +14,6 @@ public interface ICreditController {
 
 	void populateFields();
 
+	void updateToAllMoney();
+
 }

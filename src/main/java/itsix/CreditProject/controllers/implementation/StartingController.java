@@ -66,6 +66,7 @@ public class StartingController implements IStartingController {
 	}
 
 	private IProductValidator initializeProductValidator() {
+
 		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
 		StringBuilder errorMessageBuilder = new StringBuilder();
 		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);

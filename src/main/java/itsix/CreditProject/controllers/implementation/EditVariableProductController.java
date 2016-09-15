@@ -68,11 +68,6 @@ public class EditVariableProductController implements IEditVariableProductContro
 		view.setCreditName(product.getName());
 		view.setMinimumSize(product.getMinValue());
 		view.setMaxValue(product.getMaxValue());
-		
-		System.out.println(repository.getIndicator().doubleValue());
-		System.out.println(product.getInterestRate().doubleValue());
-		System.out.println(product.getInterestRate().doubleValue() - repository.getIndicator().doubleValue());
-		
 		view.setInterestRate(product.getInterestRate().doubleValue() - repository.getIndicator().doubleValue());
 		view.setCurrency(repository.getCurrencyRepository().getCreditIndex(product));
 		view.setMinPeriod(product.getMinPeriod());

@@ -56,7 +56,7 @@ public class NewCreditController implements INewCreditController {
 		IDispatcher dispatcher = dispatchers.get(selectedProduct.getClass());
 
 		ICredit credit = creditBuilder.build(view.getCreditName(), view.getMoney(), view.getInterestRate(),
-				view.getPeriod(), dispatcher.dispatch(selectedProduct));
+				view.getPeriod(), dispatcher.dispatch(selectedProduct), account);
 
 		IValidatorResult result = validator.validateFields(credit, selectedProduct);
 

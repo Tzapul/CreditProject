@@ -23,7 +23,7 @@ public class CreditController implements ICreditController {
 		this.soldPayment = soldPayment;
 		this.currentPayment = cashPayment;
 	}
-	
+
 	@Override
 	public void populateFields() {
 		view.setName(credit.getName());
@@ -51,5 +51,10 @@ public class CreditController implements ICreditController {
 	@Override
 	public void changeToSoldPayment() {
 		currentPayment = soldPayment;
+	}
+
+	@Override
+	public void updateToAllMoney() {
+		view.setAdvancedPaymentMoney(credit.getRemainingMoney());
 	}
 }

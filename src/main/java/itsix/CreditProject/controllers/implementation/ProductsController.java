@@ -31,7 +31,7 @@ public class ProductsController implements IProductsController {
 	private IRepository repository;
 
 	private ProductsView view;
-	
+
 	private Map<Class<?>, IEditProductView> editViews;
 
 	public ProductsController(IRepository repository, Map<Class<?>, IEditProductView> editViews) {
@@ -50,7 +50,8 @@ public class ProductsController implements IProductsController {
 		// Initialize interval and credit builders
 		IIntervalBuilder intervalBuilder = new IntervalBuilder();
 		IFixedInterestProductBuilder fixedInterestBuilder = new FixedInterestProductBuilder(intervalBuilder);
-		IVariableInterestProductBuilder variableInterestBuilder = new VariableInterestProductBuilder(intervalBuilder, repository);
+		IVariableInterestProductBuilder variableInterestBuilder = new VariableInterestProductBuilder(intervalBuilder,
+				repository);
 
 		IProductValidator productValidator = initializeProductValidator();
 
@@ -63,12 +64,12 @@ public class ProductsController implements IProductsController {
 	}
 
 	public IProductValidator initializeProductValidator() {
-		
+
 		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
 		StringBuilder errorMessageBuilder = new StringBuilder();
 		IValidator validator = new Validator(errorMessageBuilder, resultBuilder);
 		IProductValidator creditValidator = new ProductValidator(validator);
-		
+
 		return creditValidator;
 	}
 
@@ -87,7 +88,7 @@ public class ProductsController implements IProductsController {
 
 		IProduct product = view.getProductList().getSelectedValue();
 		IEditProductView editCreditView = editViews.get(product.getClass());
-		
+
 		editCreditView.setControllerProduct(product);
 		editCreditView.setVisible(true);
 	}

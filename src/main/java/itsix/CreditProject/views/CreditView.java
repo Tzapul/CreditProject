@@ -32,7 +32,7 @@ public class CreditView extends JFrame {
 	private ICreditController creditController;
 	private JTextField advancedMoneyTextField;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	
+
 	public CreditView(ICreditController creditController) {
 		this.creditController = creditController;
 		initialize();
@@ -42,7 +42,7 @@ public class CreditView extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setBounds(100, 100, 450, 340);
+		setBounds(100, 100, 450, 375);
 		setLayout(null);
 
 		JLabel lblName = new JLabel("Name :");
@@ -80,38 +80,39 @@ public class CreditView extends JFrame {
 		JButton btnAdvancedPayment = new JButton("Advanced Payment");
 		btnAdvancedPayment.setBounds(155, 253, 140, 23);
 		add(btnAdvancedPayment);
-		
+
 		advancedMoneyTextField = new DoubleJTextField();
 		advancedMoneyTextField.setBounds(155, 203, 140, 20);
 		add(advancedMoneyTextField);
 		advancedMoneyTextField.setColumns(10);
 		advancedMoneyTextField.setText("0");
-		
+
 		JRadioButton rdbtnCashPayment = new JRadioButton("Cash Payment");
 		rdbtnCashPayment.setSelected(true);
 		buttonGroup.add(rdbtnCashPayment);
 		rdbtnCashPayment.setBounds(27, 225, 109, 23);
 		add(rdbtnCashPayment);
 		rdbtnCashPayment.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				creditController.changeToCashPayment();
 			}
 		});
-		
+
 		JRadioButton rdbtnSoldPayment = new JRadioButton("Sold Payment");
 		buttonGroup.add(rdbtnSoldPayment);
 		rdbtnSoldPayment.setBounds(319, 225, 109, 23);
 		add(rdbtnSoldPayment);
+
 		rdbtnSoldPayment.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				creditController.changeToSoldPayment();
 			}
 		});
-		
+
 		btnAdvancedPayment.addActionListener(new ActionListener() {
 
 			@Override
@@ -119,7 +120,18 @@ public class CreditView extends JFrame {
 				creditController.payInAdvance();
 			}
 		});
-		
+
+		JButton btnAllRemainingMoney = new JButton("All Remaining Money");
+		btnAllRemainingMoney.setBounds(155, 295, 140, 23);
+		add(btnAllRemainingMoney);
+		btnAllRemainingMoney.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				creditController.updateToAllMoney();
+			}
+		});
+
 		addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -127,7 +139,7 @@ public class CreditView extends JFrame {
 				e.getWindow().dispose();
 			}
 		});
-		
+
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				"Cancel");
 		getRootPane().getActionMap().put("Cancel", new AbstractAction() {
@@ -153,5 +165,9 @@ public class CreditView extends JFrame {
 
 	public void setRemainingMoney(Double remainingMoney) {
 		lblRemainingValue.setText(String.valueOf(remainingMoney));
+	}
+
+	public void setAdvancedPaymentMoney(Double money) {
+		advancedMoneyTextField.setText(String.valueOf(money));
 	}
 }

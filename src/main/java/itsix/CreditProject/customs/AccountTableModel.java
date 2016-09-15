@@ -22,7 +22,7 @@ public class AccountTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		return columnNames.length;
-	}
+	} 
 
 	@Override
 	public int getRowCount() {

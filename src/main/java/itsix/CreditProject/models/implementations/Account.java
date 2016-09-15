@@ -143,4 +143,9 @@ public class Account implements IAccount {
 		publisher.notifySubscribers();
 	}
 
+	@Override
+	public void remove(Credit credit) {
+		credits.remove(credit);
+	}
+
 }

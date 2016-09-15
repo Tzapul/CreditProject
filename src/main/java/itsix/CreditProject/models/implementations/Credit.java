@@ -30,9 +30,11 @@ public class Credit implements ICredit {
 
 	private IInnerPublisher publisher;
 	private IProduct product;
+	
+	private IAccount account;
 
 	public Credit(String name, IMoney borrowedMoney, IMoney remainingMoney, MutableDouble interestRate, IPeriod period,
-			IRate dailyRate, IPeriod remainingDays, IInnerPublisher publisher, IProduct product) {
+			IRate dailyRate, IPeriod remainingDays, IInnerPublisher publisher, IProduct product, IAccount account) {
 		this.name = name;
 		this.borrowedMoney = borrowedMoney;
 		this.period = period;
@@ -43,6 +45,7 @@ public class Credit implements ICredit {
 		this.product = product;
 		this.interestRate = this.product.getInterestRate();
 		this.previousInterestRate = this.interestRate.toDouble();
+		this.account = account;
 	}
 
 	@Override
@@ -82,9 +85,19 @@ public class Credit implements ICredit {
 	public void recalculate(Double money) {
 		Double previousValue = remainingMoney.getValue();
 		remainingMoney.take(money);
+		
+		if(creditIsDone()) {
+			account.remove(this);
+			publisher.notifySubscribers();
+			return;
+		}
 
 		dailyRate.recalculate(previousValue, remainingMoney.getValue(), remainingDays.getNumberOfDays());
 		publisher.notifySubscribers();
+	}
+
+	private boolean creditIsDone() {
+		return remainingMoney.getValue() <= 0;
 	}
 
 	@Override
