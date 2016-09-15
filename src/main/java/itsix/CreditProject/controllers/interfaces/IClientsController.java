@@ -3,7 +3,7 @@ package itsix.CreditProject.controllers.interfaces;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.views.ClientView;
 
-public interface IClientController {
+public interface IClientsController {
 
 	void goToNewClientView();
 

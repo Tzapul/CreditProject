@@ -24,4 +24,6 @@ public interface IProductsController {
 	void clearDescription();
 
 	AbstractListModel<IProduct> createCreditList();
+
+	void toggleEditButton();
 }

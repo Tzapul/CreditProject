@@ -105,4 +105,9 @@ public class ProductRepository implements IProductRepository {
 		publisher.notifySubscribers();
 	}
 
+	@Override
+	public boolean hasNoCredits() {
+		return products.size() == 0;
+	}
+
 }

@@ -12,7 +12,7 @@ import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
 import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.controllers.interfaces.IClientBuilder;
-import itsix.CreditProject.controllers.interfaces.IClientController;
+import itsix.CreditProject.controllers.interfaces.IClientsController;
 import itsix.CreditProject.controllers.interfaces.INewAccountController;
 import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
@@ -30,7 +30,7 @@ import itsix.CreditProject.views.ClientView;
 import itsix.CreditProject.views.NewAccountView;
 import itsix.CreditProject.views.NewClientView;
 
-public class ClientController implements IClientController {
+public class ClientsController implements IClientsController {
 
 	private IRepository repository;
 
@@ -42,7 +42,7 @@ public class ClientController implements IClientController {
 
 	private IClientValidator clientValidator;
 
-	public ClientController(ICurrencyRepository currencyRepository, IRepository repository,
+	public ClientsController(ICurrencyRepository currencyRepository, IRepository repository,
 			IClientValidator clientValidator) {
 		this.currencyRepository = currencyRepository;
 		this.repository = repository;

@@ -25,6 +25,7 @@ import javax.swing.event.DocumentListener;
 import org.apache.commons.lang.mutable.MutableDouble;
 
 import itsix.CreditProject.controllers.interfaces.INewProductController;
+import itsix.CreditProject.controllers.interfaces.IProductsController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.interfaces.ICurrency;
@@ -46,11 +47,13 @@ public class NewProductView extends JFrame {
 
 	private JComboBox<ICurrency> currencyComboBox;
 
-	private INewProductController controller;
+	private INewProductController newProductController;
+	private IProductsController productsController;
+	
 	private JTextField maxPeriodTextField;
 
 	public NewProductView(INewProductController controller) {
-		this.controller = controller;
+		this.newProductController = controller;
 		initialize();
 	}
 
@@ -117,7 +120,7 @@ public class NewProductView extends JFrame {
 
 			public void update() {
 				if (interestIsNotNull()) {
-					controller.updateRealInterestRate();
+					newProductController.updateRealInterestRate();
 				}
 			}
 		});
@@ -127,7 +130,7 @@ public class NewProductView extends JFrame {
 		add(lblCurrency);
 
 		currencyComboBox = new JComboBox<>();
-		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getCurrencies()));
+		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(newProductController.getCurrencies()));
 		currencyComboBox.setBounds(179, 183, 85, 20);
 		add(currencyComboBox);
 
@@ -140,8 +143,8 @@ public class NewProductView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.changeToFixedBuilder();
-				controller.setLabelsInvisible();
+				newProductController.changeToFixedBuilder();
+				newProductController.setLabelsInvisible();
 			}
 		});
 		add(rdbtnFixedInterest);
@@ -152,8 +155,8 @@ public class NewProductView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.changeToVariableBuilder();
-				controller.setLabelsVisible();
+				newProductController.changeToVariableBuilder();
+				newProductController.setLabelsVisible();
 			}
 		});
 		add(rdbtnVariableInterest);
@@ -167,7 +170,8 @@ public class NewProductView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.createNewCredit();
+				newProductController.createNewCredit();
+				productsController.toggleEditButton();
 			}
 		});
 
@@ -281,5 +285,9 @@ public class NewProductView extends JFrame {
 
 	public Integer getMaxPeriod() {
 		return Integer.valueOf(maxPeriodTextField.getText());
+	}
+
+	public void setProductsController(IProductsController productsController) {
+		this.productsController = productsController;
 	}
 }

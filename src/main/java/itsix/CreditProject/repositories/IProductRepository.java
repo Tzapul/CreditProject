@@ -22,4 +22,6 @@ public interface IProductRepository extends IPublisher {
 
 	void updateProduct(IProduct product, IProduct updatedProduct);
 
+	boolean hasNoCredits();
+
 }

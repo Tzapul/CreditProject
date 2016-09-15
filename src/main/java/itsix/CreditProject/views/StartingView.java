@@ -57,7 +57,7 @@ public class StartingView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.goToProductsWindow();
+				controller.showProductsWindow();
 			}
 		});
 
@@ -69,7 +69,7 @@ public class StartingView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.goToClientsWindow();
+				controller.showClientsWindow();
 			}
 		});
 		btnClients.setBounds(311, 382, 130, 40);

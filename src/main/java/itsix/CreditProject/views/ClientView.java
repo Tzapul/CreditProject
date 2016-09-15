@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import itsix.CreditProject.controllers.interfaces.IClientController;
+import itsix.CreditProject.controllers.interfaces.IClientsController;
 import itsix.CreditProject.customs.AccountTableModel;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.interfaces.IAccount;
@@ -41,14 +41,14 @@ public class ClientView extends JFrame implements ISubscriber {
 
 	private JTable accountsTable;
 
-	private IClientController controller;
+	private IClientsController controller;
 
 	private AccountTableModel tableModel;
 
 	private JButton btnNewAccount;
 	private JButton btnSaveCredentials;
 
-	public ClientView(IClientController controller) {
+	public ClientView(IClientsController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -193,7 +193,7 @@ public class ClientView extends JFrame implements ISubscriber {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible(false);
 			}
 		});
 

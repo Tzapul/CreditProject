@@ -89,6 +89,10 @@ public class VariableInterestProduct implements IProduct {
 	public Integer getMaxPeriod() {
 		return product.getMaxPeriod();
 	}
+	
+	public IProduct getProduct() {
+		return product;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -98,7 +102,7 @@ public class VariableInterestProduct implements IProduct {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FixedInterestProduct other = (FixedInterestProduct) obj;
+		VariableInterestProduct other = (VariableInterestProduct) obj;
 
 		if (product == null) {
 			if (other.getProduct() != null)

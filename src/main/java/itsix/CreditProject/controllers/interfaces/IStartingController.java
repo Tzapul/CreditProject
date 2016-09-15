@@ -3,8 +3,8 @@ package itsix.CreditProject.controllers.interfaces;
 public interface IStartingController {
 
 
-	void goToClientsWindow();
+	void showClientsWindow();
 
-	void goToProductsWindow();
+	void showProductsWindow();
 
 }

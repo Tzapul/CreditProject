@@ -33,10 +33,12 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 	private JList<IProduct> productsList;
 	private JTextPane descriptionTextPane;
-	private IProductsController controller;
+	private IProductsController productsController;
+	
+	private JButton btnEditProduct;
 
 	public ProductsView(IProductsController controller, IRepository repository) {
-		this.controller = controller;
+		this.productsController = controller;
 		repository.getProductRepository().subscribe(this);
 		initialize();
 	}
@@ -53,7 +55,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.goToNewProductView();
+				productsController.goToNewProductView();
 			}
 		});
 		setLayout(null);
@@ -69,13 +71,13 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 		add(descriptionTextPane);
 
-		JButton btnEditProduct = new JButton("Edit Product");
+		btnEditProduct = new JButton("Edit Product");
 		btnEditProduct.setBounds(245, 413, 100, 23);
 		btnEditProduct.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.goToEditProduct();
+				productsController.goToEditProduct();
 			}
 		});
 		add(btnEditProduct);
@@ -87,7 +89,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 		productsList = new JList<>();
 		creditsScrollPane.setViewportView(productsList);
 
-		AbstractListModel<IProduct> model = new ProductList(controller.getCreditsList());
+		AbstractListModel<IProduct> model = new ProductList(productsController.getCreditsList());
 		productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		productsList.setModel(model);
 		productsList.setSelectedIndex(0);
@@ -97,7 +99,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!productsList.isSelectionEmpty()) {
-					controller.setDescriptionText(getSelectedProductDescription());
+					productsController.setDescriptionText(getSelectedProductDescription());
 				}
 			}
 		});
@@ -109,10 +111,13 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.clearDescription();
-				controller.delete(productsList.getSelectedValue());
+				productsController.clearDescription();
+				productsController.delete(productsList.getSelectedValue());
+				productsController.toggleEditButton();
 			}
 		});
+		
+		productsController.toggleEditButton();
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -129,7 +134,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible(false);
 			}
 		});
 	}
@@ -141,7 +146,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 	@Override
 	public void update() {
-		AbstractListModel<IProduct> model = controller.createCreditList();
+		AbstractListModel<IProduct> model = productsController.createCreditList();
 		productsList.setModel(model);
 		productsList.setSelectedIndex(0);
 	}
@@ -156,5 +161,17 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 	public void clearDescription() {
 		descriptionTextPane.setText("");
+	}
+
+	public IProduct getProductsListSelectedValue() {
+		return productsList.getSelectedValue();
+	}
+
+	public void setEditDisabled() {
+		btnEditProduct.setEnabled(false);
+	}
+	
+	public void setEditEnabled() {
+		btnEditProduct.setEnabled(true);
 	}
 }
