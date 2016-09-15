@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import org.apache.commons.lang.mutable.MutableDouble;
@@ -35,12 +37,12 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 	private static final long serialVersionUID = 1L;
 
 	private JTextField nameTextField;
-	
+
 	private JTextField minValueTextField;
 	private JTextField maxValueTextField;
-	
+
 	private JTextField interestRateTextField;
-	
+
 	private JTextField minPeriodTextField;
 	private JTextField maxPeriodTextField;
 
@@ -50,6 +52,19 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 
 	public EditFixedProductView(IEditFixedProductController controller) {
 		this.controller = controller;
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+
 		initialize();
 	}
 
@@ -57,7 +72,7 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 
 		setTitle("Edit Fixed Product");
 		setBounds(100, 100, 300, 400);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
@@ -145,7 +160,7 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 				e.getWindow().dispose();
 			}
 		});
-		
+
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				"Cancel"); //$NON-NLS-1$
 		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
@@ -189,10 +204,10 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
 
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
-		
+
 		double interestRateValue = Double.valueOf(interestRateTextField.getText());
 		MutableDouble interestRate = new MutableDouble(interestRateValue);
-		
+
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());
 		IInterval period = new PeriodInterval(new Interval(minPeriod, maxPeriod));

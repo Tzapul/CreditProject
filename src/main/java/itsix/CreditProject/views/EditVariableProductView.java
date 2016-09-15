@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -36,34 +38,46 @@ import itsix.CreditProject.models.interfaces.IProduct;
 public class EditVariableProductView extends JFrame implements IEditProductView {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JTextField nameTextField;
-	
+
 	private JTextField minValueTextField;
 	private JTextField maxValueTextField;
-	
+
 	private JTextField interestRateTextField;
-	
+
 	private JTextField minPeriodTextField;
 	private JTextField maxPeriodTextField;
 
 	private JLabel lblRealInterestRateValue;
-	
+
 	private JComboBox<ICurrency> currencyComboBox;
 
 	private IEditVariableProductController controller;
 
-	
 	public EditVariableProductView(IEditVariableProductController controller) {
 		this.controller = controller;
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+
 		initialize();
 	}
 
 	private void initialize() {
-		
+
 		setTitle("Edit Variable Product");
 		setBounds(100, 100, 300, 500);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 
@@ -165,19 +179,19 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 		maxPeriodTextField.setBounds(170, 272, 86, 20);
 		add(maxPeriodTextField);
 		maxPeriodTextField.setColumns(10);
-		
+
 		JLabel lblRealInterestRate = new JLabel("Real Interest rate (%) :");
 		lblRealInterestRate.setBounds(25, 320, 118, 14);
 		add(lblRealInterestRate);
-		
+
 		lblRealInterestRateValue = new JLabel("");
 		lblRealInterestRateValue.setBounds(170, 320, 86, 14);
 		add(lblRealInterestRateValue);
-		
+
 		JLabel lblIndicator = new JLabel("Indicator :");
 		lblIndicator.setBounds(25, 358, 99, 14);
 		add(lblIndicator);
-		
+
 		JLabel lblIndicatorValue = new JLabel("");
 		lblIndicatorValue.setBounds(170, 358, 86, 14);
 		lblIndicatorValue.setText(controller.getIndicator());
@@ -191,7 +205,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 				e.getWindow().dispose();
 			}
 		});
-		
+
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				"Cancel"); //$NON-NLS-1$
 		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
@@ -239,10 +253,11 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 		IInterval moneyInterval = new MoneyInterval(new Interval(minValue, maxValue));
 
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
-		
-		double interestRateValue = Double.valueOf(interestRateTextField.getText()) + Double.valueOf(controller.getIndicator());
+
+		double interestRateValue = Double.valueOf(interestRateTextField.getText())
+				+ Double.valueOf(controller.getIndicator());
 		MutableDouble interestRate = new MutableDouble(interestRateValue);
-		
+
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());
 		IInterval period = new PeriodInterval(new Interval(minPeriod, maxPeriod));
@@ -259,7 +274,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 	public void setMaxPeriod(Integer maxPeriod) {
 		maxPeriodTextField.setText(String.valueOf(maxPeriod));
 	}
-	
+
 	public IEditVariableProductController getController() {
 		return controller;
 	}
@@ -268,7 +283,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 	public void setControllerProduct(IProduct product) {
 		controller.setProduct(product);
 	}
-	
+
 	public void assignInterestRateValue(Double value) {
 		if (interestIsNotNull()) {
 			DecimalFormat df = new DecimalFormat("#.###");

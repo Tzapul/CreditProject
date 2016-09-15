@@ -45,9 +45,8 @@ public class ProductsController implements IProductsController {
 	}
 
 	@Override
-	public void goToNewCreditView() {
+	public void goToNewProductView() {
 
-		// Initialize interval and credit builders
 		IIntervalBuilder intervalBuilder = new IntervalBuilder();
 		IFixedInterestProductBuilder fixedInterestBuilder = new FixedInterestProductBuilder(intervalBuilder);
 		IVariableInterestProductBuilder variableInterestBuilder = new VariableInterestProductBuilder(intervalBuilder,

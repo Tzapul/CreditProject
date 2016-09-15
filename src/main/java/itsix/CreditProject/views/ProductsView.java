@@ -53,7 +53,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.goToNewCreditView();
+				controller.goToNewProductView();
 			}
 		});
 		setLayout(null);

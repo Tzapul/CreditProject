@@ -9,7 +9,7 @@ import itsix.CreditProject.views.ProductsView;
 
 public interface IProductsController {
 
-	void goToNewCreditView();
+	void goToNewProductView();
 
 	List<IProduct> getCreditsList();
 
