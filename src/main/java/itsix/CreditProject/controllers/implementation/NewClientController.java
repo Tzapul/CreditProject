@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import itsix.CreditProject.controllers.interfaces.IClientBuilder;
+import itsix.CreditProject.builders.interfaces.IClientBuilder;
 import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.exceptions.ClientNotFoundException;
 import itsix.CreditProject.models.interfaces.IClient;
@@ -21,30 +21,30 @@ public class NewClientController implements INewClientController {
 
 	private IClientRepository clientRepository;
 
-	private NewClientView view;
+	private NewClientView newClientView;
 
 	private IClientBuilder builder;
 
 	private IClientValidator validator;
 
 	public NewClientController(IClientRepository clientRepository, IClientBuilder builder, IClientValidator validator) {
-		super();
 		this.clientRepository = clientRepository;
 		this.builder = builder;
 		this.validator = validator;
 	}
 
 	@Override
-	public void setView(NewClientView view) {
-		this.view = view;
+	public void setView(NewClientView newClientView) {
+		this.newClientView = newClientView;
 	}
 
 	@Override
 	public void addClient() {
 		List<ISubscriber> subscribers = new ArrayList<>();
 		IInnerPublisher publisher = new Publisher(subscribers);
-		IClient client = builder.build(view.getSSN(), view.getFirstname(), view.getLastname(), view.getAddress(),
-				publisher);
+
+		IClient client = builder.build(newClientView.getSSN(), newClientView.getFirstname(),
+				newClientView.getLastname(), newClientView.getAddress(), publisher);
 
 		IValidatorResult result = validator.validateFields(client);
 
@@ -56,9 +56,12 @@ public class NewClientController implements INewClientController {
 
 		try {
 			clientRepository.addNewClient(client);
-			view.dispose();
+			newClientView.dispose();
+			newClientView.clear();
+			JOptionPane.showMessageDialog(null, "Successfully created the client!", "Created",
+					JOptionPane.INFORMATION_MESSAGE);
 		} catch (ClientNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "Client already exists", "Not found", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Client already exist!", "Not found", JOptionPane.WARNING_MESSAGE);
 		}
 
 	}

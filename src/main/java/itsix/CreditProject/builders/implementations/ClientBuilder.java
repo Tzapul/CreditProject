@@ -1,13 +1,13 @@
 package itsix.CreditProject.builders.implementations;
 
-import itsix.CreditProject.controllers.interfaces.IClientBuilder;
+import itsix.CreditProject.builders.interfaces.IClientBuilder;
 import itsix.CreditProject.models.implementations.Client;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.repositories.IClientRepository;
 
-public class ClientBuilder implements IClientBuilder {
+public class ClientBuilder implements IClientBuilder{
 
 	
 	private IClientRepository clientRepository;

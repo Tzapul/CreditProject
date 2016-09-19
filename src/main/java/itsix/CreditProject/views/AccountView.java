@@ -26,6 +26,7 @@ import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.customs.CreditsTableModel;
 import itsix.CreditProject.customs.IntegerJTextField;
 import itsix.CreditProject.models.interfaces.IAccount;
+import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.pubSub.ISubscriber;
 
@@ -33,7 +34,7 @@ public class AccountView extends JFrame implements ISubscriber {
 
 	private static final long serialVersionUID = 1L;
 
-	private IAccountController controller;
+	private IAccountController accountController;
 	private JLabel lblCurrenyValue;
 
 	private JTextField soldTextField;
@@ -46,8 +47,7 @@ public class AccountView extends JFrame implements ISubscriber {
 	private JButton btnDeposit;
 
 	public AccountView(IAccountController controller) {
-		this.controller = controller;
-		controller.getAccount().subscribe(this);
+		this.accountController = controller;
 		initialize();
 	}
 
@@ -98,7 +98,7 @@ public class AccountView extends JFrame implements ISubscriber {
 			}
 
 			public void update() {
-				controller.toggleOperationButtons();
+				accountController.toggleOperationButtons();
 			}
 		});
 
@@ -110,7 +110,7 @@ public class AccountView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controller.depositMoney();
+				accountController.depositMoney();
 				moneyTextField.setText("0");
 			}
 		});
@@ -123,7 +123,7 @@ public class AccountView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controller.withdrawMoney();
+				accountController.withdrawMoney();
 			}
 		});
 
@@ -135,7 +135,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		creditsTable.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				if (me.getClickCount() == 2) {
-					controller.goToCreditView();
+					accountController.goToCreditView();
 				}
 			}
 		});
@@ -152,7 +152,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		btnMakeCredit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controller.goToMakeCreditView();
+				accountController.goToMakeCreditView();
 			}
 		});
 
@@ -190,7 +190,7 @@ public class AccountView extends JFrame implements ISubscriber {
 
 	@Override
 	public void update() {
-		IAccount account = controller.getAccount();
+		IAccount account = accountController.getAccount();
 		DecimalFormat df = new DecimalFormat("#.###");
 		soldTextField.setText(String.valueOf(df.format(account.getSold())));
 		creditsModel = new CreditsTableModel(account.getCredits());
@@ -218,5 +218,13 @@ public class AccountView extends JFrame implements ISubscriber {
 
 	public ICredit getSelectedCredit() {
 		return creditsModel.getRow(creditsTable.getSelectedRow());
+	}
+
+	public void show(IClient currentClient, IAccount account) {
+		account.subscribe(this);
+		setVisible(true);
+		accountController.setClient(currentClient);
+		accountController.setAccount(account);
+		accountController.updateFields();
 	}
 }

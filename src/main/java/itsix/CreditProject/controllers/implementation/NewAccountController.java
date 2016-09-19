@@ -20,14 +20,14 @@ import itsix.CreditProject.views.NewAccountView;
 
 public class NewAccountController implements INewAccountController {
 
-	private IClient client;
+	private IClient currentClient;
 
 	private NewAccountView view;
 
 	private ICurrencyRepository currencyRepository;
 
 	public NewAccountController(IClient client, ICurrencyRepository currencyRepository) {
-		this.client = client;
+		this.currentClient = client;
 		this.currencyRepository = currencyRepository;
 	}
 
@@ -40,7 +40,7 @@ public class NewAccountController implements INewAccountController {
 
 		IAccount account = new Account(view.getCurrency(), credits, sold, publisher);
 
-		client.addAccount(account);
+		currentClient.addAccount(account);
 		view.dispose();
 	}
 
@@ -51,7 +51,12 @@ public class NewAccountController implements INewAccountController {
 
 	@Override
 	public Vector<ICurrency> getRemainingCurrencies() {
-		return currencyRepository.getRemainingCurrencies(client.getCurrencies());
+		return currencyRepository.getRemainingCurrencies(currentClient.getCurrencies());
+	}
+
+	@Override
+	public void setClient(IClient currentClient) {
+		this.currentClient = currentClient;
 	}
 
 }

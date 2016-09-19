@@ -9,25 +9,38 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import itsix.CreditProject.builders.implementations.AccountBuilder;
+import itsix.CreditProject.builders.implementations.ClientBuilder;
 import itsix.CreditProject.builders.implementations.CurrencyBuilder;
 import itsix.CreditProject.builders.implementations.FixedInterestProductBuilder;
 import itsix.CreditProject.builders.implementations.IntervalBuilder;
+import itsix.CreditProject.builders.implementations.OperationBuilder;
+import itsix.CreditProject.builders.implementations.PaymentBuilder;
 import itsix.CreditProject.builders.implementations.VariableInterestProductBuilder;
 import itsix.CreditProject.builders.interfaces.IAccountBuilder;
+import itsix.CreditProject.builders.interfaces.IClientBuilder;
 import itsix.CreditProject.builders.interfaces.ICurrencyBuilder;
 import itsix.CreditProject.builders.interfaces.IFixedInterestProductBuilder;
 import itsix.CreditProject.builders.interfaces.IIntervalBuilder;
+import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
+import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
 import itsix.CreditProject.builders.interfaces.IVariableInterestProductBuilder;
+import itsix.CreditProject.controllers.implementation.AccountController;
 import itsix.CreditProject.controllers.implementation.ClientsController;
 import itsix.CreditProject.controllers.implementation.DaysController;
 import itsix.CreditProject.controllers.implementation.EditFixedProductController;
 import itsix.CreditProject.controllers.implementation.EditVariableProductController;
+import itsix.CreditProject.controllers.implementation.NewAccountController;
+import itsix.CreditProject.controllers.implementation.NewClientController;
 import itsix.CreditProject.controllers.implementation.NewProductController;
 import itsix.CreditProject.controllers.implementation.ProductsController;
 import itsix.CreditProject.controllers.implementation.StartingController;
+import itsix.CreditProject.controllers.interfaces.IAccountController;
+import itsix.CreditProject.controllers.interfaces.IClientsController;
 import itsix.CreditProject.controllers.interfaces.IDaysController;
 import itsix.CreditProject.controllers.interfaces.IEditFixedProductController;
 import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
+import itsix.CreditProject.controllers.interfaces.INewAccountController;
+import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.INewProductController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.controllers.interfaces.IStartingController;
@@ -53,11 +66,14 @@ import itsix.CreditProject.validator.IValidatorResultBuilder;
 import itsix.CreditProject.validator.ProductValidator;
 import itsix.CreditProject.validator.Validator;
 import itsix.CreditProject.validator.ValidatorResultBuilder;
+import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.ClientView;
 import itsix.CreditProject.views.DaysView;
 import itsix.CreditProject.views.EditFixedProductView;
 import itsix.CreditProject.views.EditVariableProductView;
 import itsix.CreditProject.views.IEditProductView;
+import itsix.CreditProject.views.NewAccountView;
+import itsix.CreditProject.views.NewClientView;
 import itsix.CreditProject.views.NewProductView;
 import itsix.CreditProject.views.ProductsView;
 import itsix.CreditProject.views.StartingView;
@@ -84,19 +100,22 @@ public class App extends JFrame {
 						productRepository);
 
 				productRepository.insertCredits(mainRepository);
-				
-				//initializing map for editViews
+
+				//
+				IClientBuilder clientBuilder = new ClientBuilder(clientRepository);
+
+				// initializing map for editViews
 				IProductValidator productValidator = initializeProductValidator();
 				Map<Class<?>, IEditProductView> editViews = new HashMap<>();
 				initializeMap(editViews, productValidator, mainRepository);
 
-				//Initializing new product view and controller
+				// Initializing new product view and controller
 				INewProductController newProductController = initializeNewProductController(mainRepository,
 						productValidator);
 				NewProductView newProductView = new NewProductView(newProductController);
 				newProductController.setView(newProductView);
 
-				//Initializing products view and controller
+				// Initializing products view and controller
 				ProductsController productsController = new ProductsController(mainRepository, editViews,
 						newProductView);
 				ProductsView productsView = new ProductsView(productsController, mainRepository);
@@ -104,21 +123,43 @@ public class App extends JFrame {
 
 				newProductView.setProductsController(productsController);
 
-				//Initializing client validator
+				// Initializing client validator
 				IClientValidator clientValidator = initializeClientValidator();
-				
-				//Initializing clients view and controller
-				ClientsController clientsController = new ClientsController(currencyRepository, mainRepository,
+
+				// Initializing new client view and controller
+				INewClientController newClientController = new NewClientController(clientRepository, clientBuilder,
 						clientValidator);
+				NewClientView newClientView = new NewClientView(newClientController);
+				newClientController.setView(newClientView);
+
+				// Initializing new account view and controller
+				IOpertationBuilder operationBuilder = new OperationBuilder();
+
+				IPaymentBuilder paymentBuilder = new PaymentBuilder();
+
+				IAccountController accountController = new AccountController(null, null, mainRepository,
+						operationBuilder, paymentBuilder);
+				AccountView accountView = new AccountView(accountController);
+				accountController.setView(accountView);
+
+				// Initializing new account controller
+				INewAccountController newAccountController = new NewAccountController(null, currencyRepository);
+				NewAccountView newAccountView = new NewAccountView(newAccountController);
+				newAccountController.setView(newAccountView);
+
+				// Initializing clients view and controller
+				IClientsController clientsController = new ClientsController(currencyRepository, mainRepository,
+						clientValidator, clientBuilder, newClientView, accountView, newAccountView);
 				ClientView clientsView = new ClientView(clientsController);
 				clientsController.setView(clientsView);
+				newAccountView.setClientsController(clientsController);
 
-				//Initializing starting view and controller
-				IStartingController controller = new StartingController(productsView, clientsView);
-				StartingView view = new StartingView(controller);
+				// Initializing starting view and controller
+				IStartingController startingController = new StartingController(productsView, clientsView);
+				StartingView view = new StartingView(startingController);
 				view.setVisible(true);
 
-				//Initializing days view and controller
+				// Initializing days view and controller
 				IDaysController daysController = new DaysController(mainRepository);
 				DaysView daysView = new DaysView(daysController);
 				daysView.setVisible(true);

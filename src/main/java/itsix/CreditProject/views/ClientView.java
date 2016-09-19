@@ -41,7 +41,7 @@ public class ClientView extends JFrame implements ISubscriber {
 
 	private JTable accountsTable;
 
-	private IClientsController controller;
+	private IClientsController clientController;
 
 	private AccountTableModel tableModel;
 
@@ -49,7 +49,7 @@ public class ClientView extends JFrame implements ISubscriber {
 	private JButton btnSaveCredentials;
 
 	public ClientView(IClientsController controller) {
-		this.controller = controller;
+		this.clientController = controller;
 		initialize();
 	}
 
@@ -103,7 +103,7 @@ public class ClientView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controller.searchForClient();
+				clientController.searchForClient();
 			}
 		});
 
@@ -133,7 +133,7 @@ public class ClientView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controller.updateClient();
+				clientController.updateClient();
 			}
 		});
 
@@ -146,7 +146,7 @@ public class ClientView extends JFrame implements ISubscriber {
 		accountsTable.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				if (me.getClickCount() == 2) {
-					controller.goToAccountView();
+					clientController.goToAccountView();
 				}
 			}
 		});
@@ -165,14 +165,14 @@ public class ClientView extends JFrame implements ISubscriber {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.goToNewAccountView();
+				clientController.goToNewAccountView();
 			}
 		});
 
 		JButton btnNewClient = new JButton("New Client");
 		btnNewClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				controller.goToNewClientView();
+				clientController.goToNewClientView();
 			}
 		});
 		btnNewClient.setBounds(312, 206, 120, 23);
@@ -183,13 +183,13 @@ public class ClientView extends JFrame implements ISubscriber {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				setVisible(false);
 			}
 		});
 
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-				"Cancel"); //$NON-NLS-1$
-		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
+				"Cancel");
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
@@ -212,7 +212,7 @@ public class ClientView extends JFrame implements ISubscriber {
 		tableModel = new AccountTableModel(currentClient.getAccounts());
 		accountsTable.setModel(tableModel);
 
-		controller.hasAllAccounts();
+		clientController.hasAllAccounts();
 	}
 
 	public void clearSearchTextField() {
@@ -236,12 +236,12 @@ public class ClientView extends JFrame implements ISubscriber {
 	}
 
 	public void subscribe() {
-		controller.getCurrentClient().subscribe(this);
+		clientController.getCurrentClient().subscribe(this);
 	}
 
 	@Override
 	public void update() {
-		controller.updateTableModel();
+		clientController.updateTableModel();
 	}
 
 	public void setNewAccountDisabled() {
@@ -265,12 +265,12 @@ public class ClientView extends JFrame implements ISubscriber {
 		firstnameTextField.setText("");
 		lastnameTextField.setText("");
 		addressTextField.setText("");
-		
+
 		btnNewAccount.setEnabled(false);
 		btnSaveCredentials.setEnabled(false);
-		
+
 		searchTextField.setText("0");
-		
+
 		tableModel = new AccountTableModel(new ArrayList<IAccount>());
 		accountsTable.setModel(tableModel);
 	}

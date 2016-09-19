@@ -34,7 +34,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 	private JList<IProduct> productsList;
 	private JTextPane descriptionTextPane;
 	private IProductsController productsController;
-	
+
 	private JButton btnEditProduct;
 
 	public ProductsView(IProductsController controller, IRepository repository) {
@@ -116,8 +116,6 @@ public class ProductsView extends JFrame implements ISubscriber {
 				productsController.toggleEditButton();
 			}
 		});
-		
-		productsController.toggleEditButton();
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -129,8 +127,8 @@ public class ProductsView extends JFrame implements ISubscriber {
 		});
 
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-				"Cancel"); //$NON-NLS-1$
-		getRootPane().getActionMap().put("Cancel", new AbstractAction() { //$NON-NLS-1$
+				"Cancel");
+		getRootPane().getActionMap().put("Cancel", new AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
@@ -170,7 +168,7 @@ public class ProductsView extends JFrame implements ISubscriber {
 	public void setEditDisabled() {
 		btnEditProduct.setEnabled(false);
 	}
-	
+
 	public void setEditEnabled() {
 		btnEditProduct.setEnabled(true);
 	}

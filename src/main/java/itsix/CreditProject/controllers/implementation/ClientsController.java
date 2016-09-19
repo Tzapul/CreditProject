@@ -5,18 +5,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import itsix.CreditProject.builders.implementations.ClientBuilder;
-import itsix.CreditProject.builders.implementations.OperationBuilder;
-import itsix.CreditProject.builders.implementations.PaymentBuilder;
-import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
-import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
-import itsix.CreditProject.controllers.interfaces.IAccountController;
-import itsix.CreditProject.controllers.interfaces.IClientBuilder;
+import itsix.CreditProject.builders.interfaces.IClientBuilder;
 import itsix.CreditProject.controllers.interfaces.IClientsController;
-import itsix.CreditProject.controllers.interfaces.INewAccountController;
-import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
-import itsix.CreditProject.models.implementations.Client;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.pubSub.IInnerPublisher;
@@ -36,36 +27,46 @@ public class ClientsController implements IClientsController {
 
 	private ICurrencyRepository currencyRepository;
 
-	private ClientView view;
+	private ClientView clientView;
+	private NewClientView newClientView;
+	private AccountView accountView;
+	private NewAccountView newAccountView;
 
 	private IClient currentClient;
 
 	private IClientValidator clientValidator;
 
+	private IClientBuilder clientBuilder;
+
 	public ClientsController(ICurrencyRepository currencyRepository, IRepository repository,
-			IClientValidator clientValidator) {
+			IClientValidator clientValidator, IClientBuilder clientBuilder, NewClientView newClientView,
+			AccountView accountView, NewAccountView newAccountView) {
 		this.currencyRepository = currencyRepository;
 		this.repository = repository;
 		this.clientValidator = clientValidator;
+		this.clientBuilder = clientBuilder;
+		this.newClientView = newClientView;
+		this.accountView = accountView;
+		this.newAccountView = newAccountView;
 	}
 
-	public void setView(ClientView view) {
-		this.view = view;
+	public void setView(ClientView clientView) {
+		this.clientView = clientView;
 	}
 
 	@Override
 	public void searchForClient() {
 
 		try {
-			currentClient = repository.getClientRepository().searchForClient(view.getSearchSSN());
+			currentClient = repository.getClientRepository().searchForClient(clientView.getSearchSSN());
 
-			view.subscribe();
-			view.paintClient(currentClient);
-			view.clearSearchTextField();
-			view.setUpdateClientEnabled();
+			clientView.subscribe();
+			clientView.paintClient(currentClient);
+			clientView.clearSearchTextField();
+			clientView.setUpdateClientEnabled();
 
 		} catch (Exception e) {
-			view.resetClient();
+			clientView.resetClient();
 			JOptionPane.showMessageDialog(null, "Client not found!", null, JOptionPane.WARNING_MESSAGE);
 		}
 
@@ -74,8 +75,8 @@ public class ClientsController implements IClientsController {
 	@Override
 	public void updateClient() {
 
-		IClient updatedClient = new Client(view.getsSN(), view.getFirstname(), view.getLastname(), view.getAddress(),
-				null);
+		IClient updatedClient = clientBuilder.build(clientView.getsSN(), clientView.getFirstname(),
+				clientView.getLastname(), clientView.getAddress(), null);
 
 		IValidatorResult result = clientValidator.validateFields(updatedClient);
 
@@ -85,66 +86,39 @@ public class ClientsController implements IClientsController {
 			return;
 		}
 
-		currentClient.update(view.getFirstname(), view.getLastname(), view.getAddress());
-		JOptionPane.showMessageDialog(null, "Client was successfully updated!", "Client Updated", JOptionPane.INFORMATION_MESSAGE);
+		currentClient.update(clientView.getFirstname(), clientView.getLastname(), clientView.getAddress());
+		JOptionPane.showMessageDialog(null, "Client was successfully updated!", "Client Updated",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
 	public void goToNewClientView() {
-
-		IClientBuilder clientBuilder = new ClientBuilder(repository.getClientRepository());
-
-		INewClientController controller = new NewClientController(repository.getClientRepository(), clientBuilder,
-				clientValidator);
-
-		NewClientView newClientView = new NewClientView(controller);
-
 		newClientView.setVisible(true);
-		controller.setView(newClientView);
-
 	}
 
 	@Override
 	public void goToAccountView() {
 
-		IAccount account = view.getSelectedAccount();
+		IAccount account = clientView.getSelectedAccount();
 
 		List<ISubscriber> subscribers = new ArrayList<>();
 		IInnerPublisher publisher = new Publisher(subscribers);
+
 		account.setPublisher(publisher);
+		account.subscribe(clientView);
 
-		IOpertationBuilder operationBuilder = new OperationBuilder();
-
-		IPaymentBuilder paymentBuilder = new PaymentBuilder();
-
-		IAccountController controller = new AccountController(currentClient, account, repository, operationBuilder,
-				paymentBuilder);
-
-		AccountView accountView = new AccountView(controller);
-
-		account.subscribe(view);
-		accountView.setVisible(true);
-		controller.setView(accountView);
-		controller.updateFields();
+		accountView.show(currentClient, account);
 
 	}
 
 	@Override
 	public void goToNewAccountView() {
-
-		INewAccountController controller = new NewAccountController(currentClient, currencyRepository);
-
-		NewAccountView view = new NewAccountView(controller, this);
-
-		controller.setView(view);
-
-		view.setVisible(true);
-
+		newAccountView.show(currentClient);
 	}
 
 	@Override
 	public void updateTableModel() {
-		view.paintClient(currentClient);
+		clientView.paintClient(currentClient);
 	}
 
 	@Override
@@ -155,9 +129,9 @@ public class ClientsController implements IClientsController {
 	@Override
 	public void hasAllAccounts() {
 		if (currencyRepository.hasAllCurrenciesOf(currentClient)) {
-			view.setNewAccountDisabled();
+			clientView.setNewAccountDisabled();
 		} else {
-			view.setNewAccountEnabled();
+			clientView.setNewAccountEnabled();
 		}
 	}
 

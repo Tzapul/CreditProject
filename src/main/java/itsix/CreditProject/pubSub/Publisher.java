@@ -12,7 +12,9 @@ public class Publisher implements IInnerPublisher {
 
 	@Override
 	public void subscribe(ISubscriber subscriber) {
-		subscribers.add(subscriber);
+		if (!subscribers.contains(subscriber)) {
+			subscribers.add(subscriber);
+		}
 	}
 
 	@Override

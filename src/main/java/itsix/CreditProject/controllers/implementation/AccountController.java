@@ -45,7 +45,7 @@ public class AccountController implements IAccountController {
 
 	private IRepository repository;
 
-	private AccountView view;
+	private AccountView accountView;
 
 	private IAccount account;
 	private IClient client;
@@ -64,19 +64,19 @@ public class AccountController implements IAccountController {
 
 	@Override
 	public void setView(AccountView accountView) {
-		this.view = accountView;
+		this.accountView = accountView;
 	}
 
 	@Override
 	public void updateFields() {
-		view.setSold(account.getSold());
-		view.setCurrency(account.getCurrencyName());
-		view.setTableModel(account.getCredits());
+		accountView.setSold(account.getSold());
+		accountView.setCurrency(account.getCurrencyName());
+		accountView.setTableModel(account.getCredits());
 	}
 
 	@Override
 	public void depositMoney() {
-		account.deposit(view.getMoney());
+		account.deposit(accountView.getMoney());
 		client.addOperation(operationBuilder.buildDepositOperation(repository.getCurrentDay()));
 	}
 
@@ -88,7 +88,7 @@ public class AccountController implements IAccountController {
 	@Override
 	public void withdrawMoney() {
 		try {
-			account.withdraw(view.getMoney());
+			account.withdraw(accountView.getMoney());
 			client.addOperation(operationBuilder.buildWithdrawOperation(repository.getCurrentDay()));
 		} catch (SoldLesserThanZeroException e) {
 			JOptionPane.showMessageDialog(null, "Sold can't be lesser than 0!", null, JOptionPane.WARNING_MESSAGE);
@@ -137,19 +137,19 @@ public class AccountController implements IAccountController {
 
 	@Override
 	public void toggleOperationButtons() {
-		if (view.moneyValueisZero()) {
-			view.disableButtons();
+		if (accountView.moneyValueisZero()) {
+			accountView.disableButtons();
 		} else {
-			view.enableButtons();
+			accountView.enableButtons();
 		}
 	}
 
 	@Override
 	public void goToCreditView() {
 		
-		ICredit credit = view.getSelectedCredit();
+		ICredit credit = accountView.getSelectedCredit();
 		
-		credit.subscribe(view);
+		credit.subscribe(accountView);
 		
 		IPayment payment = paymentBuilder.build(credit);
 		IPayment soldPayment = new SoldPayment(payment, account);
@@ -162,6 +162,16 @@ public class AccountController implements IAccountController {
 		creditView.setVisible(true);
 		creditController.setView(creditView);
 		creditController.populateFields();
+	}
+
+	@Override
+	public void setClient(IClient currentClient) {
+		this.client = currentClient;
+	}
+
+	@Override
+	public void setAccount(IAccount account) {
+		this.account = account;
 	}
 
 }

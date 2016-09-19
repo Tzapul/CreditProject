@@ -1,18 +1,5 @@
 package itsix.CreditProject.views;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-
-import itsix.CreditProject.controllers.interfaces.IClientsController;
-import itsix.CreditProject.controllers.interfaces.INewAccountController;
-import itsix.CreditProject.customs.IntegerJTextField;
-import itsix.CreditProject.models.interfaces.ICurrency;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,6 +9,19 @@ import java.awt.event.WindowEvent;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
+
+import itsix.CreditProject.controllers.interfaces.IClientsController;
+import itsix.CreditProject.controllers.interfaces.INewAccountController;
+import itsix.CreditProject.customs.IntegerJTextField;
+import itsix.CreditProject.models.interfaces.IClient;
+import itsix.CreditProject.models.interfaces.ICurrency;
 
 public class NewAccountView extends JFrame {
 
@@ -29,15 +29,14 @@ public class NewAccountView extends JFrame {
 
 	private JTextField soldTextField;
 
-	private INewAccountController controller;
+	private INewAccountController newAccountController;
 
 	private JComboBox<ICurrency> currencyComboBox;
 	
-	private IClientsController clientController;
+	private IClientsController clientsController;
 
-	public NewAccountView(INewAccountController controller, IClientsController clientController) {
-		this.controller = controller;
-		this.clientController = clientController;
+	public NewAccountView(INewAccountController newAccountController) {
+		this.newAccountController = newAccountController;
 		initialize();
 	}
 
@@ -57,7 +56,6 @@ public class NewAccountView extends JFrame {
 
 		currencyComboBox = new JComboBox<ICurrency>();
 		currencyComboBox.setBounds(103, 19, 86, 20);
-		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(controller.getRemainingCurrencies()));
 		add(currencyComboBox);
 
 		soldTextField = new IntegerJTextField();
@@ -73,8 +71,8 @@ public class NewAccountView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controller.createNewAccount();
-				clientController.hasAllAccounts();
+				newAccountController.createNewAccount();
+				clientsController.hasAllAccounts();
 			}
 		});
 		
@@ -104,5 +102,16 @@ public class NewAccountView extends JFrame {
 
 	public ICurrency getCurrency() {
 		return (ICurrency) currencyComboBox.getSelectedItem();
+	}
+	
+	public void setClientsController(IClientsController clientsController) {
+		this.clientsController = clientsController;
+	}
+
+	public void show(IClient currentClient) {
+		setVisible(true);
+		newAccountController.setClient(currentClient);
+		currencyComboBox.setModel(new DefaultComboBoxModel<ICurrency>(newAccountController.getRemainingCurrencies()));
+
 	}
 }

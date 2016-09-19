@@ -24,13 +24,14 @@ public class ProductsController implements IProductsController {
 	private IRepository mainRepository;
 
 	private ProductsView productsView;
+	
 	private NewProductView newProductsView;
-	
 	private IEditProductView editProductView;
-	
+
 	private Map<Class<?>, IEditProductView> editViews;
 
-	public ProductsController(IRepository mainRepository, Map<Class<?>, IEditProductView> editViews, NewProductView newProductsView) {
+	public ProductsController(IRepository mainRepository, Map<Class<?>, IEditProductView> editViews,
+			NewProductView newProductsView) {
 		this.mainRepository = mainRepository;
 		this.editViews = editViews;
 		this.newProductsView = newProductsView;
@@ -39,6 +40,7 @@ public class ProductsController implements IProductsController {
 	@Override
 	public void setView(ProductsView productsView) {
 		this.productsView = productsView;
+		toggleEditButton();
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class ProductsController implements IProductsController {
 	public AbstractListModel<IProduct> createCreditList() {
 		return new ProductList(mainRepository.getProductRepository().getProducts());
 	}
-	
+
 	public IProductValidator initializeProductValidator() {
 
 		IValidatorResultBuilder resultBuilder = new ValidatorResultBuilder();
@@ -93,7 +95,7 @@ public class ProductsController implements IProductsController {
 
 	@Override
 	public void toggleEditButton() {
-		if(mainRepository.getProductRepository().hasNoCredits()) {
+		if (mainRepository.getProductRepository().hasNoCredits()) {
 			productsView.setEditDisabled();
 		} else {
 			productsView.setEditEnabled();
