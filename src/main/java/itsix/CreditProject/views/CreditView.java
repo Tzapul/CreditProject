@@ -1,24 +1,26 @@
 package itsix.CreditProject.views;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import itsix.CreditProject.controllers.interfaces.ICreditController;
-import itsix.CreditProject.customs.DoubleJTextField;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.JRadioButton;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+
+import itsix.CreditProject.controllers.interfaces.ICreditController;
+import itsix.CreditProject.customs.DoubleJTextField;
+import itsix.CreditProject.models.interfaces.IAccount;
+import itsix.CreditProject.models.interfaces.ICredit;
+import itsix.CreditProject.models.interfaces.IPayment;
 
 public class CreditView extends JFrame {
 
@@ -136,7 +138,7 @@ public class CreditView extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				setVisible(false);
 			}
 		});
 
@@ -146,7 +148,7 @@ public class CreditView extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible(false);
 			}
 		});
 	}
@@ -169,5 +171,17 @@ public class CreditView extends JFrame {
 
 	public void setAdvancedPaymentMoney(Double money) {
 		advancedMoneyTextField.setText(String.valueOf(money));
+	}
+
+	public void setCreditName(String name) {
+		lblNameValue.setText(name);
+	}
+
+	public void show(IPayment payment, ICredit credit, IAccount account) {
+		creditController.show(payment, credit, account);
+	}
+
+	protected boolean advancedMoneyIsNotNull() {
+		return !advancedMoneyTextField.getText().equals(null) && advancedMoneyTextField.getText().length() != 0;
 	}
 }

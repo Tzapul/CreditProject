@@ -202,7 +202,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				setVisible(false);
 			}
 		});
 
@@ -212,7 +212,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible(false);
 			}
 		});
 	}

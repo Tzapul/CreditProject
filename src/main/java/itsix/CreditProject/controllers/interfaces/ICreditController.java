@@ -1,5 +1,8 @@
 package itsix.CreditProject.controllers.interfaces;
 
+import itsix.CreditProject.models.interfaces.IAccount;
+import itsix.CreditProject.models.interfaces.ICredit;
+import itsix.CreditProject.models.interfaces.IPayment;
 import itsix.CreditProject.views.CreditView;
 
 public interface ICreditController {
@@ -15,5 +18,7 @@ public interface ICreditController {
 	void populateFields();
 
 	void updateToAllMoney();
+
+	void show(IPayment payment, ICredit credit, IAccount account);
 
 }

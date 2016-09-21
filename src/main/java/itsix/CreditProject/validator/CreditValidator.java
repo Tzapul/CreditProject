@@ -10,14 +10,15 @@ public class CreditValidator implements ICreditValidator {
 	public CreditValidator(IValidator validator) {
 		this.validator = validator;
 	}
-	
+
 	@Override
 	public IValidatorResult validateFields(ICredit credit, IProduct product) {
 		validator.validateString("Name", credit.getName());
 		validator.validateDouble("Money", credit.getBorrowedMoney());
 		validator.validateInteger("Period", credit.getRemainingDays());
 		validator.validateInInterval("Money", credit.getBorrowedMoney(), product.getMoneyInterval());
-		validator.validateInInterval("Period", Double.valueOf(credit.getRemainingDays() / 30), product.getPeriodInterval());
+		validator.validateInInterval("Period", Double.valueOf(credit.getRemainingDays() / 30),
+				product.getPeriodInterval());
 		return validator.buildResult();
 	}
 

@@ -16,16 +16,13 @@ import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
 import itsix.CreditProject.builders.interfaces.IPeriodBuilder;
 import itsix.CreditProject.builders.interfaces.IRateBuilder;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
-import itsix.CreditProject.controllers.interfaces.ICreditController;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.dispatcher.FixedProductDispatcher;
 import itsix.CreditProject.dispatcher.IDispatcher;
 import itsix.CreditProject.dispatcher.VariableProductDispatcher;
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
-import itsix.CreditProject.models.implementations.CashPayment;
 import itsix.CreditProject.models.implementations.FixedInterestProduct;
-import itsix.CreditProject.models.implementations.SoldPayment;
 import itsix.CreditProject.models.implementations.VariableInterestProduct;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
@@ -46,20 +43,20 @@ public class AccountController implements IAccountController {
 	private IRepository repository;
 
 	private AccountView accountView;
-
+	private CreditView creditView;
+	
 	private IAccount account;
 	private IClient client;
 
 	private IOpertationBuilder operationBuilder;
 	private IPaymentBuilder paymentBuilder;
 	
-	public AccountController(IClient client, IAccount account, IRepository repository,
-			IOpertationBuilder operationBuilder, IPaymentBuilder paymentBuilder) {
-		this.client = client;
+	public AccountController(IRepository repository,
+			IOpertationBuilder operationBuilder, IPaymentBuilder paymentBuilder, CreditView creditView) {
 		this.repository = repository;
 		this.operationBuilder = operationBuilder;
-		this.account = account;
 		this.paymentBuilder = paymentBuilder;
+		this.creditView = creditView;
 	}
 
 	@Override
@@ -152,16 +149,9 @@ public class AccountController implements IAccountController {
 		credit.subscribe(accountView);
 		
 		IPayment payment = paymentBuilder.build(credit);
-		IPayment soldPayment = new SoldPayment(payment, account);
-		IPayment cashPayment = new CashPayment(payment);
 		
-		ICreditController creditController = new CreditController(credit, cashPayment, soldPayment);
+		creditView.show(payment, credit, account);
 		
-		CreditView creditView = new CreditView(creditController);
-		
-		creditView.setVisible(true);
-		creditController.setView(creditView);
-		creditController.populateFields();
 	}
 
 	@Override

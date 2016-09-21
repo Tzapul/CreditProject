@@ -26,6 +26,7 @@ import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
 import itsix.CreditProject.builders.interfaces.IVariableInterestProductBuilder;
 import itsix.CreditProject.controllers.implementation.AccountController;
 import itsix.CreditProject.controllers.implementation.ClientsController;
+import itsix.CreditProject.controllers.implementation.CreditController;
 import itsix.CreditProject.controllers.implementation.DaysController;
 import itsix.CreditProject.controllers.implementation.EditFixedProductController;
 import itsix.CreditProject.controllers.implementation.EditVariableProductController;
@@ -36,6 +37,7 @@ import itsix.CreditProject.controllers.implementation.ProductsController;
 import itsix.CreditProject.controllers.implementation.StartingController;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.controllers.interfaces.IClientsController;
+import itsix.CreditProject.controllers.interfaces.ICreditController;
 import itsix.CreditProject.controllers.interfaces.IDaysController;
 import itsix.CreditProject.controllers.interfaces.IEditFixedProductController;
 import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
@@ -44,8 +46,11 @@ import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.INewProductController;
 import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.controllers.interfaces.IStartingController;
+import itsix.CreditProject.models.implementations.CashPayment;
 import itsix.CreditProject.models.implementations.FixedInterestProduct;
+import itsix.CreditProject.models.implementations.SoldPayment;
 import itsix.CreditProject.models.implementations.VariableInterestProduct;
+import itsix.CreditProject.models.interfaces.IPayment;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
@@ -68,6 +73,7 @@ import itsix.CreditProject.validator.Validator;
 import itsix.CreditProject.validator.ValidatorResultBuilder;
 import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.ClientView;
+import itsix.CreditProject.views.CreditView;
 import itsix.CreditProject.views.DaysView;
 import itsix.CreditProject.views.EditFixedProductView;
 import itsix.CreditProject.views.EditVariableProductView;
@@ -131,14 +137,23 @@ public class App extends JFrame {
 						clientValidator);
 				NewClientView newClientView = new NewClientView(newClientController);
 				newClientController.setView(newClientView);
+				
+				
+				// Initializing credit view and controller
 
+				IPayment soldPayment = new SoldPayment();
+				IPayment cashPayment = new CashPayment();
+
+				ICreditController creditController = new CreditController(cashPayment, soldPayment);
+				CreditView creditView = new CreditView(creditController);
+				creditController.setView(creditView);
+				
 				// Initializing new account view and controller
 				IOpertationBuilder operationBuilder = new OperationBuilder();
 
 				IPaymentBuilder paymentBuilder = new PaymentBuilder();
 
-				IAccountController accountController = new AccountController(null, null, mainRepository,
-						operationBuilder, paymentBuilder);
+				IAccountController accountController = new AccountController(mainRepository, operationBuilder, paymentBuilder, creditView);
 				AccountView accountView = new AccountView(accountController);
 				accountController.setView(accountView);
 
@@ -146,6 +161,8 @@ public class App extends JFrame {
 				INewAccountController newAccountController = new NewAccountController(null, currencyRepository);
 				NewAccountView newAccountView = new NewAccountView(newAccountController);
 				newAccountController.setView(newAccountView);
+
+
 
 				// Initializing clients view and controller
 				IClientsController clientsController = new ClientsController(currencyRepository, mainRepository,

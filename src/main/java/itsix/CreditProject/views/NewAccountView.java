@@ -81,7 +81,8 @@ public class NewAccountView extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				resetView();
+				setVisible(false);
 			}
 		});
 		
@@ -91,9 +92,15 @@ public class NewAccountView extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				resetView();
+				setVisible(false);
+				
 			}
 		});
+	}
+
+	protected void resetView() {
+		soldTextField.setText("0");
 	}
 
 	public Double getSold() {

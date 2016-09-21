@@ -183,6 +183,7 @@ public class ClientView extends JFrame implements ISubscriber {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
+				resetClient();
 				setVisible(false);
 			}
 		});
@@ -193,6 +194,7 @@ public class ClientView extends JFrame implements ISubscriber {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
+				resetClient();
 				setVisible(false);
 			}
 		});
