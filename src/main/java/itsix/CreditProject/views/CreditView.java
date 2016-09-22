@@ -139,6 +139,7 @@ public class CreditView extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				setVisible(false);
+				clear();
 			}
 		});
 
@@ -149,8 +150,13 @@ public class CreditView extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				clear();
 			}
 		});
+	}
+
+	public void clear() {
+		advancedMoneyTextField.setText("0");
 	}
 
 	public Double getAdvancedPaymentMoney() {
@@ -183,5 +189,9 @@ public class CreditView extends JFrame {
 
 	protected boolean advancedMoneyIsNotNull() {
 		return !advancedMoneyTextField.getText().equals(null) && advancedMoneyTextField.getText().length() != 0;
+	}
+
+	public Double getRemainingMoney() {
+		return Double.valueOf(lblRemainingValue.getText());
 	}
 }

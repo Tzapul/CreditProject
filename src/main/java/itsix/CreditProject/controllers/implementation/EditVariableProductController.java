@@ -45,7 +45,7 @@ public class EditVariableProductController implements IEditVariableProductContro
 		}
 
 		repository.getProductRepository().updateProduct(product, updatedCredit);
-		view.dispose();
+		view.setVisible(false);
 	}
 
 	@Override

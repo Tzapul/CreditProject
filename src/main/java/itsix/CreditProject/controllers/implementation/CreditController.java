@@ -13,7 +13,7 @@ import itsix.CreditProject.views.CreditView;
 
 public class CreditController implements ICreditController {
 
-	private CreditView view;
+	private CreditView creditView;
 
 	private ICredit credit;
 
@@ -31,17 +31,23 @@ public class CreditController implements ICreditController {
 
 	@Override
 	public void populateFields() {
-		view.setCreditName(credit.getName());
-		view.setPeriod(credit.getPeriod());
-		view.setDailyRate(credit.getDailyRate());
-		view.setRemainingMoney(credit.getRemainingMoney());
+		creditView.setCreditName(credit.getName());
+		creditView.setPeriod(credit.getPeriod());
+		creditView.setDailyRate(credit.getDailyRate());
+		creditView.setRemainingMoney(credit.getRemainingMoney());
 	}
 
 	@Override
 	public void payInAdvance() {
+		Double moneyToPay = creditView.getAdvancedPaymentMoney();
+		if (creditView.getAdvancedPaymentMoney() > creditView.getRemainingMoney()) {
+			moneyToPay = creditView.getRemainingMoney();
+		}
+		
 		try {
-			currentPayment.pay(view.getAdvancedPaymentMoney());
-			view.setVisible(false);
+			currentPayment.pay(moneyToPay);
+			creditView.clear();
+			creditView.setVisible(false);
 		} catch (SoldLesserThanZeroException e) {
 			JOptionPane.showMessageDialog(null, "Sold can't be lesser than 0!", null, JOptionPane.WARNING_MESSAGE);
 		}
@@ -50,7 +56,7 @@ public class CreditController implements ICreditController {
 
 	@Override
 	public void setView(CreditView view) {
-		this.view = view;
+		this.creditView = view;
 	}
 
 	@Override
@@ -65,7 +71,7 @@ public class CreditController implements ICreditController {
 
 	@Override
 	public void updateToAllMoney() {
-		view.setAdvancedPaymentMoney(credit.getRemainingMoney());
+		creditView.setAdvancedPaymentMoney(credit.getRemainingMoney());
 	}
 
 	public void setCredit(ICredit credit) {
@@ -83,6 +89,6 @@ public class CreditController implements ICreditController {
 		this.credit = credit;
 		populateFields();
 
-		view.setVisible(true);
+		creditView.setVisible(true);
 	}
 }

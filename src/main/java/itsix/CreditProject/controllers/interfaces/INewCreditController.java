@@ -2,7 +2,9 @@ package itsix.CreditProject.controllers.interfaces;
 
 import java.util.List;
 
+import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.NewCreditView;
 
 public interface INewCreditController {
@@ -16,5 +18,9 @@ public interface INewCreditController {
 	void setDescriptionText(String selectedProductDescription);
 
 	void clearDescription();
+
+	void setAccountView(AccountView accountView);
+
+	void setAccount(IAccount account);
 
 }

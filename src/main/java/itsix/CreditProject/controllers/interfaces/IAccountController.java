@@ -3,6 +3,7 @@ package itsix.CreditProject.controllers.interfaces;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.views.AccountView;
+import itsix.CreditProject.views.NewCreditView;
 
 public interface IAccountController {
 
@@ -25,5 +26,7 @@ public interface IAccountController {
 	void setClient(IClient currentClient);
 
 	void setAccount(IAccount account);
+
+	void setNewCreditView(NewCreditView newCreditView);
 
 }

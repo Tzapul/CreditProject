@@ -1,5 +1,6 @@
 package itsix.CreditProject.customs;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -37,7 +38,8 @@ public class AccountTableModel extends AbstractTableModel {
 		case 1:
 			return data.get(row).getSymbol();
 		case 2:
-			return data.get(row).getSold();
+			DecimalFormat df = new DecimalFormat("#.###");
+			return df.format(data.get(row).getSold());
 		}
 
 		return null;

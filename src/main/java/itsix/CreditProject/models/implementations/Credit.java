@@ -30,7 +30,7 @@ public class Credit implements ICredit {
 
 	private IInnerPublisher publisher;
 	private IProduct product;
-	
+
 	private IAccount account;
 
 	public Credit(String name, IMoney borrowedMoney, IMoney remainingMoney, MutableDouble interestRate, IPeriod period,
@@ -83,16 +83,15 @@ public class Credit implements ICredit {
 
 	@Override
 	public void recalculate(Double money) {
-		Double previousValue = remainingMoney.getValue();
 		remainingMoney.take(money);
-		
-		if(creditIsDone()) {
+
+		if (creditIsDone()) {
 			account.remove(this);
 			publisher.notifySubscribers();
 			return;
 		}
 
-		dailyRate.recalculate(previousValue, remainingMoney.getValue(), remainingDays.getNumberOfDays());
+		dailyRate.recalculate(remainingMoney.getValue(), remainingDays.getNumberOfDays());
 		publisher.notifySubscribers();
 	}
 

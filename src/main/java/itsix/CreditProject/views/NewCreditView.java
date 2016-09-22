@@ -24,10 +24,11 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.commons.lang.mutable.MutableDouble;
 
-import itsix.CreditProject.controllers.implementation.AccountController;
+import itsix.CreditProject.controllers.interfaces.IAccountController;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.customs.DoubleJTextField;
 import itsix.CreditProject.customs.ProductList;
+import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IProduct;
 
 public class NewCreditView extends JFrame {
@@ -37,8 +38,8 @@ public class NewCreditView extends JFrame {
 	private JList<IProduct> productsList;
 	private JTextPane descriptionTextPane;
 
-	private INewCreditController controller;
-	private AccountController accountController;
+	private INewCreditController newCreditController;
+	private IAccountController accountController;
 
 	private JTextField moneyTextField;
 	private JTextField periodTextField;
@@ -47,8 +48,8 @@ public class NewCreditView extends JFrame {
 	private JLabel lblName;
 	private JTextField nameTextField;
 
-	public NewCreditView(INewCreditController controller, AccountController accountController) {
-		this.controller = controller;
+	public NewCreditView(INewCreditController newCreditController, IAccountController accountController) {
+		this.newCreditController = newCreditController;
 		this.accountController = accountController;
 		initialize();
 	}
@@ -76,21 +77,17 @@ public class NewCreditView extends JFrame {
 		productsList = new JList<>();
 		creditsScrollPane.setViewportView(productsList);
 
-		AbstractListModel<IProduct> model = new ProductList(controller.getCreditsList());
 		productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		productsList.setModel(model);
-		productsList.setSelectedIndex(0);
+		
 		productsList.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!productsList.isSelectionEmpty()) {
-					controller.setDescriptionText(getSelectedProductDescription());
+					newCreditController.setDescriptionText(getSelectedProductDescription());
 				}
 			}
 		});
-
-		descriptionTextPane.setText(getSelectedProductDescription());
 
 		JLabel lblMoney = new JLabel("Money :");
 		lblMoney.setBounds(220, 357, 46, 14);
@@ -119,7 +116,7 @@ public class NewCreditView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.makeCredit();
+				newCreditController.makeCredit();
 				accountController.updateFields();
 			}
 		});
@@ -188,6 +185,15 @@ public class NewCreditView extends JFrame {
 
 	public IProduct getSelectedProduct() {
 		return productsList.getSelectedValue();
+	}
+
+	public void show(IAccount account) {
+		setVisible(true);
+		newCreditController.setAccount(account);
+		AbstractListModel<IProduct> model = new ProductList(newCreditController.getCreditsList());
+		productsList.setModel(model);
+		productsList.setSelectedIndex(0);
+		descriptionTextPane.setText(getSelectedProductDescription());
 	}
 
 }

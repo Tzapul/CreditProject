@@ -111,7 +111,6 @@ public class AccountView extends JFrame implements ISubscriber {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				accountController.depositMoney();
-				moneyTextField.setText("0");
 			}
 		});
 
@@ -130,7 +129,7 @@ public class AccountView extends JFrame implements ISubscriber {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 225, 521, 140);
 		getContentPane().add(scrollPane);
-		
+
 		creditsTable = new JTable();
 		creditsTable.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
@@ -227,4 +226,9 @@ public class AccountView extends JFrame implements ISubscriber {
 		accountController.setAccount(account);
 		accountController.updateFields();
 	}
+
+	public void setResetMoneyText() {
+		moneyTextField.setText("0");
+	}
+
 }

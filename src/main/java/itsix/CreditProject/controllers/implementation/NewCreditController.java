@@ -14,14 +14,16 @@ import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.validator.ICreditValidator;
 import itsix.CreditProject.validator.IValidatorResult;
+import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.NewCreditView;
 
 public class NewCreditController implements INewCreditController {
 
 	private IRepository repository;
 
-	private NewCreditView view;
-
+	private NewCreditView newCreditView;
+	private AccountView accountView;
+	
 	private IAccount account;
 
 	private ICreditBuilder creditBuilder;
@@ -30,10 +32,9 @@ public class NewCreditController implements INewCreditController {
 
 	private Map<Class<?>, IDispatcher> dispatchers;
 
-	public NewCreditController(IRepository repository, IAccount account, ICreditBuilder creditBuilder,
+	public NewCreditController(IRepository repository, ICreditBuilder creditBuilder,
 			ICreditValidator validator, Map<Class<?>, IDispatcher> dispatchers) {
 		this.repository = repository;
-		this.account = account;
 		this.creditBuilder = creditBuilder;
 		this.validator = validator;
 		this.dispatchers = dispatchers;
@@ -45,18 +46,24 @@ public class NewCreditController implements INewCreditController {
 	}
 
 	@Override
-	public void setView(NewCreditView view) {
-		this.view = view;
+	public void setView(NewCreditView newCreditView) {
+		this.newCreditView = newCreditView;
+	}
+	
+	@Override
+	public void setAccountView(AccountView accountView) {
+		this.accountView = accountView;
 	}
 
 	@Override
 	public void makeCredit() {
 
-		IProduct selectedProduct = view.getSelectedProduct();
+		IProduct selectedProduct = newCreditView.getSelectedProduct();
 		IDispatcher dispatcher = dispatchers.get(selectedProduct.getClass());
 
-		ICredit credit = creditBuilder.build(view.getCreditName(), view.getMoney(), view.getInterestRate(),
-				view.getPeriod(), dispatcher.dispatch(selectedProduct), account);
+		ICredit credit = creditBuilder.build(newCreditView.getCreditName(), newCreditView.getMoney(),
+				newCreditView.getInterestRate(), newCreditView.getPeriod(), dispatcher.dispatch(selectedProduct),
+				account);
 
 		IValidatorResult result = validator.validateFields(credit, selectedProduct);
 
@@ -65,23 +72,28 @@ public class NewCreditController implements INewCreditController {
 
 			return;
 		}
-
+		credit.subscribe(accountView);
 		selectedProduct.subscribe(credit);
 
 		account.addNew(credit);
 		account.add(credit.getBorrowedMoney());
-		view.dispose();
+		newCreditView.dispose();
 
 	}
 
 	@Override
 	public void setDescriptionText(String description) {
-		view.setDescription(description);
+		newCreditView.setDescription(description);
 	}
 
 	@Override
 	public void clearDescription() {
-		view.clearDescription();
+		newCreditView.clearDescription();
+	}
+
+	@Override
+	public void setAccount(IAccount account) {
+		this.account = account;
 	}
 
 }

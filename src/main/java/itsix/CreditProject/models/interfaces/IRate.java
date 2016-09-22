@@ -4,8 +4,8 @@ public interface IRate {
 
 	Double getRate();
 
-	void recalculate(Double previousValue, Double remainingMoney, Integer remainingDays);
-
 	void recalculate(Double remainingMoney, Integer remainingDays);
+
+	void recalculate(Double previousValue, Double remainingMoney, Integer remainingDays, Double interestRate);
 
 }
