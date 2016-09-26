@@ -123,15 +123,15 @@ public class App extends JFrame {
 
 				productRepository.insertCredits(mainRepository);
 
-				//Initializing clientBuilder
+				// Initializing clientBuilder
 				IClientBuilder clientBuilder = new ClientBuilder(clientRepository);
 
-				//Initializing creditBuilder
+				// Initializing creditBuilder
 				ICreditBuilder creditBuilder = initializeCreditBuilder();
-				
-				//Initializing creditValidator
+
+				// Initializing creditValidator
 				ICreditValidator creditValidator = initializeCreditValidator();
-				
+
 				// initializing map for editViews
 				IProductValidator productValidator = initializeProductValidator();
 				Map<Class<?>, IEditProductView> editViews = new HashMap<>();
@@ -159,8 +159,7 @@ public class App extends JFrame {
 						clientValidator);
 				NewClientView newClientView = new NewClientView(newClientController);
 				newClientController.setView(newClientView);
-				
-				
+
 				// Initializing credit view and controller
 
 				IPayment soldPayment = new SoldPayment();
@@ -169,39 +168,38 @@ public class App extends JFrame {
 				ICreditController creditController = new CreditController(cashPayment, soldPayment);
 				CreditView creditView = new CreditView(creditController);
 				creditController.setView(creditView);
-				
+
 				// Initializing new account view and controller
 				IOpertationBuilder operationBuilder = new OperationBuilder();
 
 				IPaymentBuilder paymentBuilder = new PaymentBuilder();
-				
-				//Initializing map for dispatchers
-				
+
+				// Initializing map for dispatchers
+
 				Map<Class<?>, IDispatcher> dispatchers = new HashMap<>();
 
 				dispatchers.put(FixedInterestProduct.class, new FixedProductDispatcher());
 				dispatchers.put(VariableInterestProduct.class, new VariableProductDispatcher());
-				
-				//Initializing make credit controller and view
-				INewCreditController newCreditController = new NewCreditController(mainRepository, creditBuilder, creditValidator, dispatchers);
 
-				//Initializing account controller and view
-				IAccountController accountController = new AccountController(mainRepository, operationBuilder, paymentBuilder, creditView);
+				// Initializing make credit controller and view
+				INewCreditController newCreditController = new NewCreditController(mainRepository, creditBuilder,
+						creditValidator, dispatchers);
+
+				// Initializing account controller and view
+				IAccountController accountController = new AccountController(mainRepository, operationBuilder,
+						paymentBuilder, creditView);
 				AccountView accountView = new AccountView(accountController);
 				accountController.setView(accountView);
-				
+
 				NewCreditView newCreditView = new NewCreditView(newCreditController, accountController);
 				newCreditController.setView(newCreditView);
 				newCreditController.setAccountView(accountView);
 				accountController.setNewCreditView(newCreditView);
 
-				
 				// Initializing new account controller
 				INewAccountController newAccountController = new NewAccountController(null, currencyRepository);
 				NewAccountView newAccountView = new NewAccountView(newAccountController);
 				newAccountController.setView(newAccountView);
-
-
 
 				// Initializing clients view and controller
 				IClientsController clientsController = new ClientsController(currencyRepository, mainRepository,
@@ -221,7 +219,7 @@ public class App extends JFrame {
 				daysView.setVisible(true);
 
 			}
-			
+
 			public ICreditBuilder initializeCreditBuilder() {
 
 				IRateBuilder feeBuilder = new RateBuilder();

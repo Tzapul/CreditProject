@@ -75,9 +75,10 @@ public class Client implements IClient {
 
 	@Override
 	public void update(String firstname, String lastname, String address) {
-		this.firstname = firstname;
+ 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.address = address;
+		publisher.notifySubscribers();
 	}
 
 	@Override
@@ -158,6 +159,11 @@ public class Client implements IClient {
 		} else if (!sSN.equals(other.sSN))
 			return false;
 		return true;
+	}
+
+	@Override
+	public IInnerPublisher getPublisher() {
+		return publisher;
 	}
 
 }

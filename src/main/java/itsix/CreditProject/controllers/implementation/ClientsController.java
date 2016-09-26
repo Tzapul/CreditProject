@@ -76,7 +76,7 @@ public class ClientsController implements IClientsController {
 	public void updateClient() {
 
 		IClient updatedClient = clientBuilder.build(clientView.getsSN(), clientView.getFirstname(),
-				clientView.getLastname(), clientView.getAddress(), null);
+				clientView.getLastname(), clientView.getAddress(), currentClient.getPublisher());
 
 		IValidatorResult result = clientValidator.validateFields(updatedClient);
 
@@ -86,7 +86,7 @@ public class ClientsController implements IClientsController {
 			return;
 		}
 
-		currentClient.update(clientView.getFirstname(), clientView.getLastname(), clientView.getAddress());
+		currentClient.update(updatedClient.getFirstname(), updatedClient.getLastname(), updatedClient.getAddress());
 		JOptionPane.showMessageDialog(null, "Client was successfully updated!", "Client Updated",
 				JOptionPane.INFORMATION_MESSAGE);
 	}

@@ -9,7 +9,6 @@ import itsix.CreditProject.repositories.IClientRepository;
 
 public class ClientBuilder implements IClientBuilder{
 
-	
 	private IClientRepository clientRepository;
 
 	public ClientBuilder(IClientRepository clientRepository) {

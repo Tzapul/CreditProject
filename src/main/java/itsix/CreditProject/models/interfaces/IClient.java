@@ -33,4 +33,6 @@ public interface IClient extends IPublisher {
 
 	void payCredits();
 
+	IInnerPublisher getPublisher();
+
 }
