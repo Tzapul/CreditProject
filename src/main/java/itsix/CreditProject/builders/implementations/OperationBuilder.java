@@ -8,6 +8,8 @@ import itsix.CreditProject.models.interfaces.IOperation;
 
 public class OperationBuilder implements IOpertationBuilder {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public IOperation buildDepositOperation(Integer day) {
 		IOperation operation = new Operation(day);

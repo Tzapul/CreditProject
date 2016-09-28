@@ -1,17 +1,16 @@
 package itsix.CreditProject.app;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
-import itsix.CreditProject.builders.implementations.AccountBuilder;
 import itsix.CreditProject.builders.implementations.ClientBuilder;
 import itsix.CreditProject.builders.implementations.CreditBuilder;
-import itsix.CreditProject.builders.implementations.CurrencyBuilder;
 import itsix.CreditProject.builders.implementations.DaysPeriodBuilder;
 import itsix.CreditProject.builders.implementations.FixedInterestProductBuilder;
 import itsix.CreditProject.builders.implementations.IntervalBuilder;
@@ -20,10 +19,8 @@ import itsix.CreditProject.builders.implementations.OperationBuilder;
 import itsix.CreditProject.builders.implementations.PaymentBuilder;
 import itsix.CreditProject.builders.implementations.RateBuilder;
 import itsix.CreditProject.builders.implementations.VariableInterestProductBuilder;
-import itsix.CreditProject.builders.interfaces.IAccountBuilder;
 import itsix.CreditProject.builders.interfaces.IClientBuilder;
 import itsix.CreditProject.builders.interfaces.ICreditBuilder;
-import itsix.CreditProject.builders.interfaces.ICurrencyBuilder;
 import itsix.CreditProject.builders.interfaces.IFixedInterestProductBuilder;
 import itsix.CreditProject.builders.interfaces.IIntervalBuilder;
 import itsix.CreditProject.builders.interfaces.IMoneyBuilder;
@@ -54,8 +51,8 @@ import itsix.CreditProject.controllers.interfaces.INewAccountController;
 import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.controllers.interfaces.INewProductController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.controllers.interfaces.IStartingController;
+import itsix.CreditProject.customs.RepositoryParser;
 import itsix.CreditProject.dispatcher.FixedProductDispatcher;
 import itsix.CreditProject.dispatcher.IDispatcher;
 import itsix.CreditProject.dispatcher.VariableProductDispatcher;
@@ -64,18 +61,11 @@ import itsix.CreditProject.models.implementations.FixedInterestProduct;
 import itsix.CreditProject.models.implementations.SoldPayment;
 import itsix.CreditProject.models.implementations.VariableInterestProduct;
 import itsix.CreditProject.models.interfaces.IPayment;
-import itsix.CreditProject.pubSub.IInnerPublisher;
-import itsix.CreditProject.pubSub.ISubscriber;
-import itsix.CreditProject.pubSub.Publisher;
-import itsix.CreditProject.repositories.ClientRepository;
-import itsix.CreditProject.repositories.CurrencyRepository;
 import itsix.CreditProject.repositories.IClientRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
-import itsix.CreditProject.repositories.IIndicator;
-import itsix.CreditProject.repositories.IProductRepository;
-import itsix.CreditProject.repositories.Indicator;
-import itsix.CreditProject.repositories.MainRepository;
-import itsix.CreditProject.repositories.ProductRepository;
+import itsix.CreditProject.repositories.IParser;
+import itsix.CreditProject.repositories.IRepository;
+import itsix.CreditProject.repositories.ParseEmptyFile;
 import itsix.CreditProject.validator.ClientValidator;
 import itsix.CreditProject.validator.CreditValidator;
 import itsix.CreditProject.validator.IClientValidator;
@@ -105,23 +95,30 @@ public class App extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) {
+		
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+				}
+
+				IParser parser = new ParseEmptyFile();
 				// Initializing repositories
-				ICurrencyRepository currencyRepository = new CurrencyRepository();
 
-				IIndicator indicator = new Indicator(2.5);
-
-				IClientRepository clientRepository = initializeClientRepository();
-
-				IProductRepository productRepository = initializeProductRepository();
-
-				IRepository mainRepository = initializeMainRepository(currencyRepository, indicator, clientRepository,
-						productRepository);
-
-				productRepository.insertCredits(mainRepository);
+				IRepository mainRepository = null;
+				try {
+					mainRepository = parser.parse();
+				} catch (ClassNotFoundException | NullPointerException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				IClientRepository clientRepository = mainRepository.getClientRepository();
+				ICurrencyRepository currencyRepository = mainRepository.getCurrencyRepository();
 
 				// Initializing clientBuilder
 				IClientBuilder clientBuilder = new ClientBuilder(clientRepository);
@@ -208,8 +205,11 @@ public class App extends JFrame {
 				clientsController.setView(clientsView);
 				newAccountView.setClientsController(clientsController);
 
+				RepositoryParser serializer = new RepositoryParser();
+
 				// Initializing starting view and controller
-				IStartingController startingController = new StartingController(productsView, clientsView);
+				IStartingController startingController = new StartingController(productsView, clientsView, serializer,
+						mainRepository);
 				StartingView view = new StartingView(startingController);
 				view.setVisible(true);
 
@@ -217,6 +217,7 @@ public class App extends JFrame {
 				IDaysController daysController = new DaysController(mainRepository);
 				DaysView daysView = new DaysView(daysController);
 				daysView.setVisible(true);
+				
 
 			}
 
@@ -250,27 +251,6 @@ public class App extends JFrame {
 				INewProductController newProductController = new NewProductController(mainRepository,
 						fixedInterestBuilder, variableInterestBuilder, productValidator);
 				return newProductController;
-			}
-
-			public IRepository initializeMainRepository(ICurrencyRepository currencyRepository, IIndicator indicator,
-					IClientRepository clientRepository, IProductRepository creditRepository) {
-				IRepository mainRepository = new MainRepository(creditRepository, currencyRepository, indicator,
-						clientRepository, 1);
-				return mainRepository;
-			}
-
-			public IProductRepository initializeProductRepository() {
-				List<ISubscriber> subscribers = new ArrayList<>();
-				IInnerPublisher publisher = new Publisher(subscribers);
-				IProductRepository creditRepository = new ProductRepository(publisher);
-				return creditRepository;
-			}
-
-			public IClientRepository initializeClientRepository() {
-				ICurrencyBuilder currencyBuilder = new CurrencyBuilder();
-				IAccountBuilder accountBuilder = new AccountBuilder(currencyBuilder);
-				IClientRepository clientRepository = new ClientRepository(accountBuilder);
-				return clientRepository;
 			}
 
 			private IProductValidator initializeProductValidator() {

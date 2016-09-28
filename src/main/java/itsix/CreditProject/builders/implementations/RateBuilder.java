@@ -8,6 +8,8 @@ import itsix.CreditProject.models.interfaces.IRate;
 
 public class RateBuilder implements IRateBuilder {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public IRate build(Integer myPeriod, Double money, MutableDouble interestRate) {
 		return new Rate((money * ( 1 + interestRate.doubleValue() / 100) / myPeriod));

@@ -10,6 +10,8 @@ import itsix.CreditProject.models.interfaces.IClient;
 
 public class ClientRepository implements IClientRepository {
 
+	private static final long serialVersionUID = 1L;
+
 	private List<IClient> clients;
 
 	private IAccountBuilder accountBuilder;
@@ -54,6 +56,11 @@ public class ClientRepository implements IClientRepository {
 		for (IClient client : clients) {
 			client.payCredits();
 		}
+	}
+
+	@Override
+	public List<IClient> getClients() {
+		return clients;
 	}
 
 }

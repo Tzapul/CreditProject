@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IInterval;
 
 public class PeriodInterval implements IInterval {
 
+	private static final long serialVersionUID = 1L;
+	
 	private IInterval interval;
 
 	public PeriodInterval(IInterval interval) {

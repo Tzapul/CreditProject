@@ -19,6 +19,8 @@ import itsix.CreditProject.views.NewClientView;
 
 public class NewClientController implements INewClientController {
 
+	private static final long serialVersionUID = 1L;
+
 	private IClientRepository clientRepository;
 
 	private NewClientView newClientView;

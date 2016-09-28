@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IProduct;
 
 public class ProductValidator implements IProductValidator {
 
+	private static final long serialVersionUID = 1L;
+	
 	private IValidator validator;
 	
 	public ProductValidator(IValidator validator) {

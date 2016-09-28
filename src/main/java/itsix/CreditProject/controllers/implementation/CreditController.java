@@ -13,6 +13,8 @@ import itsix.CreditProject.views.CreditView;
 
 public class CreditController implements ICreditController {
 
+	private static final long serialVersionUID = 1L;
+
 	private CreditView creditView;
 
 	private ICredit credit;

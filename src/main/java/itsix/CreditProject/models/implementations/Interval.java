@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IInterval;
 
 public class Interval implements IInterval {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer minValue;
 	private Integer maxValue;
 

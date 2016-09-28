@@ -1,5 +1,6 @@
 package itsix.CreditProject.models.interfaces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
@@ -7,7 +8,7 @@ import itsix.CreditProject.models.implementations.Credit;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.IPublisher;
 
-public interface IAccount extends IPublisher {
+public interface IAccount extends IPublisher, Serializable {
 
 	String getCurrencyName();
 

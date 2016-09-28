@@ -1,6 +1,8 @@
 package itsix.CreditProject.pubSub;
 
-public interface IPublisher {
+import java.io.Serializable;
+
+public interface IPublisher extends Serializable{
 	
 	public void subscribe(ISubscriber subscriber);
 

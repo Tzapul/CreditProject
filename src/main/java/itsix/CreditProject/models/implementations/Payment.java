@@ -5,6 +5,10 @@ import itsix.CreditProject.models.interfaces.IPayment;
 
 public class Payment implements IPayment {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ICredit credit;
 
 	public Payment(ICredit credit) {

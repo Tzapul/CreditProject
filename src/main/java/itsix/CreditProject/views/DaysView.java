@@ -26,11 +26,11 @@ public class DaysView extends JFrame {
 	private void initialize() {
 		setBounds(100, 100, 300, 150);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		setLayout(null);
 
 		JButton btnAddDays = new JButton("Add day/s");
 		btnAddDays.setBounds(156, 42, 89, 23);
-		getContentPane().add(btnAddDays);
+		add(btnAddDays);
 		btnAddDays.addActionListener(new ActionListener() {
 
 			@Override
@@ -42,7 +42,9 @@ public class DaysView extends JFrame {
 		spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(0, 0, 360, 1));
 		spinner.setBounds(53, 43, 53, 20);
-		getContentPane().add(spinner);
+		add(spinner);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 	}
 
 	protected Integer getSpinnerValue() {

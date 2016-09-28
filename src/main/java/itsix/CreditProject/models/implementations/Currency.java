@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.ICurrency;
 
 public class Currency implements ICurrency {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String symbol;
 

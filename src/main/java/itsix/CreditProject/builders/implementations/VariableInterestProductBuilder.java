@@ -4,14 +4,16 @@ import org.apache.commons.lang.mutable.MutableDouble;
 
 import itsix.CreditProject.builders.interfaces.IIntervalBuilder;
 import itsix.CreditProject.builders.interfaces.IVariableInterestProductBuilder;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.models.implementations.VariableInterestProduct;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IInterval;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
+import itsix.CreditProject.repositories.IRepository;
 
 public class VariableInterestProductBuilder implements IVariableInterestProductBuilder {
+
+	private static final long serialVersionUID = 1L;
 
 	private IIntervalBuilder intervalBuilder;
 

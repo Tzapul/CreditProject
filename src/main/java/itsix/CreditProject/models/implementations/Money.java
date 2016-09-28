@@ -6,13 +6,14 @@ import itsix.CreditProject.models.interfaces.IMoney;
 
 public class Money implements IMoney {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Double value;
 
 	public Money(Double value) {
 		super();
 		this.value = value;
 	}
-
 
 	@Override
 	public Double getValue() {

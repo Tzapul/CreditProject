@@ -8,6 +8,8 @@ import itsix.CreditProject.models.interfaces.IMoney;
 
 public class MoneyBuilder implements IMoneyBuilder {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public IMoney build(Double value) {
 		DecimalFormat df = new DecimalFormat("#.###");

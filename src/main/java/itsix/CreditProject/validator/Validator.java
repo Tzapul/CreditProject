@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IInterval;
 
 public class Validator implements IValidator {
 
+	private static final long serialVersionUID = 1L;
+
 	public StringBuilder errorMessageBuilder;
 
 	public IValidatorResultBuilder resultBuilder;

@@ -196,4 +196,10 @@ public class NewCreditView extends JFrame {
 		descriptionTextPane.setText(getSelectedProductDescription());
 	}
 
+	public void clear() {
+		moneyTextField.setText("0");
+		nameTextField.setText("0");
+		periodTextField.setText("0");
+	}
+
 }

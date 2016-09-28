@@ -1,6 +1,8 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface IInnerProduct extends IProduct {
+import java.io.Serializable;
+
+public interface IInnerProduct extends IProduct, Serializable {
 
 	String getDescription();
 

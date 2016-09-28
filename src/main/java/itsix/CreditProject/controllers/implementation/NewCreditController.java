@@ -7,17 +7,19 @@ import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.interfaces.ICreditBuilder;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.dispatcher.IDispatcher;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.repositories.IRepository;
 import itsix.CreditProject.validator.ICreditValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.NewCreditView;
 
 public class NewCreditController implements INewCreditController {
+
+	private static final long serialVersionUID = 1L;
 
 	private IRepository repository;
 
@@ -77,7 +79,8 @@ public class NewCreditController implements INewCreditController {
 
 		account.addNew(credit);
 		account.add(credit.getBorrowedMoney());
-		newCreditView.dispose();
+		newCreditView.setVisible(false);
+		newCreditView.clear();
 
 	}
 

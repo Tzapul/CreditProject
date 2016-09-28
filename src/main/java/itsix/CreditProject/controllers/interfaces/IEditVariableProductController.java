@@ -1,12 +1,13 @@
 package itsix.CreditProject.controllers.interfaces;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.views.IEditProductView;
 
-public interface IEditVariableProductController {
+public interface IEditVariableProductController extends Serializable {
 
 	void updateRealInterestRate();
 

@@ -13,6 +13,8 @@ import itsix.CreditProject.pubSub.ISubscriber;
 
 public class Account implements IAccount {
 
+	private static final long serialVersionUID = 1L;
+	
 	private ICurrency currency;
 	private List<ICredit> credits;
 

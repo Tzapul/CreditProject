@@ -20,6 +20,8 @@ import itsix.CreditProject.views.NewAccountView;
 
 public class NewAccountController implements INewAccountController {
 
+	private static final long serialVersionUID = 1L;
+
 	private IClient currentClient;
 
 	private NewAccountView view;

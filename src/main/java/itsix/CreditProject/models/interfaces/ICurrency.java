@@ -1,6 +1,8 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface ICurrency {
+import java.io.Serializable;
+
+public interface ICurrency extends Serializable {
 
 	String getName();
 

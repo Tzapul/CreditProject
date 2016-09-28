@@ -1,6 +1,8 @@
 package itsix.CreditProject.validator;
 
-public interface IValidatorResultBuilder {
+import java.io.Serializable;
+
+public interface IValidatorResultBuilder extends Serializable {
 
 	IValidatorResult build(boolean valid, String string);
 

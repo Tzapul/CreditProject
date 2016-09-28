@@ -1,6 +1,8 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface IInterval {
+import java.io.Serializable;
+
+public interface IInterval extends Serializable {
 
 	Integer getMin();
 

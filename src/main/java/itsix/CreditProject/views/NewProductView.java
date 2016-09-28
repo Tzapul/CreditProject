@@ -213,7 +213,8 @@ public class NewProductView extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				setVisible(false);
+				clear();
 			}
 		});
 
@@ -223,9 +224,20 @@ public class NewProductView extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible(false);
+				clear();
 			}
 		});
+	}
+
+	protected void clear() {
+		nameTextField.setText("");
+		minValueTextField.setText("0");
+		maxValueTextField.setText("0");
+		interestRateTextField.setText("0");
+		currencyComboBox.setSelectedIndex(0);
+		minPeriodTextField.setText("0");
+		maxPeriodTextField.setText("0");
 	}
 
 	public Integer getMinValue() {

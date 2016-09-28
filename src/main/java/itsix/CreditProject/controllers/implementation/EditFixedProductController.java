@@ -15,6 +15,8 @@ import itsix.CreditProject.views.IEditProductView;
 
 public class EditFixedProductController implements IEditFixedProductController {
 
+	private static final long serialVersionUID = 1L;
+
 	private ICurrencyRepository currencyRepository;
 
 	private IProductRepository productRepository;

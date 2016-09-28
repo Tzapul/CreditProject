@@ -8,18 +8,20 @@ import javax.swing.JOptionPane;
 
 import itsix.CreditProject.builders.interfaces.IProductBuilder;
 import itsix.CreditProject.controllers.interfaces.INewProductController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
+import itsix.CreditProject.repositories.IRepository;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.NewProductView;
 
 public class NewProductController implements INewProductController {
+
+	private static final long serialVersionUID = 1L;
 
 	private IRepository repository;
 

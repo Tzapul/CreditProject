@@ -1,6 +1,8 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface IRate {
+import java.io.Serializable;
+
+public interface IRate extends Serializable {
 
 	Double getRate();
 

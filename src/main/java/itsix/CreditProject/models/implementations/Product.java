@@ -10,6 +10,8 @@ import itsix.CreditProject.pubSub.ISubscriber;
 
 public class Product implements IProduct {
 
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 
 	private IInterval moneyInterval;
@@ -39,6 +41,7 @@ public class Product implements IProduct {
 		appendCurrency(builder);
 		appendInterestRate(builder);
 		appendPeriod(builder);
+		
 		return builder.toString();
 	}
 
@@ -115,6 +118,7 @@ public class Product implements IProduct {
 		this.interestRate.setValue(product.getInterestRate().doubleValue());
 		this.currency = product.getCurrency();
 		this.moneyInterval = product.getMoneyInterval();
+		
 		publisher.notifySubscribers();
 	}
 

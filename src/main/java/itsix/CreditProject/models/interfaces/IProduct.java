@@ -1,10 +1,12 @@
 package itsix.CreditProject.models.interfaces;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.mutable.MutableDouble;
 
 import itsix.CreditProject.pubSub.IPublisher;
 
-public interface IProduct extends IPublisher {
+public interface IProduct extends IPublisher, Serializable {
 
 	String getDescription();
 

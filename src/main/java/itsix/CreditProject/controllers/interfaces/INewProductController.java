@@ -1,11 +1,12 @@
 package itsix.CreditProject.controllers.interfaces;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.views.NewProductView;
 
-public interface INewProductController {
+public interface INewProductController extends Serializable {
 
 	void createNewCredit();
 

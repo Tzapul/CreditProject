@@ -12,6 +12,8 @@ import itsix.CreditProject.pubSub.ISubscriber;
 
 public class Client implements IClient {
 
+	private static final long serialVersionUID = 1L;
+
 	private Integer sSN;
 	private String firstname;
 	private String lastname;
@@ -20,7 +22,7 @@ public class Client implements IClient {
 	private List<IAccount> accounts;
 	private List<IOperation> operations;
 
-	private IInnerPublisher publisher;
+	private transient IInnerPublisher publisher;
 
 	public Client(Integer sSN, String firstname, String lastname, String address, IInnerPublisher publisher) {
 		this.accounts = new ArrayList<>();
@@ -75,7 +77,7 @@ public class Client implements IClient {
 
 	@Override
 	public void update(String firstname, String lastname, String address) {
- 		this.firstname = firstname;
+		this.firstname = firstname;
 		this.lastname = lastname;
 		this.address = address;
 		publisher.notifySubscribers();

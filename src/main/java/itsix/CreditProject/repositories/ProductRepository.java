@@ -3,21 +3,15 @@ package itsix.CreditProject.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.mutable.MutableDouble;
-
-import itsix.CreditProject.builders.implementations.FixedInterestProductBuilder;
-import itsix.CreditProject.builders.implementations.IntervalBuilder;
-import itsix.CreditProject.builders.implementations.VariableInterestProductBuilder;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.ProductAlreadyExistsException;
-import itsix.CreditProject.models.implementations.Currency;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
-import itsix.CreditProject.pubSub.Publisher;
 
 public class ProductRepository implements IProductRepository {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<IProduct> products;
 
@@ -26,20 +20,6 @@ public class ProductRepository implements IProductRepository {
 	public ProductRepository(IInnerPublisher publisher) {
 		this.products = new ArrayList<>();
 		this.publisher = publisher;
-	}
-
-	@Override
-	public void insertCredits(IRepository mainRepository) {
-		IntervalBuilder intervalBuilder = new IntervalBuilder();
-		FixedInterestProductBuilder fixedCreditBuilder = new FixedInterestProductBuilder(intervalBuilder);
-		VariableInterestProductBuilder variableCreditBuilder = new VariableInterestProductBuilder(intervalBuilder,
-				mainRepository);
-		
-		List<ISubscriber> subscribers = new ArrayList<>();
-		IInnerPublisher publisher = new Publisher(subscribers);
-
-		products.add(fixedCreditBuilder.build("asdasdasd", 2000, 3000, new MutableDouble(1.52), new Currency("USD", "$"), 12, 24, publisher));
-		products.add(variableCreditBuilder.build("aseaseasease", 1000, 2500, new MutableDouble(2.3), new Currency("EURO", "€"), 6, 24, publisher));
 	}
 
 	@Override

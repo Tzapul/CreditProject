@@ -1,7 +1,7 @@
 package itsix.CreditProject.controllers.implementation;
 
 import itsix.CreditProject.controllers.interfaces.IDaysController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
+import itsix.CreditProject.repositories.IRepository;
 
 public class DaysController implements IDaysController {
 

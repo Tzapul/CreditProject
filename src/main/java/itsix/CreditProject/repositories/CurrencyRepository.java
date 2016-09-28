@@ -11,6 +11,8 @@ import itsix.CreditProject.models.interfaces.IProduct;
 
 public class CurrencyRepository implements ICurrencyRepository {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Vector<ICurrency> currencies;
 
 	public CurrencyRepository() {

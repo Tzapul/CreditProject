@@ -7,6 +7,8 @@ import itsix.CreditProject.models.interfaces.ISoldPayment;
 
 public class SoldPayment implements ISoldPayment {
 
+	private static final long serialVersionUID = 1L;
+
 	private IPayment payment;
 
 	private IAccount account;

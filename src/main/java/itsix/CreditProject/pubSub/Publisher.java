@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Publisher implements IInnerPublisher {
 
+	private static final long serialVersionUID = 1L;
+	
 	private List<ISubscriber> subscribers;
 
 	public Publisher(List<ISubscriber> subscribers) {

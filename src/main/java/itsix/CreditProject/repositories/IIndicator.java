@@ -1,6 +1,8 @@
 package itsix.CreditProject.repositories;
 
-public interface IIndicator {
+import java.io.Serializable;
+
+public interface IIndicator extends Serializable{
 
 	Double getValue();
 

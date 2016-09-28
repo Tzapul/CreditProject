@@ -9,6 +9,8 @@ import itsix.CreditProject.repositories.IClientRepository;
 
 public class ClientBuilder implements IClientBuilder{
 
+	private static final long serialVersionUID = 1L;
+	
 	private IClientRepository clientRepository;
 
 	public ClientBuilder(IClientRepository clientRepository) {

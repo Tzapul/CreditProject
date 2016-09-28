@@ -22,10 +22,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import itsix.CreditProject.controllers.interfaces.IProductsController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.customs.ProductList;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.pubSub.ISubscriber;
+import itsix.CreditProject.repositories.IRepository;
 
 public class ProductsView extends JFrame implements ISubscriber {
 
@@ -122,7 +122,8 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				setVisible(false);
+				;
 			}
 		});
 
@@ -139,7 +140,10 @@ public class ProductsView extends JFrame implements ISubscriber {
 
 	public String getSelectedProductDescription() {
 		IProduct selectedProduct = productsList.getSelectedValue();
-		return "Type : " + selectedProduct.getType() + "\n" + selectedProduct.getDescription();
+		if (selectedProduct != null) {
+			return "Type : " + selectedProduct.getType() + "\n" + selectedProduct.getDescription();
+		}
+		return null;
 	}
 
 	@Override

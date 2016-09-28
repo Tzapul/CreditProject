@@ -1,9 +1,9 @@
 package itsix.CreditProject.repositories;
 
-import itsix.CreditProject.controllers.interfaces.IRepository;
-
 public class MainRepository implements IRepository {
 
+	private static final long serialVersionUID = 1L;
+	
 	private IProductRepository productRepository;
 	private ICurrencyRepository currencyRepository;
 	private IClientRepository clientRepository;

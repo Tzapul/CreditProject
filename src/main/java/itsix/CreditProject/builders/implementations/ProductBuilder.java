@@ -13,6 +13,8 @@ import itsix.CreditProject.builders.interfaces.IProductBuilder;
 
 public class ProductBuilder implements IProductBuilder {
 
+	private static final long serialVersionUID = 1L;
+	
 	private IIntervalBuilder intervalBuilder;
 
 	public ProductBuilder(IIntervalBuilder intervalBuilder) {

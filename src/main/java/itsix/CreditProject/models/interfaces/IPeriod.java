@@ -1,6 +1,8 @@
 package itsix.CreditProject.models.interfaces;
 
-public interface IPeriod {
+import java.io.Serializable;
+
+public interface IPeriod extends Serializable {
 
 	Integer getNumberOfDays();
 

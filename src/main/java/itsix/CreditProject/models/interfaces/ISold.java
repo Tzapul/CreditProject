@@ -1,8 +1,10 @@
 package itsix.CreditProject.models.interfaces;
 
+import java.io.Serializable;
+
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 
-public interface ISold {
+public interface ISold extends Serializable {
 
 	Double getValue();
 

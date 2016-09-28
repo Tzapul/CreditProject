@@ -17,6 +17,8 @@ import itsix.CreditProject.pubSub.Publisher;
 
 public class AccountBuilder implements IAccountBuilder {
 
+	private static final long serialVersionUID = 1L;
+	
 	private ICurrencyBuilder currencyBuillder;
 	
 	public AccountBuilder(ICurrencyBuilder currencyBuillder) {

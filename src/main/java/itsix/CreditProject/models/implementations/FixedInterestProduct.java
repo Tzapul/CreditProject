@@ -14,6 +14,8 @@ import itsix.CreditProject.pubSub.ISubscriber;
 
 public class FixedInterestProduct implements IProduct {
 
+	private static final long serialVersionUID = 1L;
+
 	private IProduct product;
 
 	private IIntervalBuilder intervalBuilder = new IntervalBuilder();

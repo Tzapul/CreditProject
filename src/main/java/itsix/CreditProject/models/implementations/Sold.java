@@ -5,6 +5,8 @@ import itsix.CreditProject.models.interfaces.ISold;
 
 public class Sold implements ISold {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Double value;
 
 	public Sold(Double value) {

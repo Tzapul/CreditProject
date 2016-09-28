@@ -5,14 +5,16 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.repositories.IRepository;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidatorResult;
 import itsix.CreditProject.views.IEditProductView;
 
 public class EditVariableProductController implements IEditVariableProductController {
+
+	private static final long serialVersionUID = 1L;
 
 	private IRepository repository;
 

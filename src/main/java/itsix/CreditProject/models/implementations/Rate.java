@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IRate;
 
 public class Rate implements IRate {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Double rate;
 
 	public Rate(Double rate) {

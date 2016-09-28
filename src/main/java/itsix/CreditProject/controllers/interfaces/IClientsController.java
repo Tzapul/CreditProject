@@ -1,9 +1,11 @@
 package itsix.CreditProject.controllers.interfaces;
 
+import java.io.Serializable;
+
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.views.ClientView;
 
-public interface IClientsController {
+public interface IClientsController extends Serializable {
 
 	void goToNewClientView();
 

@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.swing.AbstractListModel;
 
 import itsix.CreditProject.controllers.interfaces.IProductsController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.customs.ProductList;
 import itsix.CreditProject.models.interfaces.IProduct;
+import itsix.CreditProject.repositories.IRepository;
 import itsix.CreditProject.validator.IProductValidator;
 import itsix.CreditProject.validator.IValidator;
 import itsix.CreditProject.validator.IValidatorResultBuilder;
@@ -21,10 +21,12 @@ import itsix.CreditProject.views.ProductsView;
 
 public class ProductsController implements IProductsController {
 
+	private static final long serialVersionUID = 1L;
+
 	private IRepository mainRepository;
 
 	private ProductsView productsView;
-	
+
 	private NewProductView newProductsView;
 	private IEditProductView editProductView;
 

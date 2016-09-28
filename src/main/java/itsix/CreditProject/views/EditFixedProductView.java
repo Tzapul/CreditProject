@@ -15,8 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import org.apache.commons.lang.mutable.MutableDouble;
@@ -52,18 +50,6 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 
 	public EditFixedProductView(IEditFixedProductController controller) {
 		this.controller = controller;
-
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
 
 		initialize();
 	}
@@ -147,7 +133,7 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 		lblMaxPeriod.setBounds(25, 275, 118, 14);
 		getContentPane().add(lblMaxPeriod);
 
-		maxPeriodTextField = new JTextField();
+		maxPeriodTextField = new IntegerJTextField();
 		maxPeriodTextField.setBounds(170, 272, 86, 20);
 		getContentPane().add(maxPeriodTextField);
 		maxPeriodTextField.setColumns(10);
@@ -157,7 +143,7 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				e.getWindow().dispose();
+				setVisible(false);
 			}
 		});
 
@@ -167,7 +153,7 @@ public class EditFixedProductView extends JFrame implements IEditProductView {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible(false);
 			}
 		});
 	}

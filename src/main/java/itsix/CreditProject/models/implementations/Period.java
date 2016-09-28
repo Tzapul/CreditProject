@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IPeriod;
 
 public class Period implements IPeriod {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer days;
 
 	public Period(Integer days) {

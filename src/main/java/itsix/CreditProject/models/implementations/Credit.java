@@ -15,6 +15,8 @@ import itsix.CreditProject.pubSub.ISubscriber;
 
 public class Credit implements ICredit {
 
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 
 	private IMoney borrowedMoney;

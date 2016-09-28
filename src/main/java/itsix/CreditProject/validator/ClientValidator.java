@@ -4,6 +4,8 @@ import itsix.CreditProject.models.interfaces.IClient;
 
 public class ClientValidator implements IClientValidator {
 
+	private static final long serialVersionUID = 1L;
+	
 	private IValidator validator;
 
 	public ClientValidator(IValidator validator) {

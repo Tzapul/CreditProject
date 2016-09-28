@@ -6,6 +6,8 @@ import itsix.CreditProject.models.interfaces.ICashPayment;
 
 public class CashPayment implements ICashPayment {
 
+	private static final long serialVersionUID = 1L;
+	
 	private IPayment payment;
 
 	public CashPayment() {

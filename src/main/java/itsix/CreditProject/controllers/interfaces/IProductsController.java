@@ -1,5 +1,6 @@
 package itsix.CreditProject.controllers.interfaces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -7,7 +8,7 @@ import javax.swing.AbstractListModel;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.views.ProductsView;
 
-public interface IProductsController {
+public interface IProductsController extends Serializable {
 
 	void goToNewProductView();
 

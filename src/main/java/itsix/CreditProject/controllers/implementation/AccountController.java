@@ -5,24 +5,26 @@ import javax.swing.JOptionPane;
 import itsix.CreditProject.builders.interfaces.IOpertationBuilder;
 import itsix.CreditProject.builders.interfaces.IPaymentBuilder;
 import itsix.CreditProject.controllers.interfaces.IAccountController;
-import itsix.CreditProject.controllers.interfaces.IRepository;
 import itsix.CreditProject.exceptions.SoldLesserThanZeroException;
 import itsix.CreditProject.models.interfaces.IAccount;
 import itsix.CreditProject.models.interfaces.IClient;
 import itsix.CreditProject.models.interfaces.ICredit;
 import itsix.CreditProject.models.interfaces.IPayment;
+import itsix.CreditProject.repositories.IRepository;
 import itsix.CreditProject.views.AccountView;
 import itsix.CreditProject.views.CreditView;
 import itsix.CreditProject.views.NewCreditView;
 
 public class AccountController implements IAccountController {
 
+	private static final long serialVersionUID = 1L;
+
 	private IRepository repository;
 
 	private AccountView accountView;
 	private CreditView creditView;
 	private NewCreditView newCreditView;
-	
+
 	private IAccount account;
 	private IClient client;
 

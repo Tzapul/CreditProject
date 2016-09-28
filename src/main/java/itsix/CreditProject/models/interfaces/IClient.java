@@ -1,11 +1,12 @@
 package itsix.CreditProject.models.interfaces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.IPublisher;
 
-public interface IClient extends IPublisher {
+public interface IClient extends IPublisher, Serializable {
 
 	void addAccount(IAccount account);
 

@@ -2,13 +2,13 @@ package itsix.CreditProject.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import itsix.CreditProject.controllers.interfaces.IStartingController;
 
@@ -18,23 +18,11 @@ public class StartingView extends JFrame {
 
 	private JLabel lblNewLabel;
 
-	private IStartingController controller;
-	
+	private IStartingController startingController;
+
 	public StartingView(IStartingController controller) {
 
-		this.controller = controller;
-		
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+		this.startingController = controller;
 
 		initialize();
 	}
@@ -57,7 +45,7 @@ public class StartingView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.showProductsWindow();
+				startingController.showProductsWindow();
 			}
 		});
 
@@ -69,11 +57,19 @@ public class StartingView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.showClientsWindow();
+				startingController.showClientsWindow();
 			}
 		});
 		btnClients.setBounds(311, 382, 130, 40);
 		add(btnClients);
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent w) {
+				startingController.serialize();
+			}
+		});
 
 	}
 }

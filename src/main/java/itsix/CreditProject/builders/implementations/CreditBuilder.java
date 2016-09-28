@@ -22,6 +22,8 @@ import itsix.CreditProject.pubSub.Publisher;
 
 public class CreditBuilder implements ICreditBuilder {
 
+	private static final long serialVersionUID = 1L;
+
 	private IMoneyBuilder moneyBuilder;
 	
 	private IPeriodBuilder periodBuilder;

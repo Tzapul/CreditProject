@@ -8,6 +8,8 @@ import itsix.CreditProject.models.interfaces.IInterval;
 
 public class IntervalBuilder implements IIntervalBuilder {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public IInterval buildPeriodInterval(Integer min, Integer max) {
 		IInterval interval = new Interval(min, max);
