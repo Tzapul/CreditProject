@@ -240,9 +240,7 @@ public class EditVariableProductView extends JFrame implements IEditProductView 
 
 		ICurrency currency = (ICurrency) currencyComboBox.getSelectedItem();
 
-		double interestRateValue = Double.valueOf(interestRateTextField.getText())
-				+ Double.valueOf(controller.getIndicator());
-		MutableDouble interestRate = new MutableDouble(interestRateValue);
+		MutableDouble interestRate = new MutableDouble(lblRealInterestRateValue.getText());
 
 		Integer minPeriod = Integer.valueOf(minPeriodTextField.getText());
 		Integer maxPeriod = Integer.valueOf(maxPeriodTextField.getText());

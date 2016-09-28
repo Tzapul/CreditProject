@@ -45,7 +45,7 @@ public class NewProductController implements INewProductController {
 	}
 
 	@Override
-	public void createNewCredit() {
+	public void createNewProduct() {
 		
 		List<ISubscriber> subscribers = new ArrayList<>();
 		IInnerPublisher publisher = new Publisher(subscribers);
@@ -66,7 +66,8 @@ public class NewProductController implements INewProductController {
 		
 		try {
 			repository.getProductRepository().add(product);
-			view.dispose();
+			view.setVisible(false);
+			view.clear();
 		} catch (ProductAlreadyExistsException e) {
 			JOptionPane.showMessageDialog(null,
 				    "Product already exists",

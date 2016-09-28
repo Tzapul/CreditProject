@@ -44,7 +44,8 @@ public class NewProductView extends JFrame {
 	private JLabel lblRealInterestRateValue;
 
 	private ButtonGroup buttonGroup;
-
+	private JRadioButton rdbtnFixedInterest;
+	
 	private JComboBox<ICurrency> currencyComboBox;
 
 	private INewProductController newProductController;
@@ -136,7 +137,7 @@ public class NewProductView extends JFrame {
 
 		buttonGroup = new ButtonGroup();
 
-		JRadioButton rdbtnFixedInterest = new JRadioButton("Fixed Interest");
+		rdbtnFixedInterest = new JRadioButton("Fixed Interest");
 		rdbtnFixedInterest.setSelected(true);
 		rdbtnFixedInterest.setBounds(17, 369, 109, 23);
 		rdbtnFixedInterest.addActionListener(new ActionListener() {
@@ -170,7 +171,7 @@ public class NewProductView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				newProductController.createNewCredit();
+				newProductController.createNewProduct();
 				productsController.toggleEditButton();
 			}
 		});
@@ -230,7 +231,7 @@ public class NewProductView extends JFrame {
 		});
 	}
 
-	protected void clear() {
+	public void clear() {
 		nameTextField.setText("");
 		minValueTextField.setText("0");
 		maxValueTextField.setText("0");
@@ -238,6 +239,8 @@ public class NewProductView extends JFrame {
 		currencyComboBox.setSelectedIndex(0);
 		minPeriodTextField.setText("0");
 		maxPeriodTextField.setText("0");
+		newProductController.changeToFixedBuilder();
+		rdbtnFixedInterest.setSelected(true);
 	}
 
 	public Integer getMinValue() {

@@ -8,7 +8,7 @@ import itsix.CreditProject.views.NewProductView;
 
 public interface INewProductController extends Serializable {
 
-	void createNewCredit();
+	void createNewProduct();
 
 	Vector<ICurrency> getCurrencies();
 

@@ -52,6 +52,8 @@ import itsix.CreditProject.controllers.interfaces.INewClientController;
 import itsix.CreditProject.controllers.interfaces.INewCreditController;
 import itsix.CreditProject.controllers.interfaces.INewProductController;
 import itsix.CreditProject.controllers.interfaces.IStartingController;
+import itsix.CreditProject.customs.IKahanCalculator;
+import itsix.CreditProject.customs.KahanCalculator;
 import itsix.CreditProject.customs.RepositoryParser;
 import itsix.CreditProject.dispatcher.FixedProductDispatcher;
 import itsix.CreditProject.dispatcher.IDispatcher;
@@ -65,7 +67,6 @@ import itsix.CreditProject.repositories.IClientRepository;
 import itsix.CreditProject.repositories.ICurrencyRepository;
 import itsix.CreditProject.repositories.IParser;
 import itsix.CreditProject.repositories.IRepository;
-import itsix.CreditProject.repositories.ParseEmptyFile;
 import itsix.CreditProject.validator.ClientValidator;
 import itsix.CreditProject.validator.CreditValidator;
 import itsix.CreditProject.validator.IClientValidator;
@@ -107,7 +108,7 @@ public class App extends JFrame {
 					e.printStackTrace();
 				}
 
-				IParser parser = new ParseEmptyFile();
+				IParser parser = new RepositoryParser();
 				// Initializing repositories
 
 				IRepository mainRepository = null;
@@ -266,8 +267,10 @@ public class App extends JFrame {
 			private void initializeMap(Map<Class<?>, IEditProductView> editViews, IProductValidator productValidator,
 					IRepository mainRepository) {
 
+				IKahanCalculator kahanCalculator = new KahanCalculator();
+				
 				IEditVariableProductController editVariableController = new EditVariableProductController(
-						mainRepository, productValidator);
+						mainRepository, productValidator, kahanCalculator);
 				IEditProductView editVariableView = new EditVariableProductView(editVariableController);
 				editVariableController.setView(editVariableView);
 				editViews.put(VariableInterestProduct.class, editVariableView);

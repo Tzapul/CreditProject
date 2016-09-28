@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import itsix.CreditProject.controllers.interfaces.IEditVariableProductController;
+import itsix.CreditProject.customs.IKahanCalculator;
 import itsix.CreditProject.models.interfaces.ICurrency;
 import itsix.CreditProject.models.interfaces.IProduct;
 import itsix.CreditProject.repositories.IRepository;
@@ -23,10 +24,13 @@ public class EditVariableProductController implements IEditVariableProductContro
 	private IEditProductView view;
 
 	private IProductValidator productValidator;
+	
+	private IKahanCalculator kahanCalculator;
 
-	public EditVariableProductController(IRepository repository, IProductValidator productValidator) {
+	public EditVariableProductController(IRepository repository, IProductValidator productValidator, IKahanCalculator kahanCalculator) {
 		this.repository = repository;
 		this.productValidator = productValidator;
+		this.kahanCalculator = kahanCalculator;
 	}
 
 	public void setProduct(IProduct product) {
@@ -70,7 +74,13 @@ public class EditVariableProductController implements IEditVariableProductContro
 		view.setCreditName(product.getName());
 		view.setMinimumSize(product.getMinValue());
 		view.setMaxValue(product.getMaxValue());
-		view.setInterestRate(product.getInterestRate().doubleValue() - repository.getIndicator().doubleValue());
+		
+//		System.out.println(product.getInterestRate().toDouble());
+//		System.out.println(repository.getIndicator());
+//		System.out.println((product.getInterestRate().toDouble() - repository.getIndicator()));
+		
+		view.setInterestRate(kahanCalculator.calculateSubstraction(product.getInterestRate().toDouble(), repository.getIndicator()));
+		
 		view.setCurrency(repository.getCurrencyRepository().getCreditIndex(product));
 		view.setMinPeriod(product.getMinPeriod());
 		view.setMaxPeriod(product.getMaxPeriod());

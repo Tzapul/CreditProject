@@ -11,7 +11,7 @@ import itsix.CreditProject.pubSub.IInnerPublisher;
 import itsix.CreditProject.pubSub.ISubscriber;
 import itsix.CreditProject.pubSub.Publisher;
 
-public class ParseEmptyFile implements IParser {
+public class EmptyFileParser implements IParser {
 
 	@Override
 	public IRepository parse() {

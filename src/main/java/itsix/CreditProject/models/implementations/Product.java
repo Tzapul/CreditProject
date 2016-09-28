@@ -115,7 +115,7 @@ public class Product implements IProduct {
 	public void updateFields(IProduct product) {
 		this.name = product.getName();
 		this.periodInterval = product.getPeriodInterval();
-		this.interestRate.setValue(product.getInterestRate().doubleValue());
+		this.interestRate.setValue(product.getInterestRate());
 		this.currency = product.getCurrency();
 		this.moneyInterval = product.getMoneyInterval();
 		

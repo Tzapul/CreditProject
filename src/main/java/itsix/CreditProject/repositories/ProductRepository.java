@@ -80,6 +80,7 @@ public class ProductRepository implements IProductRepository {
 		for (IProduct myProduct : products) {
 			if (myProduct.equals(product)) {
 				myProduct.updateFields(updatedProduct);
+				break;
 			}
 		}
 		publisher.notifySubscribers();
